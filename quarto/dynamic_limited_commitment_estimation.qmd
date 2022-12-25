@@ -1,0 +1,7 @@
+# Dynamic limited-commitment model (estimation)
+
+## Estimation based on @laczo2015risk
+
+The code is largely based on the one by @laczo2015risk. The replication data and codes of the paper can be downloaded at [the journal website](https://onlinelibrary.wiley.com/doi/abs/10.1111/jeea.12115).
+
+

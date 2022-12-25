@@ -1,0 +1,6 @@
+# Dynamic limited-commitment model (theory)
+
+## Model based on @ligon2002informal
+
+
+
