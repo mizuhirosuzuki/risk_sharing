@@ -184,7 +184,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>vil_mean_educ <span class="ot">&lt;-</span> village_mat <span class="sc">%*%</span> <span class="fu">as.vector</span>(educdat[,<span class="dv">1</span>] <span class="sc">%*%</span> village_mat <span class="sc">/</span> village_size)</span>
 <span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>educ <span class="ot">&lt;-</span> educdat[,<span class="dv">1</span>] <span class="sc">-</span> vil_mean_educ</span>
 <span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="do">## propf (?)</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="do">## proportion of female household members</span></span>
 <span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>vil_mean_propf <span class="ot">&lt;-</span> village_mat <span class="sc">%*%</span> <span class="fu">as.vector</span>(propfdat[,<span class="dv">1</span>] <span class="sc">%*%</span> village_mat <span class="sc">/</span> village_size)</span>
 <span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>propf <span class="ot">&lt;-</span> propfdat[,<span class="dv">1</span>] <span class="sc">-</span> vil_mean_propf</span>
 <span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
@@ -445,825 +445,193 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rnorm</span>(<span class="at">n =</span> hnum <span class="sc">*</span> tnum <span class="sc">*</span> Nsim_full <span class="sc">*</span> <span class="dv">3</span>), </span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(hnum, tnum, Nsim_full, <span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<section id="perfect-risk-sharing-with-homogeneous-preferences" class="level3">
+<h3 class="anchored" data-anchor-id="perfect-risk-sharing-with-homogeneous-preferences">Perfect risk sharing with homogeneous preferences =============</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perfect risk sharing with homogeneous preferences =============</span></span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># log-likelihood function</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># log-likelihood function</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>gamma_c <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>ml_full_hom <span class="ot">&lt;-</span> <span class="cf">function</span>(param, vilcode) {</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  gamma_c <span class="ot">&lt;-</span> param</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  sim_density <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="dv">0</span>, <span class="fu">c</span>(village_size[vilcode], tnum <span class="sc">-</span> <span class="dv">1</span>, Nsim_full))</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  log_mean_density <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> village_size[vilcode], <span class="at">ncol =</span> tnum <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (sim <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Nsim_full) {</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># "true" consumption</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    cons_star <span class="ot">&lt;-</span> consdat[village_mat[, vilcode] <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span><span class="sc">:</span>(tnum <span class="sc">-</span> <span class="dv">1</span>)] <span class="sc">/</span> </span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>      <span class="fu">exp</span>(eps[,, sim, <span class="dv">1</span>] <span class="sc">*</span> <span class="fu">sqrt</span>(gamma_c))[village_mat[, vilcode] <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span><span class="sc">:</span>(tnum <span class="sc">-</span> <span class="dv">1</span>)]</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># rescaling for removing level differences across years</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    mean_cons_star <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(cons_star[,<span class="dv">1</span><span class="sc">:</span>(tnum <span class="sc">-</span> <span class="dv">1</span>)])</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    mean_cons <span class="ot">&lt;-</span> <span class="fu">mean</span>(consdat[village_mat[, vilcode] <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span><span class="sc">:</span>(tnum <span class="sc">-</span> <span class="dv">1</span>)])</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    cons_star <span class="ot">&lt;-</span> cons_star[, <span class="dv">1</span><span class="sc">:</span>(tnum <span class="sc">-</span> <span class="dv">1</span>)] <span class="sc">*</span> mean_cons <span class="sc">/</span> </span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">matrix</span>(mean_cons_star, <span class="at">nrow =</span> village_size[vilcode], <span class="at">ncol =</span> tnum <span class="sc">-</span> <span class="dv">1</span>, <span class="at">byrow =</span> T)</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># consumption difference from village mean observed by econometricians</span></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    lhs <span class="ot">&lt;-</span> (<span class="fu">log</span>(consdat) <span class="sc">-</span> <span class="fu">log</span>(vil_mean_cons_tij))[village_mat[, vilcode] <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">2</span><span class="sc">:</span>tnum]</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># actual consumption difference from village mean</span></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># (it's assumed that the average observed and "true" consumption of the village</span></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># are the same, probably because the average of the measurement error is close to 0</span></span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># when the village size is sufficiently large and can be ignored)</span></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    gt <span class="ot">&lt;-</span> <span class="fu">log</span>(cons_star) <span class="sc">-</span> <span class="fu">log</span>(vil_mean_cons_tij)[village_mat[, vilcode] <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span><span class="sc">:</span>(tnum <span class="sc">-</span> <span class="dv">1</span>)]</span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># multiplier term of variance of the measurement error</span></span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>    seg1 <span class="ot">&lt;-</span> ((hnumv <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> hnumv)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (hnumv <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> hnumv<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>    sim_density[,, sim] <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(lhs, <span class="at">mean =</span> gt, <span class="at">sd =</span> <span class="fu">sqrt</span>(seg1 <span class="sc">*</span> gamma_c))</span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>village_size[vilcode]) {</span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(tnum <span class="sc">-</span> <span class="dv">1</span>)) {</span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>      log_mean_density <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">mean</span>(sim_density[i, j, sim]))</span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>  logML <span class="ot">&lt;-</span> <span class="fu">sum</span>(log_mean_density, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="sc">-</span> logML)</span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>minpar <span class="ot">&lt;-</span> <span class="fl">0.02</span></span>
-<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>maxpar <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
-<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>sol <span class="ot">&lt;-</span> <span class="fu">optim</span>(</span>
-<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.1</span>,</span>
-<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>  ml_full_hom,</span>
-<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>  <span class="at">vilcode =</span> vilcode,</span>
-<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"L-BFGS-B"</span>,</span>
-<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower =</span> minpar,</span>
-<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper =</span> maxpar,</span>
-<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">trace =</span> <span class="dv">5</span>, <span class="at">maxit =</span> <span class="dv">200</span>),</span>
-<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>  <span class="at">hessian =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>N = 1, M = 5 machine precision = 2.22045e-16
-L = 0.02 
-X0 = 0.1 
-U = 0.2 
-At X0, 0 variables are exactly at the bounds
-At iterate     0  f=      0.16867  |proj g|=         0.08
-Iteration     0
-
----------------- CAUCHY entered-------------------
-
-There are 1  breakpoints
-
-Piece      1 f1, f2 at start point -7.3732e+01  7.3732e+01
-Distance to the next break point =   9.3167e-03
-Distance to the stationary point =   1.0000e+00
-Variable  1  is fixed.
-Cauchy X =  0.02 
-
----------------- exit CAUCHY----------------------
-
-0  variables are free at GCP on iteration 1
-LINE SEARCH 0 times; norm of step = 0.08
-
-iterations 1
-function evaluations 2
-segments explored during Cauchy searches 1
-BFGS updates skipped 0
-active bounds at final generalized Cauchy point 1
-norm of the final projected gradient 0
-final function value -1.04033
-
-X = 0.02 
-F = -1.04033
-final  value -1.040330 
-converged</code></pre>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  hnumv <span class="ot">&lt;-</span> village_size[vilcode]</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  sim_density <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="dv">0</span>, <span class="fu">c</span>(hnumv, tnum <span class="sc">-</span> <span class="dv">1</span>, Nsim_full))</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  log_mean_density <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> hnumv, <span class="at">ncol =</span> tnum <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (sim <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Nsim_full) {</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># "true" consumption</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    cons_star <span class="ot">&lt;-</span> consdat[village_mat[, vilcode] <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span><span class="sc">:</span>(tnum <span class="sc">-</span> <span class="dv">1</span>)] <span class="sc">/</span> </span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>      <span class="fu">exp</span>(eps[,, sim, <span class="dv">1</span>] <span class="sc">*</span> <span class="fu">sqrt</span>(gamma_c))[village_mat[, vilcode] <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span><span class="sc">:</span>(tnum <span class="sc">-</span> <span class="dv">1</span>)]</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># rescaling for removing level differences across years</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    mean_cons_star <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(cons_star[,<span class="dv">1</span><span class="sc">:</span>(tnum <span class="sc">-</span> <span class="dv">1</span>)])</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    mean_cons <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(consdat[village_mat[, vilcode] <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span><span class="sc">:</span>(tnum <span class="sc">-</span> <span class="dv">1</span>)])</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    cons_star <span class="ot">&lt;-</span> cons_star[, <span class="dv">1</span><span class="sc">:</span>(tnum <span class="sc">-</span> <span class="dv">1</span>)] <span class="sc">*</span> </span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">matrix</span>(mean_cons <span class="sc">/</span> mean_cons_star, <span class="at">nrow =</span> hnumv, <span class="at">ncol =</span> tnum <span class="sc">-</span> <span class="dv">1</span>, <span class="at">byrow =</span> T)</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># consumption difference from village mean observed by econometricians</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>    lhs <span class="ot">&lt;-</span> (<span class="fu">log</span>(consdat) <span class="sc">-</span> <span class="fu">log</span>(vil_mean_cons_tij))[village_mat[, vilcode] <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">2</span><span class="sc">:</span>tnum]</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># actual consumption difference from village mean</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># (it's assumed that the average observed and "true" consumption of the village</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># are the same, probably because the average of the measurement error is close to 0</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># when the village size is sufficiently large and can be ignored)</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>    gt <span class="ot">&lt;-</span> <span class="fu">log</span>(cons_star) <span class="sc">-</span> <span class="fu">log</span>(vil_mean_cons_tij)[village_mat[, vilcode] <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span><span class="sc">:</span>(tnum <span class="sc">-</span> <span class="dv">1</span>)]</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># multiplier term of variance of the measurement error</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>    seg1 <span class="ot">&lt;-</span> ((hnumv <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> hnumv)<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (hnumv <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> hnumv<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>    sim_density[,, sim] <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(lhs, <span class="at">mean =</span> gt, <span class="at">sd =</span> <span class="fu">sqrt</span>(seg1 <span class="sc">*</span> gamma_c))</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>hnumv) {</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(tnum <span class="sc">-</span> <span class="dv">1</span>)) {</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>      log_mean_density[i,t] <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">mean</span>(sim_density[i, t,]))</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>  logML <span class="ot">&lt;-</span> <span class="fu">sum</span>(log_mean_density, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="sc">-</span> logML)</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>minpar <span class="ot">&lt;-</span> <span class="fl">0.02</span></span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>maxpar <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>sol <span class="ot">&lt;-</span> <span class="fu">optim</span>(</span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.1</span>,</span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>  ml_full_hom,</span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>  <span class="at">vilcode =</span> vilcode,</span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"L-BFGS-B"</span>,</span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower =</span> minpar,</span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper =</span> maxpar,</span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">trace =</span> <span class="dv">0</span>, <span class="at">maxit =</span> <span class="dv">200</span>),</span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>  <span class="at">hessian =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>vilcode</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1</code></pre>
-</div>
-</div>
+<p>Standard error calculations to be added.</p>
+</section>
+<section id="perfect-risk-sharing-with-heterogeneous-preferences" class="level3">
+<h3 class="anchored" data-anchor-id="perfect-risk-sharing-with-heterogeneous-preferences">Perfect risk sharing with heterogeneous preferences =============</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#setwd("/Users/slaczo/Dropbox/IndiaCodesNew/JEEA4411codes") #change appropriately</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>(<span class="at">all =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>dropbox_folder <span class="ot">&lt;-</span> <span class="st">"~/Dropbox/Replication/Laczo2015/"</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">file.path</span>(dropbox_folder, <span class="st">"allest"</span>))</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>vilcode<span class="ot">=</span><span class="dv">1</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">81</span>)</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#define utility function and normalize values for numerical convenience</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>uu2<span class="ot">=</span><span class="cf">function</span>(cc,sigi) {</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (sigi<span class="sc">!=</span><span class="dv">1</span>) {</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>        ut<span class="ot">=</span>(cc<span class="sc">^</span>(<span class="dv">1</span><span class="sc">-</span>sigi)<span class="sc">-</span><span class="dv">1</span>)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>sigi)</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">else</span> {</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>        ut<span class="ot">=</span><span class="fu">log</span>(cc)</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(ut)</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    }   </span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>uup2<span class="ot">=</span><span class="cf">function</span>(cc,sigi) cc<span class="sc">^</span>(<span class="sc">-</span>sigi)</span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>uu<span class="ot">=</span><span class="cf">function</span>(cc,sigi) <span class="fu">uu2</span>(cc,sigi)<span class="sc">/</span><span class="fu">uu2</span>(<span class="dv">400</span>,sigi)</span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>uup<span class="ot">=</span><span class="cf">function</span>(cc,sigi) <span class="fu">uup2</span>(cc,sigi)<span class="sc">/</span><span class="fu">uup2</span>(<span class="dv">400</span>,sigi)</span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>time<span class="ot">=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>tnum)</span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>hid<span class="ot">=</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span>hnum)</span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>nv<span class="ot">=</span><span class="fu">max</span>(villagedat)</span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="co">#number of observations</span></span>
-<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>nn<span class="ot">=</span>hnum<span class="sc">*</span>(tnum<span class="dv">-1</span>)</span>
-<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="co">#CONSTRUCT VARIABLES</span></span>
-<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a><span class="co">#compute village mean of income and consumption</span></span>
-<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>vilmeaninct<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(nv,tnum))</span>
-<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>vilsuminct<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(nv,tnum))</span>
-<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>vilmeaninc<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>vilmeanconst<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(nv,tnum))</span>
-<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>vilsumconst<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(nv,tnum))</span>
-<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>vilmeancons<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nv) {</span>
-<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (l <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>tnum) {</span>
-<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>    incda<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,ta))</span>
-<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>    consda<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,ta))</span>
-<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>hnum) {</span>
-<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>tnum) {</span>
-<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (villagedat[i,j]<span class="sc">==</span>k <span class="sc">&amp;</span> tcode[i,j]<span class="sc">==</span>l) {</span>
-<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>            incda[i,j]<span class="ot">=</span>incdat[i,j]</span>
-<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>            consda[i,j]<span class="ot">=</span>consdat[i,j]</span>
-<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a>    }}}</span>
-<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a>    vilmeaninct[k,l]<span class="ot">=</span><span class="fu">mean</span>(incda,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a>    vilsuminct[k,l]<span class="ot">=</span><span class="fu">sum</span>(incda,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a>    vilmeanconst[k,l]<span class="ot">=</span><span class="fu">mean</span>(consda,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a>    vilsumconst[k,l]<span class="ot">=</span><span class="fu">sum</span>(consda,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a>vilmeaninc[k]<span class="ot">=</span><span class="fu">mean</span>(vilmeaninct[k,])</span>
-<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a>vilmeancons[k]<span class="ot">=</span><span class="fu">mean</span>(vilmeanconst[k,])</span>
-<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a><span class="co">#reshape</span></span>
-<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a>vilmeaninctij<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,tnum))</span>
-<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a>vilsuminctij<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,tnum))</span>
-<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a>vilmeanconstij<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,tnum))</span>
-<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a>vilsumconstij<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,tnum))</span>
-<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>hnum) {</span>
-<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>tnum) {</span>
-<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nv) {</span>
-<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (villagedat[i,j]<span class="sc">==</span>k) {</span>
-<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a>    vilmeaninctij[i,j]<span class="ot">=</span>vilmeaninct[k,j]</span>
-<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a>    vilsuminctij[i,j]<span class="ot">=</span>vilsuminct[k,j]</span>
-<span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a>    vilmeanconstij[i,j]<span class="ot">=</span>vilmeanconst[k,j]</span>
-<span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a>    vilsumconstij[i,j]<span class="ot">=</span>vilsumconst[k,j]</span>
-<span id="cb14-72"><a href="#cb14-72" aria-hidden="true" tabindex="-1"></a>}}}}</span>
-<span id="cb14-73"><a href="#cb14-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-74"><a href="#cb14-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-75"><a href="#cb14-75" aria-hidden="true" tabindex="-1"></a><span class="co">#compute differences from the village mean</span></span>
-<span id="cb14-76"><a href="#cb14-76" aria-hidden="true" tabindex="-1"></a>vilmeaneduc<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb14-77"><a href="#cb14-77" aria-hidden="true" tabindex="-1"></a>vilmeanpropf<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a>vilmeanage<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb14-79"><a href="#cb14-79" aria-hidden="true" tabindex="-1"></a>vilmeanland1<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb14-80"><a href="#cb14-80" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>hnum) {</span>
-<span id="cb14-81"><a href="#cb14-81" aria-hidden="true" tabindex="-1"></a>    vilmeaneduca<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb14-82"><a href="#cb14-82" aria-hidden="true" tabindex="-1"></a>    vilmeanpropfa<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb14-83"><a href="#cb14-83" aria-hidden="true" tabindex="-1"></a>    vilmeanagea<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb14-84"><a href="#cb14-84" aria-hidden="true" tabindex="-1"></a>    vilmeanland1a<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb14-85"><a href="#cb14-85" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>hnum) {</span>
-<span id="cb14-86"><a href="#cb14-86" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (villagedat[j,<span class="dv">1</span>]<span class="sc">==</span>villagedat[i,<span class="dv">1</span>]) {</span>
-<span id="cb14-87"><a href="#cb14-87" aria-hidden="true" tabindex="-1"></a>        vilmeaneduca[j]<span class="ot">=</span><span class="fu">mean</span>(educdat[j,],<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb14-88"><a href="#cb14-88" aria-hidden="true" tabindex="-1"></a>        vilmeanpropfa[j]<span class="ot">=</span><span class="fu">mean</span>(propfdat[j,],<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb14-89"><a href="#cb14-89" aria-hidden="true" tabindex="-1"></a>        vilmeanagea[j]<span class="ot">=</span><span class="fu">mean</span>(agedat[j,],<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb14-90"><a href="#cb14-90" aria-hidden="true" tabindex="-1"></a>        vilmeanland1a[j]<span class="ot">=</span><span class="fu">mean</span>(landdat1[j,],<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb14-91"><a href="#cb14-91" aria-hidden="true" tabindex="-1"></a>    }}</span>
-<span id="cb14-92"><a href="#cb14-92" aria-hidden="true" tabindex="-1"></a>    vilmeaneduc[i]<span class="ot">=</span><span class="fu">mean</span>(vilmeaneduca,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb14-93"><a href="#cb14-93" aria-hidden="true" tabindex="-1"></a>    vilmeanpropf[i]<span class="ot">=</span><span class="fu">mean</span>(vilmeanpropfa,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb14-94"><a href="#cb14-94" aria-hidden="true" tabindex="-1"></a>    vilmeanage[i]<span class="ot">=</span><span class="fu">mean</span>(vilmeanagea,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb14-95"><a href="#cb14-95" aria-hidden="true" tabindex="-1"></a>    vilmeanland1[i]<span class="ot">=</span><span class="fu">mean</span>(vilmeanland1a,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb14-96"><a href="#cb14-96" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb14-97"><a href="#cb14-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-98"><a href="#cb14-98" aria-hidden="true" tabindex="-1"></a>educ<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb14-99"><a href="#cb14-99" aria-hidden="true" tabindex="-1"></a>propf<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb14-100"><a href="#cb14-100" aria-hidden="true" tabindex="-1"></a>age<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb14-101"><a href="#cb14-101" aria-hidden="true" tabindex="-1"></a>land1<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb14-102"><a href="#cb14-102" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>hnum) {</span>
-<span id="cb14-103"><a href="#cb14-103" aria-hidden="true" tabindex="-1"></a>    educ[i]<span class="ot">=</span><span class="fu">mean</span>(educdat[i,],<span class="at">na.rm=</span><span class="cn">TRUE</span>)<span class="sc">-</span>vilmeaneduc[i]</span>
-<span id="cb14-104"><a href="#cb14-104" aria-hidden="true" tabindex="-1"></a>    propf[i]<span class="ot">=</span><span class="fu">mean</span>(propfdat[i,],<span class="at">na.rm=</span><span class="cn">TRUE</span>)<span class="sc">-</span>vilmeanpropf[i]</span>
-<span id="cb14-105"><a href="#cb14-105" aria-hidden="true" tabindex="-1"></a>    age[i]<span class="ot">=</span><span class="fu">mean</span>(agedat[i,],<span class="at">na.rm=</span><span class="cn">TRUE</span>)<span class="sc">-</span>vilmeanage[i]</span>
-<span id="cb14-106"><a href="#cb14-106" aria-hidden="true" tabindex="-1"></a>    land1[i]<span class="ot">=</span><span class="fu">mean</span>(landdat1[i,],<span class="at">na.rm=</span><span class="cn">TRUE</span>)<span class="sc">-</span>vilmeanland1[i]</span>
-<span id="cb14-107"><a href="#cb14-107" aria-hidden="true" tabindex="-1"></a>    }   </span>
-<span id="cb14-108"><a href="#cb14-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-109"><a href="#cb14-109" aria-hidden="true" tabindex="-1"></a><span class="co">#endowment shares</span></span>
-<span id="cb14-110"><a href="#cb14-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-111"><a href="#cb14-111" aria-hidden="true" tabindex="-1"></a>kk<span class="ot">=</span>vilcode</span>
-<span id="cb14-112"><a href="#cb14-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-113"><a href="#cb14-113" aria-hidden="true" tabindex="-1"></a>hnumv0<span class="ot">=</span><span class="dv">0</span></span>
-<span id="cb14-114"><a href="#cb14-114" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>hnum) {</span>
-<span id="cb14-115"><a href="#cb14-115" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (villagedat[i,<span class="dv">1</span>]<span class="sc">&lt;</span>kk) {</span>
-<span id="cb14-116"><a href="#cb14-116" aria-hidden="true" tabindex="-1"></a>        hnumv0<span class="ot">=</span>hnumv0<span class="sc">+</span><span class="dv">1</span></span>
-<span id="cb14-117"><a href="#cb14-117" aria-hidden="true" tabindex="-1"></a>        }}</span>
-<span id="cb14-118"><a href="#cb14-118" aria-hidden="true" tabindex="-1"></a>hnumv<span class="ot">=</span><span class="dv">0</span></span>
-<span id="cb14-119"><a href="#cb14-119" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>hnum) {</span>
-<span id="cb14-120"><a href="#cb14-120" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (villagedat[i,<span class="dv">1</span>]<span class="sc">==</span>kk) {</span>
-<span id="cb14-121"><a href="#cb14-121" aria-hidden="true" tabindex="-1"></a>        hnumv<span class="ot">=</span>hnumv<span class="sc">+</span><span class="dv">1</span></span>
-<span id="cb14-122"><a href="#cb14-122" aria-hidden="true" tabindex="-1"></a>        }}</span>
-<span id="cb14-123"><a href="#cb14-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-124"><a href="#cb14-124" aria-hidden="true" tabindex="-1"></a>incdata<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,tnum))</span>
-<span id="cb14-125"><a href="#cb14-125" aria-hidden="true" tabindex="-1"></a>consdata<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,tnum))</span>
-<span id="cb14-126"><a href="#cb14-126" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>hnum) {</span>
-<span id="cb14-127"><a href="#cb14-127" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>tnum) {</span>
-<span id="cb14-128"><a href="#cb14-128" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (incdat[i,j]<span class="sc">&gt;</span><span class="dv">0</span>) {</span>
-<span id="cb14-129"><a href="#cb14-129" aria-hidden="true" tabindex="-1"></a>        incdata[i,j]<span class="ot">=</span>incdat[i,j]</span>
-<span id="cb14-130"><a href="#cb14-130" aria-hidden="true" tabindex="-1"></a>        consdata[i,j]<span class="ot">=</span>consdat[i,j]</span>
-<span id="cb14-131"><a href="#cb14-131" aria-hidden="true" tabindex="-1"></a>        }}}</span>
-<span id="cb14-132"><a href="#cb14-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-133"><a href="#cb14-133" aria-hidden="true" tabindex="-1"></a>low1<span class="ot">=</span><span class="fu">quantile</span>(incdata[((hnumv0<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(hnumv0<span class="sc">+</span>hnumv)),],<span class="fl">0.025</span>,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb14-134"><a href="#cb14-134" aria-hidden="true" tabindex="-1"></a>high1<span class="ot">=</span><span class="fu">quantile</span>(incdata[((hnumv0<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(hnumv0<span class="sc">+</span>hnumv)),],<span class="fl">0.975</span>,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb14-135"><a href="#cb14-135" aria-hidden="true" tabindex="-1"></a>clow1<span class="ot">=</span><span class="fu">quantile</span>(consdata[((hnumv0<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(hnumv0<span class="sc">+</span>hnumv)),],<span class="fl">0.025</span>,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb14-136"><a href="#cb14-136" aria-hidden="true" tabindex="-1"></a>chigh1<span class="ot">=</span><span class="fu">quantile</span>(consdata[((hnumv0<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(hnumv0<span class="sc">+</span>hnumv)),],<span class="fl">0.975</span>,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb14-137"><a href="#cb14-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-138"><a href="#cb14-138" aria-hidden="true" tabindex="-1"></a><span class="co">#compute village mean income and consumption</span></span>
-<span id="cb14-139"><a href="#cb14-139" aria-hidden="true" tabindex="-1"></a>vilmeaninct<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(nv,tnum))</span>
-<span id="cb14-140"><a href="#cb14-140" aria-hidden="true" tabindex="-1"></a>vilmeaninc<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb14-141"><a href="#cb14-141" aria-hidden="true" tabindex="-1"></a>vilmeanconst<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(nv,tnum))</span>
-<span id="cb14-142"><a href="#cb14-142" aria-hidden="true" tabindex="-1"></a>vilmeancons<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb14-143"><a href="#cb14-143" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nv) {</span>
-<span id="cb14-144"><a href="#cb14-144" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (l <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>tnum) {</span>
-<span id="cb14-145"><a href="#cb14-145" aria-hidden="true" tabindex="-1"></a>    incda<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,ta))</span>
-<span id="cb14-146"><a href="#cb14-146" aria-hidden="true" tabindex="-1"></a>    consda<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,ta))</span>
-<span id="cb14-147"><a href="#cb14-147" aria-hidden="true" tabindex="-1"></a>    hhsizea<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,ta))</span>
-<span id="cb14-148"><a href="#cb14-148" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>hnum) {</span>
-<span id="cb14-149"><a href="#cb14-149" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>tnum) {</span>
-<span id="cb14-150"><a href="#cb14-150" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (villagedat[i,j]<span class="sc">==</span>k <span class="sc">&amp;</span> tcode[i,j]<span class="sc">==</span>l) {</span>
-<span id="cb14-151"><a href="#cb14-151" aria-hidden="true" tabindex="-1"></a>            incda[i,j]<span class="ot">=</span>incdata[i,j]</span>
-<span id="cb14-152"><a href="#cb14-152" aria-hidden="true" tabindex="-1"></a>            consda[i,j]<span class="ot">=</span>consdata[i,j]</span>
-<span id="cb14-153"><a href="#cb14-153" aria-hidden="true" tabindex="-1"></a>    }}}</span>
-<span id="cb14-154"><a href="#cb14-154" aria-hidden="true" tabindex="-1"></a>    vilmeaninct[k,l]<span class="ot">=</span><span class="fu">mean</span>(incda,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb14-155"><a href="#cb14-155" aria-hidden="true" tabindex="-1"></a>    vilmeanconst[k,l]<span class="ot">=</span><span class="fu">mean</span>(consda,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb14-156"><a href="#cb14-156" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb14-157"><a href="#cb14-157" aria-hidden="true" tabindex="-1"></a>vilmeaninc[k]<span class="ot">=</span><span class="fu">mean</span>(vilmeaninct[k,])</span>
-<span id="cb14-158"><a href="#cb14-158" aria-hidden="true" tabindex="-1"></a>vilmeancons[k]<span class="ot">=</span><span class="fu">mean</span>(vilmeanconst[k,])</span>
-<span id="cb14-159"><a href="#cb14-159" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb14-160"><a href="#cb14-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-161"><a href="#cb14-161" aria-hidden="true" tabindex="-1"></a><span class="co">#reshape</span></span>
-<span id="cb14-162"><a href="#cb14-162" aria-hidden="true" tabindex="-1"></a>vilmeaninctij<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,tnum))</span>
-<span id="cb14-163"><a href="#cb14-163" aria-hidden="true" tabindex="-1"></a>vilmeanconstij<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,tnum))</span>
-<span id="cb14-164"><a href="#cb14-164" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>hnum) {</span>
-<span id="cb14-165"><a href="#cb14-165" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>tnum) {</span>
-<span id="cb14-166"><a href="#cb14-166" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nv) {</span>
-<span id="cb14-167"><a href="#cb14-167" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (villagedat[i,j]<span class="sc">==</span>k) {</span>
-<span id="cb14-168"><a href="#cb14-168" aria-hidden="true" tabindex="-1"></a>    vilmeaninctij[i,j]<span class="ot">=</span>vilmeaninct[k,j]</span>
-<span id="cb14-169"><a href="#cb14-169" aria-hidden="true" tabindex="-1"></a>    vilmeanconstij[i,j]<span class="ot">=</span>vilmeanconst[k,j]</span>
-<span id="cb14-170"><a href="#cb14-170" aria-hidden="true" tabindex="-1"></a>}}}}</span>
-<span id="cb14-171"><a href="#cb14-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-172"><a href="#cb14-172" aria-hidden="true" tabindex="-1"></a><span class="co">#compute ratio of mean consumption to income in the data    </span></span>
-<span id="cb14-173"><a href="#cb14-173" aria-hidden="true" tabindex="-1"></a>consperincvt<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(nv,tnum))</span>
-<span id="cb14-174"><a href="#cb14-174" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nv) {</span>
-<span id="cb14-175"><a href="#cb14-175" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (l <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>tnum) {</span>
-<span id="cb14-176"><a href="#cb14-176" aria-hidden="true" tabindex="-1"></a>    consperincvt[k,l]<span class="ot">=</span>vilmeanconst[k,l]<span class="sc">/</span>vilmeaninct[k,l]</span>
-<span id="cb14-177"><a href="#cb14-177" aria-hidden="true" tabindex="-1"></a>    }}</span>
-<span id="cb14-178"><a href="#cb14-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-179"><a href="#cb14-179" aria-hidden="true" tabindex="-1"></a><span class="co">#rescale income</span></span>
-<span id="cb14-180"><a href="#cb14-180" aria-hidden="true" tabindex="-1"></a>incdatb<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,ta))</span>
-<span id="cb14-181"><a href="#cb14-181" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>hnum) {</span>
-<span id="cb14-182"><a href="#cb14-182" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>tnum) {</span>
-<span id="cb14-183"><a href="#cb14-183" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nv) {</span>
-<span id="cb14-184"><a href="#cb14-184" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (villagedat[i,j]<span class="sc">==</span>k) {</span>
-<span id="cb14-185"><a href="#cb14-185" aria-hidden="true" tabindex="-1"></a>    incdatb[i,j]<span class="ot">=</span>incdat[i,j]<span class="sc">*</span>consperincvt[k,j]</span>
-<span id="cb14-186"><a href="#cb14-186" aria-hidden="true" tabindex="-1"></a>}}}}</span>
-<span id="cb14-187"><a href="#cb14-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-188"><a href="#cb14-188" aria-hidden="true" tabindex="-1"></a><span class="co">#reshape</span></span>
-<span id="cb14-189"><a href="#cb14-189" aria-hidden="true" tabindex="-1"></a>vilmeaninctb<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(nv,tnum))</span>
-<span id="cb14-190"><a href="#cb14-190" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nv) {</span>
-<span id="cb14-191"><a href="#cb14-191" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>tnum) {</span>
-<span id="cb14-192"><a href="#cb14-192" aria-hidden="true" tabindex="-1"></a>    incdatba<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,ta))</span>
-<span id="cb14-193"><a href="#cb14-193" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>hnum) {</span>
-<span id="cb14-194"><a href="#cb14-194" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (villagedat[i,j]<span class="sc">==</span>k) {</span>
-<span id="cb14-195"><a href="#cb14-195" aria-hidden="true" tabindex="-1"></a>    incdatba[i,j]<span class="ot">=</span>incdatb[i,j]</span>
-<span id="cb14-196"><a href="#cb14-196" aria-hidden="true" tabindex="-1"></a>}}</span>
-<span id="cb14-197"><a href="#cb14-197" aria-hidden="true" tabindex="-1"></a>vilmeaninctb[k,j]<span class="ot">=</span><span class="fu">mean</span>(incdatba,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb14-198"><a href="#cb14-198" aria-hidden="true" tabindex="-1"></a>}}</span>
-<span id="cb14-199"><a href="#cb14-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-200"><a href="#cb14-200" aria-hidden="true" tabindex="-1"></a><span class="co">#update village means</span></span>
-<span id="cb14-201"><a href="#cb14-201" aria-hidden="true" tabindex="-1"></a>vilmeanincbij<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,tnum))</span>
-<span id="cb14-202"><a href="#cb14-202" aria-hidden="true" tabindex="-1"></a>vilmeanconsbij<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,tnum))</span>
-<span id="cb14-203"><a href="#cb14-203" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>hnum) {</span>
-<span id="cb14-204"><a href="#cb14-204" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>tnum) {</span>
-<span id="cb14-205"><a href="#cb14-205" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nv) {</span>
-<span id="cb14-206"><a href="#cb14-206" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (villagedat[i,j]<span class="sc">==</span>k) {</span>
-<span id="cb14-207"><a href="#cb14-207" aria-hidden="true" tabindex="-1"></a>    vilmeanincbij[i,j]<span class="ot">=</span>vilmeaninctb[k,j]</span>
-<span id="cb14-208"><a href="#cb14-208" aria-hidden="true" tabindex="-1"></a>    vilmeanconsbij[i,j]<span class="ot">=</span>vilmeanconst[k,j]</span>
-<span id="cb14-209"><a href="#cb14-209" aria-hidden="true" tabindex="-1"></a>}}}}</span>
-<span id="cb14-210"><a href="#cb14-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-211"><a href="#cb14-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-212"><a href="#cb14-212" aria-hidden="true" tabindex="-1"></a><span class="co"># ESTIMATE INCOME PROCESSES</span></span>
-<span id="cb14-213"><a href="#cb14-213" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb14-214"><a href="#cb14-214" aria-hidden="true" tabindex="-1"></a>Sh1<span class="ot">=</span><span class="dv">8</span></span>
-<span id="cb14-215"><a href="#cb14-215" aria-hidden="true" tabindex="-1"></a>Sh2<span class="ot">=</span><span class="dv">5</span></span>
-<span id="cb14-216"><a href="#cb14-216" aria-hidden="true" tabindex="-1"></a><span class="co">#Sh1 number of income states for hh1</span></span>
-<span id="cb14-217"><a href="#cb14-217" aria-hidden="true" tabindex="-1"></a><span class="co">#Sh2 number of income states for hh2</span></span>
-<span id="cb14-218"><a href="#cb14-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-219"><a href="#cb14-219" aria-hidden="true" tabindex="-1"></a>S<span class="ot">=</span>Sh1<span class="sc">*</span>Sh2</span>
-<span id="cb14-220"><a href="#cb14-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-221"><a href="#cb14-221" aria-hidden="true" tabindex="-1"></a><span class="co">#hh</span></span>
-<span id="cb14-222"><a href="#cb14-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-223"><a href="#cb14-223" aria-hidden="true" tabindex="-1"></a><span class="co">#lagged income</span></span>
-<span id="cb14-224"><a href="#cb14-224" aria-hidden="true" tabindex="-1"></a>Lincdatb<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,tnum))</span>
-<span id="cb14-225"><a href="#cb14-225" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>hnum) {</span>
-<span id="cb14-226"><a href="#cb14-226" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(tnum<span class="dv">-1</span>)) {</span>
-<span id="cb14-227"><a href="#cb14-227" aria-hidden="true" tabindex="-1"></a>    Lincdatb[i,j<span class="sc">+</span><span class="dv">1</span>]<span class="ot">=</span>incdatb[i,j]</span>
-<span id="cb14-228"><a href="#cb14-228" aria-hidden="true" tabindex="-1"></a>    }}</span>
-<span id="cb14-229"><a href="#cb14-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-230"><a href="#cb14-230" aria-hidden="true" tabindex="-1"></a><span class="co">#create 4 groups</span></span>
-<span id="cb14-231"><a href="#cb14-231" aria-hidden="true" tabindex="-1"></a>sh1r<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(nv,<span class="dv">2</span>,<span class="dv">2</span>,Sh1))</span>
-<span id="cb14-232"><a href="#cb14-232" aria-hidden="true" tabindex="-1"></a>P1r<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(nv,<span class="dv">2</span>,<span class="dv">2</span>,Sh1,Sh1))</span>
-<span id="cb14-233"><a href="#cb14-233" aria-hidden="true" tabindex="-1"></a>sh2r<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(nv,Sh2))</span>
-<span id="cb14-234"><a href="#cb14-234" aria-hidden="true" tabindex="-1"></a>P2r<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(nv,Sh2,Sh2))</span>
-<span id="cb14-235"><a href="#cb14-235" aria-hidden="true" tabindex="-1"></a>meancor<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb14-236"><a href="#cb14-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-237"><a href="#cb14-237" aria-hidden="true" tabindex="-1"></a>meanincv<span class="ot">=</span><span class="fu">numeric</span>()  </span>
-<span id="cb14-238"><a href="#cb14-238" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> (hnumv0<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(hnumv0<span class="sc">+</span>hnumv)) {</span>
-<span id="cb14-239"><a href="#cb14-239" aria-hidden="true" tabindex="-1"></a>    meanincv[i]<span class="ot">=</span><span class="fu">mean</span>(incdatb[i,])</span>
-<span id="cb14-240"><a href="#cb14-240" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb14-241"><a href="#cb14-241" aria-hidden="true" tabindex="-1"></a>medinc<span class="ot">=</span><span class="fu">quantile</span>(meanincv,<span class="fl">0.5</span>,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb14-242"><a href="#cb14-242" aria-hidden="true" tabindex="-1"></a>hlmean<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb14-243"><a href="#cb14-243" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> (hnumv0<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(hnumv0<span class="sc">+</span>hnumv)) {</span>
-<span id="cb14-244"><a href="#cb14-244" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (meanincv[i]<span class="sc">&lt;=</span>medinc) {</span>
-<span id="cb14-245"><a href="#cb14-245" aria-hidden="true" tabindex="-1"></a>    hlmean[i]<span class="ot">=</span><span class="dv">1</span></span>
-<span id="cb14-246"><a href="#cb14-246" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
-<span id="cb14-247"><a href="#cb14-247" aria-hidden="true" tabindex="-1"></a>    hlmean[i]<span class="ot">=</span><span class="dv">2</span></span>
-<span id="cb14-248"><a href="#cb14-248" aria-hidden="true" tabindex="-1"></a>    }}</span>
-<span id="cb14-249"><a href="#cb14-249" aria-hidden="true" tabindex="-1"></a>cvincv<span class="ot">=</span><span class="fu">numeric</span>()    </span>
-<span id="cb14-250"><a href="#cb14-250" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> (hnumv0<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(hnumv0<span class="sc">+</span>hnumv)) {</span>
-<span id="cb14-251"><a href="#cb14-251" aria-hidden="true" tabindex="-1"></a>    cvincv[i]<span class="ot">=</span><span class="fu">sd</span>(incdatb[i,])<span class="sc">/</span><span class="fu">mean</span>(incdatb[i,])</span>
-<span id="cb14-252"><a href="#cb14-252" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb14-253"><a href="#cb14-253" aria-hidden="true" tabindex="-1"></a>medcvinc<span class="ot">=</span><span class="fu">quantile</span>(cvincv,<span class="fl">0.5</span>,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb14-254"><a href="#cb14-254" aria-hidden="true" tabindex="-1"></a>hlcv<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb14-255"><a href="#cb14-255" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> (hnumv0<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(hnumv0<span class="sc">+</span>hnumv)) {</span>
-<span id="cb14-256"><a href="#cb14-256" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (cvincv[i]<span class="sc">&lt;=</span>medcvinc) {</span>
-<span id="cb14-257"><a href="#cb14-257" aria-hidden="true" tabindex="-1"></a>    hlcv[i]<span class="ot">=</span><span class="dv">1</span></span>
-<span id="cb14-258"><a href="#cb14-258" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
-<span id="cb14-259"><a href="#cb14-259" aria-hidden="true" tabindex="-1"></a>    hlcv[i]<span class="ot">=</span><span class="dv">2</span>   </span>
-<span id="cb14-260"><a href="#cb14-260" aria-hidden="true" tabindex="-1"></a>    }}</span>
-<span id="cb14-261"><a href="#cb14-261" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb14-262"><a href="#cb14-262" aria-hidden="true" tabindex="-1"></a>eig<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,Sh1))</span>
-<span id="cb14-263"><a href="#cb14-263" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-264"><a href="#cb14-264" aria-hidden="true" tabindex="-1"></a>bmedinc<span class="ot">=</span>incdatb</span>
-<span id="cb14-265"><a href="#cb14-265" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> (hnumv0<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(hnumv0<span class="sc">+</span>hnumv)) {</span>
-<span id="cb14-266"><a href="#cb14-266" aria-hidden="true" tabindex="-1"></a>  bmedinc[i,]<span class="ot">=</span><span class="sc">-</span>(hlmean[i]<span class="sc">-</span><span class="dv">2</span>)<span class="sc">*</span>incdatb[i,]</span>
-<span id="cb14-267"><a href="#cb14-267" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb14-268"><a href="#cb14-268" aria-hidden="true" tabindex="-1"></a>medinc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># log-likelihood function</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>param <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="fl">0.1</span>, <span class="dv">5</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>ml_full_het <span class="ot">&lt;-</span> <span class="cf">function</span>(param, vilcode) {</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  beta_coef <span class="ot">&lt;-</span> param[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  gamma_c <span class="ot">&lt;-</span> param[<span class="dv">5</span>]</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  hnumv <span class="ot">&lt;-</span> village_size[vilcode]</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  sim_density <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="dv">0</span>, <span class="fu">c</span>(hnumv, tnum <span class="sc">-</span> <span class="dv">1</span>, Nsim_full))</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  log_mean_density <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, <span class="at">nrow =</span> hnumv, <span class="at">ncol =</span> tnum <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># bounds for sigma_i values</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  min_sig <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  max_sig <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  sigma_i <span class="ot">&lt;-</span> <span class="fu">pmin</span>(<span class="fu">pmax</span>(</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span> <span class="sc">+</span> </span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>      beta_coef[<span class="dv">1</span>] <span class="sc">*</span> educ[village_mat[,vilcode] <span class="sc">==</span> <span class="dv">1</span>] <span class="sc">+</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>      beta_coef[<span class="dv">2</span>] <span class="sc">*</span> propf[village_mat[,vilcode] <span class="sc">==</span> <span class="dv">1</span>] <span class="sc">+</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>      beta_coef[<span class="dv">3</span>] <span class="sc">*</span> age[village_mat[,vilcode] <span class="sc">==</span> <span class="dv">1</span>] <span class="sc">+</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>      beta_coef[<span class="dv">4</span>] <span class="sc">*</span> land1[village_mat[,vilcode] <span class="sc">==</span> <span class="dv">1</span>],</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    min_sig), max_sig)</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># adjustment of sigma_i to prevent strange values of sigma_i</span></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>  sigma_i_2 <span class="ot">&lt;-</span> sigma_i</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>  sigma_count_1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(sigma_i <span class="sc">==</span> min_sig)</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>  sigma_count_2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(sigma_i <span class="sc">==</span> max_sig)</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>  sigma_i_2[(sigma_i <span class="sc">==</span> min_sig) <span class="sc">|</span> (sigma_i <span class="sc">==</span> max_sig)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>  sigma_count <span class="ot">&lt;-</span> sigma_count_1 <span class="sc">+</span> sigma_count_2</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>  mean_sigma_1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(sigma_i_2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> (hnumv <span class="sc">-</span> sigma_count) <span class="sc">/</span> hnumv <span class="sc">+</span></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>    min_sig <span class="sc">*</span> sigma_count_1 <span class="sc">/</span> hnumv <span class="sc">+</span></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>    max_sig <span class="sc">*</span> sigma_count_2 <span class="sc">/</span> hnumv</span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>  mean_sigma_2 <span class="ot">&lt;-</span> <span class="fu">mean</span>(sigma_i_2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> (hnumv <span class="sc">-</span> sigma_count) <span class="sc">/</span> hnumv <span class="sc">-</span></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>    (<span class="fu">mean</span>(sigma_i) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> hnumv <span class="sc">/</span> (hnumv <span class="sc">-</span> sigma_count)</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>  sigma_3 <span class="ot">&lt;-</span> sigma_i</span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>  sigma_3[(sigma_i <span class="sc">&gt;</span> min_sig) <span class="sc">&amp;</span> (sigma_i <span class="sc">&lt;</span> max_sig)] <span class="ot">&lt;-</span> sigma_i[(sigma_i <span class="sc">&gt;</span> min_sig) <span class="sc">&amp;</span> (sigma_i <span class="sc">&lt;</span> max_sig)] <span class="sc">*</span></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>    mean_sigma_2 <span class="sc">/</span> <span class="fu">mean</span>(sigma_i_2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>  sigma_3 <span class="ot">&lt;-</span> <span class="fu">pmin</span>(<span class="fu">pmax</span>(sigma_3, min_sig), max_sig)</span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>  sigma_i <span class="ot">&lt;-</span> sigma_3 <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dnorm</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">1</span>)</span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (sim <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Nsim_full) {</span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>    <span class="co"># "true" consumption</span></span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>    cons_star <span class="ot">&lt;-</span> consdat[village_mat[, vilcode] <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span><span class="sc">:</span>(tnum <span class="sc">-</span> <span class="dv">1</span>)] <span class="sc">/</span> </span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>      <span class="fu">exp</span>(eps[,, sim, <span class="dv">1</span>] <span class="sc">*</span> <span class="fu">sqrt</span>(gamma_c))[village_mat[, vilcode] <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span><span class="sc">:</span>(tnum <span class="sc">-</span> <span class="dv">1</span>)]</span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>    <span class="co"># rescaling for removing level differences across years</span></span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>    mean_cons_star <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(cons_star[,<span class="dv">1</span><span class="sc">:</span>(tnum <span class="sc">-</span> <span class="dv">1</span>)])</span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>    mean_cons <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(consdat[village_mat[, vilcode] <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span><span class="sc">:</span>(tnum <span class="sc">-</span> <span class="dv">1</span>)])</span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>    cons_star <span class="ot">&lt;-</span> cons_star[, <span class="dv">1</span><span class="sc">:</span>(tnum <span class="sc">-</span> <span class="dv">1</span>)] <span class="sc">*</span> </span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>      <span class="fu">matrix</span>(mean_cons <span class="sc">/</span> mean_cons_star, <span class="at">nrow =</span> hnumv, <span class="at">ncol =</span> tnum <span class="sc">-</span> <span class="dv">1</span>, <span class="at">byrow =</span> T)</span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>    <span class="co"># consumption difference from village mean observed by econometricians</span></span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a>    lhs <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">+</span> sigma_i) <span class="sc">*</span> <span class="fu">log</span>(consdat)[village_mat[, vilcode] <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">2</span><span class="sc">:</span>tnum] <span class="sc">-</span> </span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>      <span class="fu">log</span>(vil_mean_cons_tij)[village_mat[, vilcode] <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">2</span><span class="sc">:</span>tnum]</span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>    <span class="co"># actual consumption difference from village mean</span></span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>    <span class="co"># (it's assumed that the average observed and "true" consumption of the village</span></span>
+<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>    <span class="co"># are the same, probably because the average of the measurement error is close to 0</span></span>
+<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>    <span class="co"># when the village size is sufficiently large and can be ignored)</span></span>
+<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a>    gt <span class="ot">&lt;-</span> (<span class="dv">1</span> <span class="sc">+</span> sigma_i) <span class="sc">*</span> <span class="fu">log</span>(cons_star) <span class="sc">-</span> <span class="fu">log</span>(vil_mean_cons_tij)[village_mat[, vilcode] <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span><span class="sc">:</span>(tnum <span class="sc">-</span> <span class="dv">1</span>)]</span>
+<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>    <span class="co"># multiplier term of variance of the measurement error</span></span>
+<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>hnumv) {</span>
+<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a>      seg1 <span class="ot">&lt;-</span> ((hnumv <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> hnumv <span class="sc">+</span> sigma_i[i])<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (hnumv <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> hnumv<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>      sim_density[i,, sim] <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(lhs[i,], <span class="at">mean =</span> gt[i,], <span class="at">sd =</span> <span class="fu">sqrt</span>(seg1 <span class="sc">*</span> gamma_c))</span>
+<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>hnumv) {</span>
+<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (t <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(tnum <span class="sc">-</span> <span class="dv">1</span>)) {</span>
+<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a>      log_mean_density[i,t] <span class="ot">&lt;-</span> <span class="fu">log</span>(<span class="fu">mean</span>(sim_density[i, t,]))</span>
+<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a>  logML <span class="ot">&lt;-</span> <span class="fu">sum</span>(log_mean_density, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="sc">-</span> logML)</span>
+<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a>startpar <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.4242611094730358023419</span>,</span>
+<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fl">0.1132560053156791424200</span>,</span>
+<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fl">0.0030469865039083081013</span>,</span>
+<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span><span class="fl">0.0177119155358136347311</span>,</span>
+<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a>  <span class="fl">0.0940451640253737869424</span>)</span>
+<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a>minpar <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a>  startpar[<span class="dv">1</span>] <span class="sc">-</span> <span class="fl">0.3</span>,</span>
+<span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a>  startpar[<span class="dv">2</span>] <span class="sc">-</span> <span class="fl">0.2</span>,</span>
+<span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a>  startpar[<span class="dv">3</span>] <span class="sc">-</span> <span class="fl">0.03</span>,</span>
+<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a>  startpar[<span class="dv">4</span>] <span class="sc">-</span> <span class="fl">0.03</span>,</span>
+<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a>  startpar[<span class="dv">5</span>] <span class="sc">-</span> <span class="fl">0.05</span>)</span>
+<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a>maxpar <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a>  startpar[<span class="dv">1</span>] <span class="sc">+</span> <span class="fl">0.1</span>,</span>
+<span id="cb11-97"><a href="#cb11-97" aria-hidden="true" tabindex="-1"></a>  startpar[<span class="dv">2</span>] <span class="sc">+</span> <span class="fl">0.2</span>,</span>
+<span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a>  startpar[<span class="dv">3</span>] <span class="sc">+</span> <span class="fl">0.03</span>,</span>
+<span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a>  startpar[<span class="dv">4</span>] <span class="sc">+</span> <span class="fl">0.03</span>,</span>
+<span id="cb11-100"><a href="#cb11-100" aria-hidden="true" tabindex="-1"></a>  startpar[<span class="dv">5</span>] <span class="sc">+</span> <span class="fl">0.02</span>)</span>
+<span id="cb11-101"><a href="#cb11-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-102"><a href="#cb11-102" aria-hidden="true" tabindex="-1"></a>sol <span class="ot">&lt;-</span> <span class="fu">optim</span>(</span>
+<span id="cb11-103"><a href="#cb11-103" aria-hidden="true" tabindex="-1"></a>  startpar,</span>
+<span id="cb11-104"><a href="#cb11-104" aria-hidden="true" tabindex="-1"></a>  ml_full_het,</span>
+<span id="cb11-105"><a href="#cb11-105" aria-hidden="true" tabindex="-1"></a>  <span class="at">vilcode =</span> vilcode,</span>
+<span id="cb11-106"><a href="#cb11-106" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"L-BFGS-B"</span>,</span>
+<span id="cb11-107"><a href="#cb11-107" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower =</span> minpar,</span>
+<span id="cb11-108"><a href="#cb11-108" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper =</span> maxpar,</span>
+<span id="cb11-109"><a href="#cb11-109" aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">trace =</span> <span class="dv">0</span>, <span class="at">maxit =</span> <span class="dv">200</span>),</span>
+<span id="cb11-110"><a href="#cb11-110" aria-hidden="true" tabindex="-1"></a>  <span class="at">hessian =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-111"><a href="#cb11-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-112"><a href="#cb11-112" aria-hidden="true" tabindex="-1"></a>sol<span class="sc">$</span>par</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     50% 
-237.3702 </code></pre>
+<pre><code>[1]  0.426909604 -0.069897280 -0.002870369 -0.001233678  0.049143148</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(bmedinc[(hnumv0<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(hnumv0<span class="sc">+</span>hnumv),],<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 81.18551</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ESTIMATE AR(1) PROCESS AND THEN APPROXIMATE IT BY A MARKOV CHAIN FOR EACH OF THE FOUR GROUPS</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="do">## low mean low cv</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>incdat2l<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>consdat2l<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>Lincdat2l<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>tcode2<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>hcode2<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>hnum) {</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>tnum) {</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (villagedat[i,j]<span class="sc">==</span>kk) {</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ((incdat[i,j]<span class="sc">&gt;</span>low1) <span class="sc">&amp;</span> (incdat[i,j]<span class="sc">&lt;</span>high1)) {</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    incdat2l[tnum<span class="sc">*</span>(i<span class="dv">-1</span>)<span class="sc">+</span>j]<span class="ot">=</span>incdatb[i,j]</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    consdat2l[tnum<span class="sc">*</span>(i<span class="dv">-1</span>)<span class="sc">+</span>j]<span class="ot">=</span>consdat[i,j]</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    Lincdat2l[tnum<span class="sc">*</span>(i<span class="dv">-1</span>)<span class="sc">+</span>j]<span class="ot">=</span>Lincdatb[i,j]</span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>}}}}</span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> (hnumv0<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(hnumv0<span class="sc">+</span>hnumv)) {</span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>tnum) {</span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (hlmean[i]<span class="sc">==</span><span class="dv">2</span> <span class="sc">|</span> hlcv[i]<span class="sc">==</span><span class="dv">2</span>) {</span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>    incdat2l[tnum<span class="sc">*</span>(i<span class="dv">-1</span>)<span class="sc">+</span>j]<span class="ot">=</span><span class="cn">NA</span></span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>    Lincdat2l[tnum<span class="sc">*</span>(i<span class="dv">-1</span>)<span class="sc">+</span>j]<span class="ot">=</span><span class="cn">NA</span></span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>    }}}</span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>mu<span class="ot">=</span><span class="fu">mean</span>(incdat2l,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>rho<span class="ot">=</span><span class="fu">cor</span>(incdat2l,Lincdat2l,<span class="at">use=</span><span class="st">"complete.obs"</span>)</span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>sigma2u<span class="ot">=</span><span class="fu">var</span>(incdat2l,<span class="at">na.rm=</span><span class="cn">TRUE</span>)<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>rho<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>sigmau<span class="ot">=</span><span class="fu">sqrt</span>(sigma2u)</span>
-<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>sigmaeps<span class="ot">=</span><span class="fu">sqrt</span>(sigma2u<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>rho<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>a<span class="ot">=</span>(<span class="dv">1</span><span class="sc">-</span>rho)<span class="sc">*</span>mu</span>
-<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>mu</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 182.4754</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>rho</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1886173</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(sigma2u)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 49.08777</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>incdat02<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,tnum))</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>consdat02<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,tnum))</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> (hnumv0<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(hnumv0<span class="sc">+</span>hnumv)) {</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>tnum) {</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ((villagedat[i,j]<span class="sc">==</span>kk) <span class="sc">&amp;&amp;</span> (hlmean[i]<span class="sc">==</span><span class="dv">1</span>) <span class="sc">&amp;&amp;</span> (hlcv[i]<span class="sc">==</span><span class="dv">1</span>) <span class="sc">&amp;&amp;</span> (incdat[i,j]<span class="sc">&gt;</span>low1) <span class="sc">&amp;&amp;</span> (incdat[i,j]<span class="sc">&lt;</span>high1)) {</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>        incdat02[i,j]<span class="ot">=</span>incdatb[i,j]</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>        consdat02[i,j]<span class="ot">=</span>consdat[i,j]</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>        }}}</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Markov chain for income of households</span></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co">#points</span></span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>jj<span class="ot">=</span><span class="dv">0</span></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>sh1<span class="ot">=</span><span class="fu">numeric</span>(<span class="at">length=</span>Sh1)</span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>sh1[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]<span class="ot">=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)</span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> ((sh1[<span class="dv">1</span>]<span class="sc">-</span>sh1[<span class="dv">2</span>])<span class="sc">^</span><span class="dv">2</span><span class="sc">&lt;</span><span class="fl">0.0000000000001</span>) {</span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> (jj<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(Sh1<span class="sc">+</span>jj)) {</span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>    sh1[(i<span class="sc">-</span>jj)]<span class="ot">=</span><span class="fu">quantile</span>(incdat02,((<span class="dv">2</span><span class="sc">*</span>i<span class="dv">-1</span>)<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>(Sh1<span class="sc">+</span>jj))),<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>    jj<span class="ot">=</span>jj<span class="sc">+</span><span class="dv">1</span></span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>jj<span class="ot">=</span>jj<span class="dv">-1</span></span>
-<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>sh1<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> (jj<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(Sh1<span class="sc">+</span>jj)) {</span>
-<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>    sh1[(i<span class="sc">-</span>jj)]<span class="ot">=</span><span class="fu">quantile</span>(incdat02,((<span class="dv">2</span><span class="sc">*</span>i<span class="dv">-1</span>)<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>(Sh1<span class="sc">+</span>jj))),<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a><span class="co">#transition probabilities</span></span>
-<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>P1<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(Sh1,Sh1))</span>
-<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Sh1) {</span>
-<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>    P1[j,<span class="dv">1</span>]<span class="ot">=</span><span class="fu">pnorm</span>(((sh1[<span class="dv">1</span>])<span class="sc">-</span>a<span class="sc">-</span>rho<span class="sc">*</span>(sh1[j])<span class="sc">+</span>((sh1[<span class="dv">2</span>])<span class="sc">-</span>(sh1[<span class="dv">1</span>]))<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>sigmau)</span>
-<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>    P1[j,Sh1]<span class="ot">=</span><span class="dv">1</span><span class="sc">-</span><span class="fu">pnorm</span>(((sh1[Sh1])<span class="sc">-</span>a<span class="sc">-</span>rho<span class="sc">*</span>(sh1[j])<span class="sc">-</span>((sh1[Sh1])<span class="sc">-</span>(sh1[(Sh1<span class="dv">-1</span>)]))<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>sigmau)</span>
-<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Sh1) {</span>
-<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>(Sh1<span class="dv">-1</span>)) {</span>
-<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a>    P1[j,k]<span class="ot">=</span><span class="fu">pnorm</span>(((sh1[k])<span class="sc">-</span>a<span class="sc">-</span>rho<span class="sc">*</span>(sh1[j])<span class="sc">+</span>((sh1[(k<span class="sc">+</span><span class="dv">1</span>)])<span class="sc">-</span>(sh1[k]))<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>sigmau)<span class="sc">-</span><span class="fu">pnorm</span>(((sh1[k])<span class="sc">-</span>a<span class="sc">-</span>rho<span class="sc">*</span>(sh1[j])<span class="sc">-</span>((sh1[k])<span class="sc">-</span>(sh1[(k<span class="dv">-1</span>)]))<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>sigmau)</span>
-<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a>    }}</span>
-<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a>eig[<span class="dv">1</span>,<span class="dv">1</span>,]<span class="ot">=</span><span class="fu">eigen</span>(<span class="fu">t</span>(P1))<span class="sc">$</span>vector[,<span class="dv">1</span>]<span class="sc">/</span><span class="fu">sum</span>(<span class="fu">eigen</span>(<span class="fu">t</span>(P1))<span class="sc">$</span>vector[,<span class="dv">1</span>])</span>
-<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a>scalerhh<span class="ot">=</span><span class="fu">mean</span>(incdat02,<span class="at">na.rm=</span><span class="cn">TRUE</span>)<span class="sc">/</span>sh1<span class="sc">%*%</span>eig[<span class="dv">1</span>,<span class="dv">1</span>,]</span>
-<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a>sh1<span class="ot">=</span>scalerhh<span class="sc">*</span>sh1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in scalerhh * sh1: Recycling array of length 1 in array-vector arithmetic is deprecated.
-  Use c() or as.vector() instead.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>sh1r[kk,<span class="dv">1</span>,<span class="dv">1</span>,]<span class="ot">=</span>sh1</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>P1r[kk,<span class="dv">1</span>,<span class="dv">1</span>,,]<span class="ot">=</span>P1</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="do">## low mean high cv</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>incdat2l<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>consdat2l<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>Lincdat2l<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>tcode2<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>hcode2<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>hnum) {</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>tnum) {</span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (villagedat[i,j]<span class="sc">==</span>kk) {</span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ((incdat[i,j]<span class="sc">&gt;</span>low1) <span class="sc">&amp;</span> (incdat[i,j]<span class="sc">&lt;</span>high1)) {</span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    incdat2l[tnum<span class="sc">*</span>(i<span class="dv">-1</span>)<span class="sc">+</span>j]<span class="ot">=</span>incdatb[i,j]</span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>    consdat2l[tnum<span class="sc">*</span>(i<span class="dv">-1</span>)<span class="sc">+</span>j]<span class="ot">=</span>consdat[i,j]</span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>    Lincdat2l[tnum<span class="sc">*</span>(i<span class="dv">-1</span>)<span class="sc">+</span>j]<span class="ot">=</span>Lincdatb[i,j]</span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>}}}}</span>
-<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> (hnumv0<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(hnumv0<span class="sc">+</span>hnumv)) {</span>
-<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>tnum) {</span>
-<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (hlmean[i]<span class="sc">==</span><span class="dv">2</span> <span class="sc">|</span> hlcv[i]<span class="sc">==</span><span class="dv">1</span>) {</span>
-<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>    incdat2l[tnum<span class="sc">*</span>(i<span class="dv">-1</span>)<span class="sc">+</span>j]<span class="ot">=</span><span class="cn">NA</span></span>
-<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>    Lincdat2l[tnum<span class="sc">*</span>(i<span class="dv">-1</span>)<span class="sc">+</span>j]<span class="ot">=</span><span class="cn">NA</span></span>
-<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>    }}}</span>
-<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb26-28"><a href="#cb26-28" aria-hidden="true" tabindex="-1"></a>mu<span class="ot">=</span><span class="fu">mean</span>(incdat2l,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb26-29"><a href="#cb26-29" aria-hidden="true" tabindex="-1"></a>rho<span class="ot">=</span><span class="fu">cor</span>(incdat2l,Lincdat2l,<span class="at">use=</span><span class="st">"complete.obs"</span>)</span>
-<span id="cb26-30"><a href="#cb26-30" aria-hidden="true" tabindex="-1"></a>sigma2u<span class="ot">=</span><span class="fu">var</span>(incdat2l,<span class="at">na.rm=</span><span class="cn">TRUE</span>)<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>rho<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb26-31"><a href="#cb26-31" aria-hidden="true" tabindex="-1"></a>sigmau<span class="ot">=</span><span class="fu">sqrt</span>(sigma2u)</span>
-<span id="cb26-32"><a href="#cb26-32" aria-hidden="true" tabindex="-1"></a>sigmaeps<span class="ot">=</span><span class="fu">sqrt</span>(sigma2u<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>rho<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb26-33"><a href="#cb26-33" aria-hidden="true" tabindex="-1"></a>a<span class="ot">=</span>(<span class="dv">1</span><span class="sc">-</span>rho)<span class="sc">*</span>mu</span>
-<span id="cb26-34"><a href="#cb26-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-35"><a href="#cb26-35" aria-hidden="true" tabindex="-1"></a>mu</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 160.2013</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>rho</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.6256918</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(sigma2u)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 68.50632</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>incdat02<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,tnum))</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>consdat02<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,tnum))</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> (hnumv0<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(hnumv0<span class="sc">+</span>hnumv)) {</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>tnum) {</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ((villagedat[i,j]<span class="sc">==</span>kk) <span class="sc">&amp;&amp;</span> (hlmean[i]<span class="sc">==</span><span class="dv">1</span>) <span class="sc">&amp;&amp;</span> (hlcv[i]<span class="sc">==</span><span class="dv">2</span>) <span class="sc">&amp;&amp;</span> (incdat[i,j]<span class="sc">&gt;</span>low1) <span class="sc">&amp;&amp;</span> (incdat[i,j]<span class="sc">&lt;</span>high1)) {</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>        incdat02[i,j]<span class="ot">=</span>incdatb[i,j]</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>        consdat02[i,j]<span class="ot">=</span>consdat[i,j]</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>        }}}</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Markov chain for income of households</span></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="co">#points</span></span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>jj<span class="ot">=</span><span class="dv">0</span></span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>sh1<span class="ot">=</span><span class="fu">numeric</span>(<span class="at">length=</span>Sh1)</span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>sh1[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]<span class="ot">=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)</span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> ((sh1[<span class="dv">1</span>]<span class="sc">-</span>sh1[<span class="dv">2</span>])<span class="sc">^</span><span class="dv">2</span><span class="sc">&lt;</span><span class="fl">0.0000000000001</span>) {</span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> (jj<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(Sh1<span class="sc">+</span>jj)) {</span>
-<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>    sh1[(i<span class="sc">-</span>jj)]<span class="ot">=</span><span class="fu">quantile</span>(incdat02,((<span class="dv">2</span><span class="sc">*</span>i<span class="dv">-1</span>)<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>(Sh1<span class="sc">+</span>jj))),<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>    jj<span class="ot">=</span>jj<span class="sc">+</span><span class="dv">1</span></span>
-<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>jj<span class="ot">=</span>jj<span class="dv">-1</span></span>
-<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a>sh1<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> (jj<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(Sh1<span class="sc">+</span>jj)) {</span>
-<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>    sh1[(i<span class="sc">-</span>jj)]<span class="ot">=</span><span class="fu">quantile</span>(incdat02,((<span class="dv">2</span><span class="sc">*</span>i<span class="dv">-1</span>)<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>(Sh1<span class="sc">+</span>jj))),<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a><span class="co">#transition probabilities</span></span>
-<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>P1<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(Sh1,Sh1))</span>
-<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Sh1) {</span>
-<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>    P1[j,<span class="dv">1</span>]<span class="ot">=</span><span class="fu">pnorm</span>(((sh1[<span class="dv">1</span>])<span class="sc">-</span>a<span class="sc">-</span>rho<span class="sc">*</span>(sh1[j])<span class="sc">+</span>((sh1[<span class="dv">2</span>])<span class="sc">-</span>(sh1[<span class="dv">1</span>]))<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>sigmau)</span>
-<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a>    P1[j,Sh1]<span class="ot">=</span><span class="dv">1</span><span class="sc">-</span><span class="fu">pnorm</span>(((sh1[Sh1])<span class="sc">-</span>a<span class="sc">-</span>rho<span class="sc">*</span>(sh1[j])<span class="sc">-</span>((sh1[Sh1])<span class="sc">-</span>(sh1[(Sh1<span class="dv">-1</span>)]))<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>sigmau)</span>
-<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb32-33"><a href="#cb32-33" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Sh1) {</span>
-<span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>(Sh1<span class="dv">-1</span>)) {</span>
-<span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a>    P1[j,k]<span class="ot">=</span><span class="fu">pnorm</span>(((sh1[k])<span class="sc">-</span>a<span class="sc">-</span>rho<span class="sc">*</span>(sh1[j])<span class="sc">+</span>((sh1[(k<span class="sc">+</span><span class="dv">1</span>)])<span class="sc">-</span>(sh1[k]))<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>sigmau)<span class="sc">-</span><span class="fu">pnorm</span>(((sh1[k])<span class="sc">-</span>a<span class="sc">-</span>rho<span class="sc">*</span>(sh1[j])<span class="sc">-</span>((sh1[k])<span class="sc">-</span>(sh1[(k<span class="dv">-1</span>)]))<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>sigmau)</span>
-<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a>    }}</span>
-<span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a>eig[<span class="dv">1</span>,<span class="dv">2</span>,]<span class="ot">=</span><span class="fu">eigen</span>(<span class="fu">t</span>(P1))<span class="sc">$</span>vector[,<span class="dv">1</span>]<span class="sc">/</span><span class="fu">sum</span>(<span class="fu">eigen</span>(<span class="fu">t</span>(P1))<span class="sc">$</span>vector[,<span class="dv">1</span>])</span>
-<span id="cb32-38"><a href="#cb32-38" aria-hidden="true" tabindex="-1"></a>scalerhh<span class="ot">=</span><span class="fu">mean</span>(incdat02,<span class="at">na.rm=</span><span class="cn">TRUE</span>)<span class="sc">/</span>sh1<span class="sc">%*%</span>eig[<span class="dv">1</span>,<span class="dv">2</span>,]</span>
-<span id="cb32-39"><a href="#cb32-39" aria-hidden="true" tabindex="-1"></a>sh1<span class="ot">=</span>scalerhh<span class="sc">*</span>sh1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in scalerhh * sh1: Recycling array of length 1 in array-vector arithmetic is deprecated.
-  Use c() or as.vector() instead.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>sh1r[kk,<span class="dv">1</span>,<span class="dv">2</span>,]<span class="ot">=</span>sh1</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>P1r[kk,<span class="dv">1</span>,<span class="dv">2</span>,,]<span class="ot">=</span>P1</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="do">## high mean low cv</span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>incdat2l<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>consdat2l<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>Lincdat2l<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>tcode2<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>hcode2<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>hnum) {</span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>tnum) {</span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (villagedat[i,j]<span class="sc">==</span>kk) {</span>
-<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ((incdat[i,j]<span class="sc">&gt;</span>low1) <span class="sc">&amp;</span> (incdat[i,j]<span class="sc">&lt;</span>high1)) {</span>
-<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>    incdat2l[tnum<span class="sc">*</span>(i<span class="dv">-1</span>)<span class="sc">+</span>j]<span class="ot">=</span>incdatb[i,j]</span>
-<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>    consdat2l[tnum<span class="sc">*</span>(i<span class="dv">-1</span>)<span class="sc">+</span>j]<span class="ot">=</span>consdat[i,j]</span>
-<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>    Lincdat2l[tnum<span class="sc">*</span>(i<span class="dv">-1</span>)<span class="sc">+</span>j]<span class="ot">=</span>Lincdatb[i,j]</span>
-<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>}}}}</span>
-<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> (hnumv0<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(hnumv0<span class="sc">+</span>hnumv)) {</span>
-<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>tnum) {</span>
-<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (hlmean[i]<span class="sc">==</span><span class="dv">1</span> <span class="sc">|</span> hlcv[i]<span class="sc">==</span><span class="dv">2</span>) {</span>
-<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>    incdat2l[tnum<span class="sc">*</span>(i<span class="dv">-1</span>)<span class="sc">+</span>j]<span class="ot">=</span><span class="cn">NA</span></span>
-<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>    Lincdat2l[tnum<span class="sc">*</span>(i<span class="dv">-1</span>)<span class="sc">+</span>j]<span class="ot">=</span><span class="cn">NA</span></span>
-<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a>    }}}</span>
-<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a>mu<span class="ot">=</span><span class="fu">mean</span>(incdat2l,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a>rho<span class="ot">=</span><span class="fu">cor</span>(incdat2l,Lincdat2l,<span class="at">use=</span><span class="st">"complete.obs"</span>)</span>
-<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a>sigma2u<span class="ot">=</span><span class="fu">var</span>(incdat2l,<span class="at">na.rm=</span><span class="cn">TRUE</span>)<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>rho<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a>sigmau<span class="ot">=</span><span class="fu">sqrt</span>(sigma2u)</span>
-<span id="cb34-32"><a href="#cb34-32" aria-hidden="true" tabindex="-1"></a>sigmaeps<span class="ot">=</span><span class="fu">sqrt</span>(sigma2u<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>rho<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb34-33"><a href="#cb34-33" aria-hidden="true" tabindex="-1"></a>a<span class="ot">=</span>(<span class="dv">1</span><span class="sc">-</span>rho)<span class="sc">*</span>mu</span>
-<span id="cb34-34"><a href="#cb34-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-35"><a href="#cb34-35" aria-hidden="true" tabindex="-1"></a>mu</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 441.8429</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>rho</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.5503409</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(sigma2u)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 128.7411</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>incdat02<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,tnum))</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>consdat02<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,tnum))</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> (hnumv0<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(hnumv0<span class="sc">+</span>hnumv)) {</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>tnum) {</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ((villagedat[i,j]<span class="sc">==</span>kk) <span class="sc">&amp;&amp;</span> (hlmean[i]<span class="sc">==</span><span class="dv">2</span>) <span class="sc">&amp;&amp;</span> (hlcv[i]<span class="sc">==</span><span class="dv">1</span>) <span class="sc">&amp;&amp;</span> (incdat[i,j]<span class="sc">&gt;</span>low1) <span class="sc">&amp;&amp;</span> (incdat[i,j]<span class="sc">&lt;</span>high1)) {</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>        incdat02[i,j]<span class="ot">=</span>incdatb[i,j]</span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>        consdat02[i,j]<span class="ot">=</span>consdat[i,j]</span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>        }}}</span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Markov chain for income of households</span></span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="co">#points</span></span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>jj<span class="ot">=</span><span class="dv">0</span></span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>sh1<span class="ot">=</span><span class="fu">numeric</span>(<span class="at">length=</span>Sh1)</span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>sh1[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]<span class="ot">=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)</span>
-<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> ((sh1[<span class="dv">1</span>]<span class="sc">-</span>sh1[<span class="dv">2</span>])<span class="sc">^</span><span class="dv">2</span><span class="sc">&lt;</span><span class="fl">0.0000000000001</span>) {</span>
-<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> (jj<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(Sh1<span class="sc">+</span>jj)) {</span>
-<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>    sh1[(i<span class="sc">-</span>jj)]<span class="ot">=</span><span class="fu">quantile</span>(incdat02,((<span class="dv">2</span><span class="sc">*</span>i<span class="dv">-1</span>)<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>(Sh1<span class="sc">+</span>jj))),<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>    jj<span class="ot">=</span>jj<span class="sc">+</span><span class="dv">1</span></span>
-<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>jj<span class="ot">=</span>jj<span class="dv">-1</span></span>
-<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>sh1<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> (jj<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(Sh1<span class="sc">+</span>jj)) {</span>
-<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a>    sh1[(i<span class="sc">-</span>jj)]<span class="ot">=</span><span class="fu">quantile</span>(incdat02,((<span class="dv">2</span><span class="sc">*</span>i<span class="dv">-1</span>)<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>(Sh1<span class="sc">+</span>jj))),<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb40-27"><a href="#cb40-27" aria-hidden="true" tabindex="-1"></a><span class="co">#transition probabilities</span></span>
-<span id="cb40-28"><a href="#cb40-28" aria-hidden="true" tabindex="-1"></a>P1<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(Sh1,Sh1))</span>
-<span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Sh1) {</span>
-<span id="cb40-30"><a href="#cb40-30" aria-hidden="true" tabindex="-1"></a>    P1[j,<span class="dv">1</span>]<span class="ot">=</span><span class="fu">pnorm</span>(((sh1[<span class="dv">1</span>])<span class="sc">-</span>a<span class="sc">-</span>rho<span class="sc">*</span>(sh1[j])<span class="sc">+</span>((sh1[<span class="dv">2</span>])<span class="sc">-</span>(sh1[<span class="dv">1</span>]))<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>sigmau)</span>
-<span id="cb40-31"><a href="#cb40-31" aria-hidden="true" tabindex="-1"></a>    P1[j,Sh1]<span class="ot">=</span><span class="dv">1</span><span class="sc">-</span><span class="fu">pnorm</span>(((sh1[Sh1])<span class="sc">-</span>a<span class="sc">-</span>rho<span class="sc">*</span>(sh1[j])<span class="sc">-</span>((sh1[Sh1])<span class="sc">-</span>(sh1[(Sh1<span class="dv">-1</span>)]))<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>sigmau)</span>
-<span id="cb40-32"><a href="#cb40-32" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb40-33"><a href="#cb40-33" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Sh1) {</span>
-<span id="cb40-34"><a href="#cb40-34" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>(Sh1<span class="dv">-1</span>)) {</span>
-<span id="cb40-35"><a href="#cb40-35" aria-hidden="true" tabindex="-1"></a>    P1[j,k]<span class="ot">=</span><span class="fu">pnorm</span>(((sh1[k])<span class="sc">-</span>a<span class="sc">-</span>rho<span class="sc">*</span>(sh1[j])<span class="sc">+</span>((sh1[(k<span class="sc">+</span><span class="dv">1</span>)])<span class="sc">-</span>(sh1[k]))<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>sigmau)<span class="sc">-</span><span class="fu">pnorm</span>(((sh1[k])<span class="sc">-</span>a<span class="sc">-</span>rho<span class="sc">*</span>(sh1[j])<span class="sc">-</span>((sh1[k])<span class="sc">-</span>(sh1[(k<span class="dv">-1</span>)]))<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>sigmau)</span>
-<span id="cb40-36"><a href="#cb40-36" aria-hidden="true" tabindex="-1"></a>    }}</span>
-<span id="cb40-37"><a href="#cb40-37" aria-hidden="true" tabindex="-1"></a>eig[<span class="dv">2</span>,<span class="dv">1</span>,]<span class="ot">=</span><span class="fu">eigen</span>(<span class="fu">t</span>(P1))<span class="sc">$</span>vector[,<span class="dv">1</span>]<span class="sc">/</span><span class="fu">sum</span>(<span class="fu">eigen</span>(<span class="fu">t</span>(P1))<span class="sc">$</span>vector[,<span class="dv">1</span>])</span>
-<span id="cb40-38"><a href="#cb40-38" aria-hidden="true" tabindex="-1"></a>scalerhh<span class="ot">=</span><span class="fu">mean</span>(incdat02,<span class="at">na.rm=</span><span class="cn">TRUE</span>)<span class="sc">/</span>sh1<span class="sc">%*%</span>eig[<span class="dv">2</span>,<span class="dv">1</span>,]</span>
-<span id="cb40-39"><a href="#cb40-39" aria-hidden="true" tabindex="-1"></a>sh1<span class="ot">=</span>scalerhh<span class="sc">*</span>sh1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in scalerhh * sh1: Recycling array of length 1 in array-vector arithmetic is deprecated.
-  Use c() or as.vector() instead.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>sh1r[kk,<span class="dv">2</span>,<span class="dv">1</span>,]<span class="ot">=</span>sh1</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>P1r[kk,<span class="dv">2</span>,<span class="dv">1</span>,,]<span class="ot">=</span>P1</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="do">## high mean high cv</span></span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>incdat2l<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>consdat2l<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>Lincdat2l<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>tcode2<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>hcode2<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>hnum) {</span>
-<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>tnum) {</span>
-<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (villagedat[i,j]<span class="sc">==</span>kk) {</span>
-<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ((incdat[i,j]<span class="sc">&gt;</span>low1) <span class="sc">&amp;</span> (incdat[i,j]<span class="sc">&lt;</span>high1)) {</span>
-<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>    incdat2l[tnum<span class="sc">*</span>(i<span class="dv">-1</span>)<span class="sc">+</span>j]<span class="ot">=</span>incdatb[i,j]</span>
-<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>    consdat2l[tnum<span class="sc">*</span>(i<span class="dv">-1</span>)<span class="sc">+</span>j]<span class="ot">=</span>consdat[i,j]</span>
-<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>    Lincdat2l[tnum<span class="sc">*</span>(i<span class="dv">-1</span>)<span class="sc">+</span>j]<span class="ot">=</span>Lincdatb[i,j]</span>
-<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>}}}}</span>
-<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> (hnumv0<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(hnumv0<span class="sc">+</span>hnumv)) {</span>
-<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>tnum) {</span>
-<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (hlmean[i]<span class="sc">==</span><span class="dv">1</span> <span class="sc">|</span> hlcv[i]<span class="sc">==</span><span class="dv">1</span>) {</span>
-<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a>    incdat2l[tnum<span class="sc">*</span>(i<span class="dv">-1</span>)<span class="sc">+</span>j]<span class="ot">=</span><span class="cn">NA</span></span>
-<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a>    Lincdat2l[tnum<span class="sc">*</span>(i<span class="dv">-1</span>)<span class="sc">+</span>j]<span class="ot">=</span><span class="cn">NA</span></span>
-<span id="cb42-25"><a href="#cb42-25" aria-hidden="true" tabindex="-1"></a>    }}}</span>
-<span id="cb42-26"><a href="#cb42-26" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb42-27"><a href="#cb42-27" aria-hidden="true" tabindex="-1"></a>mu<span class="ot">=</span><span class="fu">mean</span>(incdat2l,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb42-28"><a href="#cb42-28" aria-hidden="true" tabindex="-1"></a>rho<span class="ot">=</span><span class="fu">cor</span>(incdat2l,Lincdat2l,<span class="at">use=</span><span class="st">"complete.obs"</span>)</span>
-<span id="cb42-29"><a href="#cb42-29" aria-hidden="true" tabindex="-1"></a>sigma2u<span class="ot">=</span><span class="fu">var</span>(incdat2l,<span class="at">na.rm=</span><span class="cn">TRUE</span>)<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>rho<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb42-30"><a href="#cb42-30" aria-hidden="true" tabindex="-1"></a>sigmau<span class="ot">=</span><span class="fu">sqrt</span>(sigma2u)</span>
-<span id="cb42-31"><a href="#cb42-31" aria-hidden="true" tabindex="-1"></a>sigmaeps<span class="ot">=</span><span class="fu">sqrt</span>(sigma2u<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>rho<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb42-32"><a href="#cb42-32" aria-hidden="true" tabindex="-1"></a>a<span class="ot">=</span>(<span class="dv">1</span><span class="sc">-</span>rho)<span class="sc">*</span>mu</span>
-<span id="cb42-33"><a href="#cb42-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-34"><a href="#cb42-34" aria-hidden="true" tabindex="-1"></a>mu</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 391.7984</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>rho</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.3653036</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(sigma2u)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 188.4576</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>incdat02<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,tnum))</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>consdat02<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnum,tnum))</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> (hnumv0<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(hnumv0<span class="sc">+</span>hnumv)) {</span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>tnum) {</span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ((villagedat[i,j]<span class="sc">==</span>kk) <span class="sc">&amp;&amp;</span> (hlmean[i]<span class="sc">==</span><span class="dv">2</span>) <span class="sc">&amp;&amp;</span> (hlcv[i]<span class="sc">==</span><span class="dv">2</span>) <span class="sc">&amp;&amp;</span> (incdat[i,j]<span class="sc">&gt;</span>low1) <span class="sc">&amp;&amp;</span> (incdat[i,j]<span class="sc">&lt;</span>high1)) {</span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>        incdat02[i,j]<span class="ot">=</span>incdatb[i,j]</span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>        consdat02[i,j]<span class="ot">=</span>consdat[i,j]</span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>        }}}</span>
-<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Markov chain for income of households</span></span>
-<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="co">#points</span></span>
-<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>jj<span class="ot">=</span><span class="dv">0</span></span>
-<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>sh1<span class="ot">=</span><span class="fu">numeric</span>(<span class="at">length=</span>Sh1)</span>
-<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>sh1[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]<span class="ot">=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>)</span>
-<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> ((sh1[<span class="dv">1</span>]<span class="sc">-</span>sh1[<span class="dv">2</span>])<span class="sc">^</span><span class="dv">2</span><span class="sc">&lt;</span><span class="fl">0.0000000000001</span>) {</span>
-<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> (jj<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(Sh1<span class="sc">+</span>jj)) {</span>
-<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>    sh1[(i<span class="sc">-</span>jj)]<span class="ot">=</span><span class="fu">quantile</span>(incdat02,((<span class="dv">2</span><span class="sc">*</span>i<span class="dv">-1</span>)<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>(Sh1<span class="sc">+</span>jj))),<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a>    jj<span class="ot">=</span>jj<span class="sc">+</span><span class="dv">1</span></span>
-<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a>jj<span class="ot">=</span>jj<span class="dv">-1</span></span>
-<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-23"><a href="#cb48-23" aria-hidden="true" tabindex="-1"></a>sh1<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb48-24"><a href="#cb48-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> (jj<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>(Sh1<span class="sc">+</span>jj)) {</span>
-<span id="cb48-25"><a href="#cb48-25" aria-hidden="true" tabindex="-1"></a>    sh1[(i<span class="sc">-</span>jj)]<span class="ot">=</span><span class="fu">quantile</span>(incdat02,((<span class="dv">2</span><span class="sc">*</span>i<span class="dv">-1</span>)<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>(Sh1<span class="sc">+</span>jj))),<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb48-26"><a href="#cb48-26" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb48-27"><a href="#cb48-27" aria-hidden="true" tabindex="-1"></a><span class="co">#transition probabilities</span></span>
-<span id="cb48-28"><a href="#cb48-28" aria-hidden="true" tabindex="-1"></a>P1<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(Sh1,Sh1))</span>
-<span id="cb48-29"><a href="#cb48-29" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Sh1) {</span>
-<span id="cb48-30"><a href="#cb48-30" aria-hidden="true" tabindex="-1"></a>    P1[j,<span class="dv">1</span>]<span class="ot">=</span><span class="fu">pnorm</span>(((sh1[<span class="dv">1</span>])<span class="sc">-</span>a<span class="sc">-</span>rho<span class="sc">*</span>(sh1[j])<span class="sc">+</span>((sh1[<span class="dv">2</span>])<span class="sc">-</span>(sh1[<span class="dv">1</span>]))<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>sigmau)</span>
-<span id="cb48-31"><a href="#cb48-31" aria-hidden="true" tabindex="-1"></a>    P1[j,Sh1]<span class="ot">=</span><span class="dv">1</span><span class="sc">-</span><span class="fu">pnorm</span>(((sh1[Sh1])<span class="sc">-</span>a<span class="sc">-</span>rho<span class="sc">*</span>(sh1[j])<span class="sc">-</span>((sh1[Sh1])<span class="sc">-</span>(sh1[(Sh1<span class="dv">-1</span>)]))<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>sigmau)</span>
-<span id="cb48-32"><a href="#cb48-32" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb48-33"><a href="#cb48-33" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Sh1) {</span>
-<span id="cb48-34"><a href="#cb48-34" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>(Sh1<span class="dv">-1</span>)) {</span>
-<span id="cb48-35"><a href="#cb48-35" aria-hidden="true" tabindex="-1"></a>    P1[j,k]<span class="ot">=</span><span class="fu">pnorm</span>(((sh1[k])<span class="sc">-</span>a<span class="sc">-</span>rho<span class="sc">*</span>(sh1[j])<span class="sc">+</span>((sh1[(k<span class="sc">+</span><span class="dv">1</span>)])<span class="sc">-</span>(sh1[k]))<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>sigmau)<span class="sc">-</span><span class="fu">pnorm</span>(((sh1[k])<span class="sc">-</span>a<span class="sc">-</span>rho<span class="sc">*</span>(sh1[j])<span class="sc">-</span>((sh1[k])<span class="sc">-</span>(sh1[(k<span class="dv">-1</span>)]))<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>sigmau)</span>
-<span id="cb48-36"><a href="#cb48-36" aria-hidden="true" tabindex="-1"></a>    }}</span>
-<span id="cb48-37"><a href="#cb48-37" aria-hidden="true" tabindex="-1"></a>eig[<span class="dv">2</span>,<span class="dv">2</span>,]<span class="ot">=</span><span class="fu">eigen</span>(<span class="fu">t</span>(P1))<span class="sc">$</span>vector[,<span class="dv">1</span>]<span class="sc">/</span><span class="fu">sum</span>(<span class="fu">eigen</span>(<span class="fu">t</span>(P1))<span class="sc">$</span>vector[,<span class="dv">1</span>])</span>
-<span id="cb48-38"><a href="#cb48-38" aria-hidden="true" tabindex="-1"></a>scalerhh<span class="ot">=</span><span class="fu">mean</span>(incdat02,<span class="at">na.rm=</span><span class="cn">TRUE</span>)<span class="sc">/</span>sh1<span class="sc">%*%</span>eig[<span class="dv">2</span>,<span class="dv">2</span>,]</span>
-<span id="cb48-39"><a href="#cb48-39" aria-hidden="true" tabindex="-1"></a>sh1<span class="ot">=</span>scalerhh<span class="sc">*</span>sh1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in scalerhh * sh1: Recycling array of length 1 in array-vector arithmetic is deprecated.
-  Use c() or as.vector() instead.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>sh1r[kk,<span class="dv">2</span>,<span class="dv">2</span>,]<span class="ot">=</span>sh1</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>P1r[kk,<span class="dv">2</span>,<span class="dv">2</span>,,]<span class="ot">=</span>P1</span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>(<span class="fl">0.1886173+0.6256918+0.5503409+0.3653036</span>)<span class="sc">/</span><span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.4324884</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SIMULATE INCOME PROCESS FOR VILLAGE</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>ys<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(hnumv,<span class="dv">1000</span>))</span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>hnumv) {</span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>ran1<span class="ot">=</span><span class="fu">runif</span>(<span class="dv">1</span>)</span>
-<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>eig2<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>eig2[<span class="dv">1</span>]<span class="ot">=</span><span class="fu">as.numeric</span>(eig[hlmean[k<span class="sc">+</span>hnumv0],hlcv[k<span class="sc">+</span>hnumv0],<span class="dv">1</span>])</span>
-<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>Sh1) {</span>
-<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>    eig2[i]<span class="ot">=</span>eig2[i<span class="dv">-1</span>]<span class="sc">+</span><span class="fu">as.numeric</span>(eig[hlmean[k<span class="sc">+</span>hnumv0],hlcv[k<span class="sc">+</span>hnumv0],i])</span>
-<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (ran1<span class="sc">&lt;</span>eig2[<span class="dv">1</span>]) {</span>
-<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>    jj<span class="ot">=</span><span class="dv">1</span></span>
-<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>Sh1) {</span>
-<span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (ran1<span class="sc">&lt;</span>eig2[i] <span class="sc">&amp;</span> ran1<span class="sc">&gt;=</span>eig2[i<span class="dv">-1</span>]) {</span>
-<span id="cb52-16"><a href="#cb52-16" aria-hidden="true" tabindex="-1"></a>    jj<span class="ot">=</span>i</span>
-<span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a>    }}</span>
-<span id="cb52-18"><a href="#cb52-18" aria-hidden="true" tabindex="-1"></a>sta<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb52-19"><a href="#cb52-19" aria-hidden="true" tabindex="-1"></a>sta[<span class="dv">1</span>]<span class="ot">=</span>jj</span>
-<span id="cb52-20"><a href="#cb52-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">1000</span>) {</span>
-<span id="cb52-21"><a href="#cb52-21" aria-hidden="true" tabindex="-1"></a>    ran1<span class="ot">=</span><span class="fu">runif</span>(<span class="dv">1</span>)</span>
-<span id="cb52-22"><a href="#cb52-22" aria-hidden="true" tabindex="-1"></a>    eig2[<span class="dv">1</span>]<span class="ot">=</span>P1r[kk,hlmean[k<span class="sc">+</span>hnumv0],hlcv[k<span class="sc">+</span>hnumv0],sta[j<span class="dv">-1</span>],<span class="dv">1</span>]</span>
-<span id="cb52-23"><a href="#cb52-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>Sh1) {</span>
-<span id="cb52-24"><a href="#cb52-24" aria-hidden="true" tabindex="-1"></a>    eig2[i]<span class="ot">=</span>eig2[i<span class="dv">-1</span>]<span class="sc">+</span>P1r[kk,hlmean[k<span class="sc">+</span>hnumv0],hlcv[k<span class="sc">+</span>hnumv0],sta[j<span class="dv">-1</span>],i]</span>
-<span id="cb52-25"><a href="#cb52-25" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb52-26"><a href="#cb52-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (ran1<span class="sc">&lt;</span>eig2[<span class="dv">1</span>]) {</span>
-<span id="cb52-27"><a href="#cb52-27" aria-hidden="true" tabindex="-1"></a>    sta[j]<span class="ot">=</span><span class="dv">1</span></span>
-<span id="cb52-28"><a href="#cb52-28" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb52-29"><a href="#cb52-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>Sh1) {</span>
-<span id="cb52-30"><a href="#cb52-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (ran1<span class="sc">&lt;</span>eig2[i] <span class="sc">&amp;</span> ran1<span class="sc">&gt;=</span>eig2[i<span class="dv">-1</span>]) {</span>
-<span id="cb52-31"><a href="#cb52-31" aria-hidden="true" tabindex="-1"></a>    sta[j]<span class="ot">=</span>i</span>
-<span id="cb52-32"><a href="#cb52-32" aria-hidden="true" tabindex="-1"></a>    }}</span>
-<span id="cb52-33"><a href="#cb52-33" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) {</span>
-<span id="cb52-34"><a href="#cb52-34" aria-hidden="true" tabindex="-1"></a>    ys[k,i]<span class="ot">=</span>sh1r[kk,hlmean[k<span class="sc">+</span>hnumv0],hlcv[k<span class="sc">+</span>hnumv0],sta[i]]</span>
-<span id="cb52-35"><a href="#cb52-35" aria-hidden="true" tabindex="-1"></a>    }}}</span>
-<span id="cb52-36"><a href="#cb52-36" aria-hidden="true" tabindex="-1"></a>meanys<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb52-37"><a href="#cb52-37" aria-hidden="true" tabindex="-1"></a>meanysl<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb52-38"><a href="#cb52-38" aria-hidden="true" tabindex="-1"></a>Lmeanys<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb52-39"><a href="#cb52-39" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">900</span>) {</span>
-<span id="cb52-40"><a href="#cb52-40" aria-hidden="true" tabindex="-1"></a>    meanys[i]<span class="ot">=</span><span class="fu">log</span>(<span class="fu">mean</span>(ys[,i<span class="sc">+</span><span class="dv">100</span>]))</span>
-<span id="cb52-41"><a href="#cb52-41" aria-hidden="true" tabindex="-1"></a>    meanysl[i]<span class="ot">=</span><span class="fu">mean</span>(ys[,i<span class="sc">+</span><span class="dv">100</span>])</span>
-<span id="cb52-42"><a href="#cb52-42" aria-hidden="true" tabindex="-1"></a>    Lmeanys[i]<span class="ot">=</span><span class="fu">log</span>(<span class="fu">mean</span>(ys[,i<span class="sc">+</span><span class="dv">99</span>]))</span>
-<span id="cb52-43"><a href="#cb52-43" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb52-44"><a href="#cb52-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-45"><a href="#cb52-45" aria-hidden="true" tabindex="-1"></a><span class="co">#ESTIMATE AR(1)</span></span>
-<span id="cb52-46"><a href="#cb52-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-47"><a href="#cb52-47" aria-hidden="true" tabindex="-1"></a>mu<span class="ot">=</span><span class="fu">mean</span>(meanys,<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb52-48"><a href="#cb52-48" aria-hidden="true" tabindex="-1"></a>rho<span class="ot">=</span><span class="fu">cor</span>(meanys,Lmeanys,<span class="at">use=</span><span class="st">"complete.obs"</span>)</span>
-<span id="cb52-49"><a href="#cb52-49" aria-hidden="true" tabindex="-1"></a>sigma2u<span class="ot">=</span><span class="fu">var</span>(meanys,<span class="at">na.rm=</span><span class="cn">TRUE</span>)<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>rho<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb52-50"><a href="#cb52-50" aria-hidden="true" tabindex="-1"></a>sigmau<span class="ot">=</span><span class="fu">sqrt</span>(sigma2u)</span>
-<span id="cb52-51"><a href="#cb52-51" aria-hidden="true" tabindex="-1"></a>sigmaeps<span class="ot">=</span><span class="fu">sqrt</span>(sigma2u<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>rho<span class="sc">^</span><span class="dv">2</span>))</span>
-<span id="cb52-52"><a href="#cb52-52" aria-hidden="true" tabindex="-1"></a>a<span class="ot">=</span>(<span class="dv">1</span><span class="sc">-</span>rho)<span class="sc">*</span>mu</span>
-<span id="cb52-53"><a href="#cb52-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-54"><a href="#cb52-54" aria-hidden="true" tabindex="-1"></a><span class="co">#Markov chain for income of villages</span></span>
-<span id="cb52-55"><a href="#cb52-55" aria-hidden="true" tabindex="-1"></a><span class="co">#points</span></span>
-<span id="cb52-56"><a href="#cb52-56" aria-hidden="true" tabindex="-1"></a>sh2<span class="ot">=</span><span class="fu">numeric</span>()</span>
-<span id="cb52-57"><a href="#cb52-57" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Sh2) {</span>
-<span id="cb52-58"><a href="#cb52-58" aria-hidden="true" tabindex="-1"></a>    sh2[i]<span class="ot">=</span><span class="fu">quantile</span>(meanysl,((<span class="dv">2</span><span class="sc">*</span>i<span class="dv">-1</span>)<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span>Sh2)),<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
-<span id="cb52-59"><a href="#cb52-59" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb52-60"><a href="#cb52-60" aria-hidden="true" tabindex="-1"></a><span class="co">#transition probabilities</span></span>
-<span id="cb52-61"><a href="#cb52-61" aria-hidden="true" tabindex="-1"></a>P2<span class="ot">=</span><span class="fu">array</span>(<span class="cn">NA</span>,<span class="fu">c</span>(Sh2,Sh2))</span>
-<span id="cb52-62"><a href="#cb52-62" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Sh2) {</span>
-<span id="cb52-63"><a href="#cb52-63" aria-hidden="true" tabindex="-1"></a>    P2[j,<span class="dv">1</span>]<span class="ot">=</span><span class="fu">pnorm</span>((<span class="fu">log</span>(sh2[<span class="dv">1</span>])<span class="sc">-</span>a<span class="sc">-</span>rho<span class="sc">*</span><span class="fu">log</span>(sh2[j])<span class="sc">+</span>(<span class="fu">log</span>(sh2[<span class="dv">2</span>])<span class="sc">-</span><span class="fu">log</span>(sh2[<span class="dv">1</span>]))<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>sigmau)</span>
-<span id="cb52-64"><a href="#cb52-64" aria-hidden="true" tabindex="-1"></a>    P2[j,Sh2]<span class="ot">=</span><span class="dv">1</span><span class="sc">-</span><span class="fu">pnorm</span>((<span class="fu">log</span>(sh2[Sh2])<span class="sc">-</span>a<span class="sc">-</span>rho<span class="sc">*</span><span class="fu">log</span>(sh2[j])<span class="sc">-</span>(<span class="fu">log</span>(sh2[Sh2])<span class="sc">-</span><span class="fu">log</span>(sh2[(Sh2<span class="dv">-1</span>)]))<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>sigmau)</span>
-<span id="cb52-65"><a href="#cb52-65" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb52-66"><a href="#cb52-66" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>Sh2) {</span>
-<span id="cb52-67"><a href="#cb52-67" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>(Sh2<span class="dv">-1</span>)) {</span>
-<span id="cb52-68"><a href="#cb52-68" aria-hidden="true" tabindex="-1"></a>    P2[j,k]<span class="ot">=</span><span class="fu">pnorm</span>((<span class="fu">log</span>(sh2[k])<span class="sc">-</span>a<span class="sc">-</span>rho<span class="sc">*</span><span class="fu">log</span>(sh2[j])<span class="sc">+</span>(<span class="fu">log</span>(sh2[(k<span class="sc">+</span><span class="dv">1</span>)])<span class="sc">-</span><span class="fu">log</span>(sh2[k]))<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>sigmau)<span class="sc">-</span><span class="fu">pnorm</span>((<span class="fu">log</span>(sh2[k])<span class="sc">-</span>a<span class="sc">-</span>rho<span class="sc">*</span><span class="fu">log</span>(sh2[j])<span class="sc">-</span>(<span class="fu">log</span>(sh2[k])<span class="sc">-</span><span class="fu">log</span>(sh2[(k<span class="dv">-1</span>)]))<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>sigmau)</span>
-<span id="cb52-69"><a href="#cb52-69" aria-hidden="true" tabindex="-1"></a>    }}</span>
-<span id="cb52-70"><a href="#cb52-70" aria-hidden="true" tabindex="-1"></a>eig2<span class="ot">=</span><span class="fu">eigen</span>(<span class="fu">t</span>(P2))<span class="sc">$</span>vector[,<span class="dv">1</span>]<span class="sc">/</span><span class="fu">sum</span>(<span class="fu">eigen</span>(<span class="fu">t</span>(P2))<span class="sc">$</span>vector[,<span class="dv">1</span>])</span>
-<span id="cb52-71"><a href="#cb52-71" aria-hidden="true" tabindex="-1"></a>scalervil<span class="ot">=</span><span class="fu">mean</span>(vilmeaninctb[kk,])<span class="sc">/</span>sh2<span class="sc">%*%</span>eig2</span>
-<span id="cb52-72"><a href="#cb52-72" aria-hidden="true" tabindex="-1"></a>sh2<span class="ot">=</span>scalervil<span class="sc">*</span>sh2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in scalervil * sh2: Recycling array of length 1 in array-vector arithmetic is deprecated.
-  Use c() or as.vector() instead.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>sh2r[kk,]<span class="ot">=</span>sh2</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>P2r[kk,,]<span class="ot">=</span>P2</span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="fu">save.image</span>(<span class="st">"allIncH1"</span>)</span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="fu">save.image</span>(<span class="fu">file.path</span>(dropbox_folder, <span class="st">"allIncH1"</span>))</span>
-<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a>sh2rd<span class="ot">=</span>sh2r</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<p>Standard error calculations to be added.</p>
+</section>
+</section>
+<section id="rhom1inchsol.r" class="level2">
+<h2 class="anchored" data-anchor-id="rhom1inchsol.r">rHom1IncHsol.R</h2>
 </section>
 </section>
 

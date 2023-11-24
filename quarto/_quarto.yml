@@ -3,14 +3,29 @@ project:
 
 book:
   title: "Risk sharing"
-  author: "Mizuhiro suzuki"
-  date: "12/21/2022"
+  author: "Mizuhiro Suzuki"
+  date: ""
   chapters:
     - index.qmd
-    - base_model.qmd
-    - static_limited_commitment.qmd
-    - dynamic_limited_commitment_theory.qmd
-    - dynamic_limited_commitment_simulation.qmd
+    - part: "Basic risk-sharing model"
+      chapters:
+        - base_model_theory.qmd
+        - base_model_empirics.qmd
+        - base_model_heterogeneity.qmd
+    - part: "Risk-sharing with limited commitment"
+      chapters:
+        - static_limited_commitment.qmd
+        - dynamic_limited_commitment_theory.qmd
+        - compare_limited_commitment_models.qmd
+        - limited_commitment_with_storage.qmd
+    - part: "Hidden information"
+      chapters:
+        - hidden_information_theory.qmd
+    - part: "Distinguishing barriers"
+    - part: "Group formation"
+    - part: "Network"
+  appendices:
+    - coate_ravallion_reproduction.qmd
 
 bibliography: references.bib
 

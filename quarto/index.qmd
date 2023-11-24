@@ -1,10 +1,7 @@
 # Preface {.unnumbered}
 
-This is a Quarto book.
+This website shows the theories and empirics of risk-sharing models.
+I made this website primarily for my self-learning, but I hope somebody finds the information here interesting.
+Any errors are my own, and please report misinformation or wrong statement if you find any.
 
-To learn more about Quarto books visit <https://quarto.org/docs/books>.
-
-```{r}
-1 + 1
-```
-
+GitHub: https://github.com/mizuhirosuzuki/risk_sharing

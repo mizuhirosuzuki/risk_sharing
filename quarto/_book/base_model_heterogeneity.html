@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Risk sharing - 3&nbsp; Extension: heterogeneity</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./static_limited_commitment.html" rel="next">
+<link href="./base_model_empirics.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Extension: heterogeneity</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Risk sharing</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Basic risk-sharing model</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./base_model_theory.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Theory</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./base_model_empirics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Empirics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./base_model_heterogeneity.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Extension: heterogeneity</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Risk-sharing with limited commitment</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./static_limited_commitment.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Static limited-commitment model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_limited_commitment_theory.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dynamic limited-commitment model (theory)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./compare_limited_commitment_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Comparison between static and dynamic limited commitment models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./limited_commitment_with_storage.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Extension: Limited commitment models with storage</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Hidden information</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hidden_information_theory.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Risk sharing with hidden information (theory)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Distinguishing barriers</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Group formation</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Network</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">Appendices</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./coate_ravallion_reproduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Computational reproduction of Coate and Ravallion (1993)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#kurosaki2001" id="toc-kurosaki2001" class="nav-link active" data-scroll-target="#kurosaki2001"><span class="toc-section-number">3.1</span>  <span class="citation" data-cites="Kurosaki2001">Kurosaki (2001)</span></a></li>
+  <li><a href="#schulhofer-wohl2011" id="toc-schulhofer-wohl2011" class="nav-link" data-scroll-target="#schulhofer-wohl2011"><span class="toc-section-number">3.2</span>  <span class="citation" data-cites="Schulhofer-Wohl2011">Schulhofer-Wohl (2011)</span></a></li>
+  <li><a href="#mazzocco2012" id="toc-mazzocco2012" class="nav-link" data-scroll-target="#mazzocco2012"><span class="toc-section-number">3.3</span>  <span class="citation" data-cites="Mazzocco2012">Mazzocco and Saini (2012)</span></a></li>
+  <li><a href="#chiappori2014" id="toc-chiappori2014" class="nav-link" data-scroll-target="#chiappori2014"><span class="toc-section-number">3.4</span>  <span class="citation" data-cites="Chiappori2014">Chiappori et al. (2014)</span></a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="toc-section-number">3.5</span>  References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Extension: heterogeneity</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>In the theoretical part of this paper, <span class="citation" data-cites="Cochrane1991">Cochrane (<a href="#ref-Cochrane1991" role="doc-biblioref">1991</a>)</span> allows heterogeneous risk and time preferences across households. However, in his “cross-sectional” analysis, if the economic shocks are independent of these variables, this heterogeneity does not matter for the test of full risk-sharing. Also, <span class="citation" data-cites="Townsend1994">Townsend (<a href="#ref-Townsend1994" role="doc-biblioref">1994</a>)</span> conducts a time-series analysis for each household in ICRISAT data, which allows different preferences for different households. One problem in this analysis is the temporal length of the data: there are only 10 years of data, which seems too short to conduct a time-series analysis. Here I will introduce works explicitly focusing on the heterogeneouos preferences of households in the context of risk sharing.</p>
+<section id="kurosaki2001" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="kurosaki2001"><span class="header-section-number">3.1</span> <span class="citation" data-cites="Kurosaki2001">Kurosaki (<a href="#ref-Kurosaki2001" role="doc-biblioref">2001</a>)</span></h2>
+<p>To investigate how risk and time preferences affect the test of full risk-sharing as in <span class="citation" data-cites="Townsend1994">Townsend (<a href="#ref-Townsend1994" role="doc-biblioref">1994</a>)</span>, he considers a model with a household-specific time discount factor (<span class="math inline">\(\rho_i\)</span>) and utility function in which risk preferences can differ (<span class="math inline">\(u_i(c_{ist})\)</span>). Assuming an interior solution, as in <span class="citation" data-cites="Townsend1994">Townsend (<a href="#ref-Townsend1994" role="doc-biblioref">1994</a>)</span>, the Pareto optimal allocation requires</p>
+<p><span class="math display">\[
+  \lambda_i \rho_i^t u_i'(c_{ist}) = \mu_{st} \quad \forall (s,t),
+\]</span> where <span class="math inline">\(\lambda_{i}\)</span> is a Pareto weight for household <span class="math inline">\(i\)</span> and <span class="math inline">\(\mu_{st}\)</span> is the Lagrange multiplier associated with the feasibility constraint, devided by the probability that the state <span class="math inline">\(s\)</span> is realized in time <span class="math inline">\(t\)</span>. Assuming a CARA preferences with a household-specific coefficient of absolute risk aversion, <span class="math inline">\(A_i\)</span>, we can derive an equation that looks similar to the one in a canonical risk-sharing model:</p>
+<p><span class="math display">\[
+  c_{it} = \alpha_i \overline{c}_t + \beta_i + \gamma_i t,
+\]</span> where</p>
+<p><span class="math display">\[\begin{align*}
+  \alpha_i &amp;= \frac{1}{A_i} \left[ \frac{1}{N} \sum_j \frac{1}{A_j} \right]^{-1} \\
+  \beta_i  &amp;= \frac{1}{A_i} \left[ \ln \lambda_i - \frac{1}{N} \sum_j \alpha_j \ln \lambda_j \right]^{-1} \\
+  \gamma_i &amp;= \frac{1}{A_i} \left[ \ln \rho_i - \frac{1}{N} \sum_j \alpha_j \ln \rho_j \right]^{-1},
+\end{align*}\]</span></p>
+<p>where <span class="math inline">\(N\)</span> is the number of households in the community.</p>
+<p>This equation implies that</p>
+<ol type="1">
+<li><span class="math inline">\(\alpha_i\)</span> is smaller for a more risk averse household, and</li>
+<li><span class="math inline">\(\gamma_i\)</span> is more negative (ie. consumption decreases over time) for a more myopic household.</li>
+</ol>
+<p>Note that, if there is no heterogeneity, <span class="math inline">\(\alpha_i\)</span> is common for all households and <span class="math inline">\(\gamma_i = 0 \quad \forall i\)</span>. A CRRA utility function results in a similar equation, but with log consumption.</p>
+<p>To test whether (i) full risk sharing is achieved and (ii) there is any heterogeneity in terms of time and risk preferrences, with CARA utility functinos, the author estimate</p>
+<p><span class="math display">\[
+  \Delta c_{it} = b_i + a_i \Delta \overline{c}_t + \zeta_i X_{it} + u_{it},
+\]</span></p>
+<p>where <span class="math inline">\(X_{it}\)</span> is the first-different household income. While this looks similar to the estimation equation in <span class="citation" data-cites="Townsend1994">Townsend (<a href="#ref-Townsend1994" role="doc-biblioref">1994</a>)</span>, this equation is much more flexible due to household-specific intercepts and slopes. Notice that here the effect of household income (<span class="math inline">\(\zeta_i\)</span>) is household specific as well, which allows the author to see which households are more “vulnerable” in the sense that income and consumption are more correlated. The estimation results suggest that (i) the full risk-sharing is not achieved, and (ii) there is heterogeneity among households in their sensitivity to aggregate and idiosyncratic shocks. The author also investigates what variables are correlated with each of <span class="math inline">\(b_i\)</span>, <span class="math inline">\(a_i\)</span>, and <span class="math inline">\(\zeta_i\)</span>.</p>
+<p>One problem of this analysis is that, as pointed out in the paper, the interpretation of <span class="math inline">\(b_i\)</span> and <span class="math inline">\(a_i\)</span> is not clear when the full risk-sharing hypothesis is rejected. As <span class="citation" data-cites="Ligon2016">Ligon (<a href="#ref-Ligon2016" role="doc-biblioref">2008</a>)</span> argues, given that the full risk sharing hypothesis is rejected, the theory does not provide an interpretation that the equation above is a consumption function. In this sense, interpreting the estimates of <span class="math inline">\(b_i\)</span> and <span class="math inline">\(a_i\)</span> as something reflecting time and risk preferences can be misleading, and more complete model needs to explain why full risk-sharing fails while taking into account preference heterogeneity. <span class="citation" data-cites="laczo2015risk">Laczó (<a href="#ref-laczo2015risk" role="doc-biblioref">2015</a>)</span> can be seen as a work attempting this, using dynamic limited commitment as the factor preventing full risk-sharing.</p>
+</section>
+<section id="schulhofer-wohl2011" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="schulhofer-wohl2011"><span class="header-section-number">3.2</span> <span class="citation" data-cites="Schulhofer-Wohl2011">Schulhofer-Wohl (<a href="#ref-Schulhofer-Wohl2011" role="doc-biblioref">2011</a>)</span></h2>
+<p>In this paper, he shows that ignoring heterogeneous preferences can bias the test of full-risk sharing and the bias is likely to be upward (ie. more likely to reject the full risk-sharing hypothesis) if risk preference is positively correlated with aggregate income shocks. This positive correlation could be seen if more risk-tolerant workers work in more risky sectors, for example. One interesting contribution in his paper is that he gives an interpretation to the coefficient on household income in the Townsend-type regression by considering costly transfers.</p>
+<p>Consider the model in <span class="citation" data-cites="Kurosaki2001">Kurosaki (<a href="#ref-Kurosaki2001" role="doc-biblioref">2001</a>)</span>, but for simplicity, just with heterogeneous risk preferences. Also, as in <span class="citation" data-cites="Schulhofer-Wohl2011">Schulhofer-Wohl (<a href="#ref-Schulhofer-Wohl2011" role="doc-biblioref">2011</a>)</span>, assume that the utility function takes the CRRA form: <span class="math inline">\(u_i(c_{it}) = \frac{c_{it}^{1 - \gamma_i}}{1 - \gamma_i}\)</span>.</p>
+<p>Then, letting the Pareto weight be <span class="math inline">\(\alpha_i\)</span> and the Lagrange multiplier on the aggregate resource constraint divided by the probability of the state being realized be <span class="math inline">\(\rho^t \lambda_t\)</span>, the first-order condition for consumption is</p>
+<p><span class="math display">\[
+  \alpha_i \left(c_{it}^{*}\right)^{ - \gamma_i} = \lambda_t,
+\]</span></p>
+<p>and thus the correct relationship between the consumption and aggregate income is</p>
+<p><span class="math display">\[
+  \log c_{it}^* = \frac{\log \alpha_i}{\gamma_i} + \frac{1}{\gamma_i} (- \log \lambda_t).
+\]</span></p>
+<p>This can be rewritten as</p>
+<p><span class="math display">\[
+  \log c_{it}^* = \frac{\log \alpha}{\gamma} + \frac{1}{\gamma} (- \log \lambda_t) + u_{it},
+\]</span> where <span class="math inline">\(u_{it} = \left(\frac{\log \alpha_i}{\gamma_i} - \frac{\log \alpha}{\gamma} \right) + \left(\frac{1}{\gamma_i} - \frac{1}{\gamma} \right) (- \log \lambda_t)\)</span>. Notice that the first part in <span class="math inline">\(u_{it}\)</span> is removed by using the household fixed effect in the regression, but the second term does not go away. Then, assuming a iid multiplicative error in consumption (<span class="math inline">\(\epsilon_{it}\)</span>), we obtain</p>
+<p><span class="math display">\[
+  \log c_{it} = \frac{\log \alpha}{\gamma} + \frac{1}{\gamma} (- \log \lambda_t) + \left(\epsilon_{it} + u_{it} \right)
+\]</span> and by including household income for the test of full risk sharing, we obtain the standard regression equation under the assumption of homogeneous risk preferences:</p>
+<p><span class="math display">\[
+  \log c_{it} = \frac{\log \alpha}{\gamma} + \frac{1}{\gamma} (- \log \lambda_t) + g \log X_{it} + \left(\epsilon_{it} + u_{it} \right)
+\]</span></p>
+<p>He shows that <span class="math inline">\(Cov(\log X_{it}, u_{it}) &gt; 0\)</span> if income responds more strongly to aggregate shocks for less risk-averse households, which results in the upward bias of the estimate of <span class="math inline">\(g\)</span>. Using the Health and Retirement Survey, he shows that this is likely to be the case. This implies that ignoring heterogeneous preferences can result in overrejection of the full risk-sharing hypothesis.</p>
+<p>To run the regression with heterogeneous preferences taken into account, <span class="citation" data-cites="Schulhofer-Wohl2011">Schulhofer-Wohl (<a href="#ref-Schulhofer-Wohl2011" role="doc-biblioref">2011</a>)</span> first obtains <span class="math inline">\(\lambda_t\)</span> by two different methods (the factor or GMM approaches), but as <span class="citation" data-cites="Kurosaki2001">Kurosaki (<a href="#ref-Kurosaki2001" role="doc-biblioref">2001</a>)</span> does, the regression equation can be rewritten in the form without <span class="math inline">\(\lambda_t\)</span>. From <span class="math inline">\(\log c_{it}^* = \frac{\log \alpha_i}{\gamma_i} + \frac{1}{\gamma_i} (- \log \lambda_t)\)</span>, we obtain</p>
+<p><span class="math display">\[
+  \frac{1}{N} \sum_j \log c_{jt}^* = \frac{1}{N} \sum_j \frac{\log \alpha_j}{\gamma_j} + (- \log \lambda_t) \frac{1}{N} \sum_j \frac{1}{\gamma_j} \\
+  \Rightarrow \frac{1}{\gamma_i} (- \log \lambda_t) = \eta_i \frac{1}{N} \sum_j \log c_{jt}^* - \eta_i \frac{1}{N} \sum_j \frac{\log \alpha_j}{\gamma_j},
+\]</span></p>
+<p>where <span class="math inline">\(\eta_i = \frac{1}{\gamma_i} \left( \frac{1}{N} \sum_j \frac{1}{\gamma_j} \right)^{-1}\)</span>. Using this, <span class="math inline">\(\log c_{it}^* = \frac{\log \alpha_i}{\gamma_i} + \frac{1}{\gamma_i} (- \log \lambda_t)\)</span> can be written as</p>
+<p><span class="math display">\[
+  \log c_{it}^* = \eta_i \frac{1}{N} \sum_j \log c_{jt}^* + \left( \frac{\log \alpha_i}{\gamma_i} - \eta_i \frac{1}{N} \sum_j \frac{\log \alpha_j}{\gamma_j} \right).
+\]</span> Notice that the second part is time-invariant and controlled by household fixed effects. Therefore, with an error term and household income, the regression equation with heterogeneous preferences becomes</p>
+<p><span class="math display">\[
+  \log c_{it} = \eta_i \frac{1}{N} \sum_i \log c_{it} + g \log X_{it} + \left( \frac{\log \alpha_i}{\gamma_i} - \eta_i \frac{1}{N} \sum_i \frac{\log \alpha_i}{\gamma_i} \right) + \left( \epsilon_{it} - \eta_i \frac{1}{N} \sum_j \epsilon_{jt} \right).
+\]</span></p>
+<p>Assuming that <span class="math inline">\(\frac{1}{N} \sum_j \epsilon_{jt}\)</span> is constant across time, the last term is removed by including household fixed effects. Therefore, the coefficients <span class="math inline">\(\eta_i\)</span> and <span class="math inline">\(g\)</span> can be estimated without deriving <span class="math inline">\(\lambda_t\)</span>.</p>
+<p>Also, this paper considers transaction cost to explain imperfect risk-sharing and to give an interpretation to the coefficient and household income. In particular, he assumes that the resource is destroyed if household consumption and income differ, and the cost if specified to be <span class="math inline">\(\phi_i \frac{c}{2} \left( \log \frac{c}{X} \right)^2\)</span>. With this cost function and an assumption that <span class="math inline">\(\phi_i / (\phi_i + \gamma_i) = g \ \forall i\)</span>, the author derives</p>
+<p><span class="math display">\[
+  \log c_{it} = \frac{(1 - g) \log \alpha_i}{\gamma_i} + \frac{1 - g}{\gamma_i} (- \log \lambda_t) + g \log X_{it} + \epsilon_{it}.
+\]</span> Hence, given that the full risk-sharing hypothesis is rejected, the running a regression with heterogeneous preferences is equivalent to estimating this equation. Using PSID data, he shows that accounting for heterogeneous risk and time preferences decreases the estimate of <span class="math inline">\(g\)</span>, which is consistent with his argument that ignoring heterogeneous preferences results in overrejction of the full risk-sharing hypothesis. He also finds that estimates based on homogenenous preferences and on heterogeneous preferences are statistically significantly different. He also finds that the models with homogeneous preferences and with heterogeneous preferences, where the former is nested in the latter, give statistically significantly different estimates. This means the rejection of the hypothesis that the preferences are common across households.</p>
+</section>
+<section id="mazzocco2012" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="mazzocco2012"><span class="header-section-number">3.3</span> <span class="citation" data-cites="Mazzocco2012">Mazzocco and Saini (<a href="#ref-Mazzocco2012" role="doc-biblioref">2012</a>)</span></h2>
+<p>This paper (i) proposes a test of homogeneous preferences under full insurance, and (ii) proposes a test to evaluate efficiency of risk sharing under heterogeneous preferences. Here only risk preferences are considered due to the relatively small data, although the authors state that it is easy to incorporate time-preference heterogeneity in the model and the tests.</p>
+</section>
+<section id="chiappori2014" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="chiappori2014"><span class="header-section-number">3.4</span> <span class="citation" data-cites="Chiappori2014">Chiappori et al. (<a href="#ref-Chiappori2014" role="doc-biblioref">2014</a>)</span></h2>
+</section>
+<section id="references" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="references"><span class="header-section-number">3.5</span> References</h2>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Chiappori2014" class="csl-entry" role="doc-biblioentry">
+Chiappori, Pierre-André, Krislert Samphantharak, Sam Schulhofer-Wohl, and Robert M. Townsend. 2014. <span>“<span class="nocase">Heterogeneity and risk sharing in village economies</span>.”</span> <em>Quantitative Economics</em> 5 (1): 1–27. <a href="https://doi.org/10.3982/QE131">https://doi.org/10.3982/QE131</a>.
+</div>
+<div id="ref-Cochrane1991" class="csl-entry" role="doc-biblioentry">
+Cochrane, John H. 1991. <span>“<span class="nocase">A Simple Test of Consumption Insurance</span>.”</span> <em>Journal of Political Economy</em> 99 (5): 957–76. <a href="https://doi.org/10.1086/261785">https://doi.org/10.1086/261785</a>.
+</div>
+<div id="ref-Kurosaki2001" class="csl-entry" role="doc-biblioentry">
+Kurosaki, Takashi. 2001. <span>“<span class="nocase">Consumption Smoothing and the Structure of Risk and Time Preferences:Theory and Evidence from Village India</span>.”</span> <em>Hitotsubashi Journal of Economics</em> 42 (2): 103–17.
+</div>
+<div id="ref-laczo2015risk" class="csl-entry" role="doc-biblioentry">
+Laczó, Sarolta. 2015. <span>“Risk Sharing with Limited Commitment and Preference Heterogeneity: Structural Estimation and Testing.”</span> <em>Journal of the European Economic Association</em> 13 (2): 265–92.
+</div>
+<div id="ref-Ligon2016" class="csl-entry" role="doc-biblioentry">
+Ligon, Ethan. 2008. <span>“Risk Sharing.”</span> In <em>The New Palgrave Dictionary of Economics</em>, 1–4. London: Palgrave Macmillan UK. <a href="https://doi.org/10.1057/978-1-349-95121-5_2357-1">https://doi.org/10.1057/978-1-349-95121-5_2357-1</a>.
+</div>
+<div id="ref-Mazzocco2012" class="csl-entry" role="doc-biblioentry">
+Mazzocco, Maurizio, and Shiv Saini. 2012. <span>“<span class="nocase">Testing efficient risk sharing with heterogeneous risk preferences</span>.”</span> <a href="https://doi.org/10.1257/aer.102.1.428">https://doi.org/10.1257/aer.102.1.428</a>.
+</div>
+<div id="ref-Schulhofer-Wohl2011" class="csl-entry" role="doc-biblioentry">
+Schulhofer-Wohl, Sam. 2011. <span>“<span class="nocase">Heterogeneity and tests of risk sharing</span>.”</span> <em>Journal of Political Economy</em>. <a href="https://doi.org/10.1086/662720">https://doi.org/10.1086/662720</a>.
+</div>
+<div id="ref-Townsend1994" class="csl-entry" role="doc-biblioentry">
+Townsend, Robert M. 1994. <span>“<span class="nocase">Risk and Insurance in Village India</span>.”</span> <em>Econometrica</em> 62 (3): 539. <a href="https://doi.org/10.2307/2951659">https://doi.org/10.2307/2951659</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./base_model_empirics.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Empirics</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./static_limited_commitment.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Static limited-commitment model</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

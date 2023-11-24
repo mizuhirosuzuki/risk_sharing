@@ -1,0 +1,11 @@
+# Empirics
+
+The model developed in the previous chapter has been used extensively for empirical analyses in the literature.
+There are mainly two ways the model is used: first, to test the full risk-sharing model, and second, to estimate the model parameters.
+Whereas the majority of the papers in the literature takes the first approach to use the model, there are papers to use the second method, primarily for comparing the empirical relevancy of different models (e.g., @ligon2002informal, @laczo2015risk).
+
+## Test of the full risk-sharing model
+
+## Structural estimation of parameters
+
+## References

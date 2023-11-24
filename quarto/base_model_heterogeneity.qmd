@@ -1,0 +1,147 @@
+# Extension: heterogeneity
+
+In the theoretical part of this paper, @Cochrane1991 allows heterogeneous risk and time preferences across households.
+However, in his "cross-sectional" analysis, if the economic shocks are independent of these variables, this heterogeneity does not matter for the test of full risk-sharing.
+Also, @Townsend1994 conducts a time-series analysis for each household in ICRISAT data, which allows different preferences for different households.
+One problem in this analysis is the temporal length of the data: there are only 10 years of data, which seems too short to conduct a time-series analysis.
+Here I will introduce works explicitly focusing on the heterogeneouos preferences of households in the context of risk sharing.
+
+## @Kurosaki2001
+
+To investigate how risk and time preferences affect the test of full risk-sharing as in @Townsend1994, he considers a model with a household-specific time discount factor ($\rho_i$) and utility function in which risk preferences can differ ($u_i(c_{ist})$).
+Assuming an interior solution, as in @Townsend1994, the Pareto optimal allocation requires
+
+$$
+  \lambda_i \rho_i^t u_i'(c_{ist}) = \mu_{st} \quad \forall (s,t),
+$$
+where $\lambda_{i}$ is a Pareto weight for household $i$ and $\mu_{st}$ is the Lagrange multiplier associated with the feasibility constraint, devided by the probability that the state $s$ is realized in time $t$.
+Assuming a CARA preferences with a household-specific coefficient of absolute risk aversion, $A_i$, we can derive an equation that looks similar to the one in a canonical risk-sharing model:
+
+$$
+  c_{it} = \alpha_i \overline{c}_t + \beta_i + \gamma_i t,
+$$
+where
+
+\begin{align*}
+  \alpha_i &= \frac{1}{A_i} \left[ \frac{1}{N} \sum_j \frac{1}{A_j} \right]^{-1} \\
+  \beta_i  &= \frac{1}{A_i} \left[ \ln \lambda_i - \frac{1}{N} \sum_j \alpha_j \ln \lambda_j \right]^{-1} \\
+  \gamma_i &= \frac{1}{A_i} \left[ \ln \rho_i - \frac{1}{N} \sum_j \alpha_j \ln \rho_j \right]^{-1},
+\end{align*}
+
+where $N$ is the number of households in the community.
+
+This equation implies that 
+
+1. $\alpha_i$ is smaller for a more risk averse household, and
+2. $\gamma_i$ is more negative (ie. consumption decreases over time) for a more myopic household.
+
+Note that, if there is no heterogeneity, $\alpha_i$ is common for all households and $\gamma_i = 0 \quad \forall i$.
+A CRRA utility function results in a similar equation, but with log consumption.
+
+To test whether (i) full risk sharing is achieved and (ii) there is any heterogeneity in terms of time and risk preferrences, with CARA utility functinos, the author estimate
+
+$$
+  \Delta c_{it} = b_i + a_i \Delta \overline{c}_t + \zeta_i X_{it} + u_{it},
+$$
+
+where $X_{it}$ is the first-different household income.
+While this looks similar to the estimation equation in @Townsend1994, this equation is much more flexible due to household-specific intercepts and slopes.
+Notice that here the effect of household income ($\zeta_i$) is household specific as well, which allows the author to see which households are more "vulnerable" in the sense that income and consumption are more correlated.
+The estimation results suggest that (i) the full risk-sharing is not achieved, and (ii) there is heterogeneity among households in their sensitivity to aggregate and idiosyncratic shocks.
+The author also investigates what variables are correlated with each of $b_i$, $a_i$, and $\zeta_i$.
+
+One problem of this analysis is that, as pointed out in the paper, the interpretation of $b_i$ and $a_i$ is not clear when the full risk-sharing hypothesis is rejected.
+As @Ligon2016 argues, given that the full risk sharing hypothesis is rejected, the theory does not provide an interpretation that the equation above is a consumption function.
+In this sense, interpreting the estimates of $b_i$ and $a_i$ as something reflecting time and risk preferences can be misleading, and more complete model needs to explain why full risk-sharing fails while taking into account preference heterogeneity.
+@laczo2015risk can be seen as a work attempting this, using dynamic limited commitment as the factor preventing full risk-sharing.
+
+## @Schulhofer-Wohl2011
+
+In this paper, he shows that ignoring heterogeneous preferences can bias the test of full-risk sharing and the bias is likely to be upward (ie. more likely to reject the full risk-sharing hypothesis) if risk preference is positively correlated with aggregate income shocks.
+This positive correlation could be seen if more risk-tolerant workers work in more risky sectors, for example.
+One interesting contribution in his paper is that he gives an interpretation to the coefficient on household income in the Townsend-type regression by considering costly transfers.
+
+Consider the model in @Kurosaki2001, but for simplicity, just with heterogeneous risk preferences.
+Also, as in @Schulhofer-Wohl2011, assume that the utility function takes the CRRA form: $u_i(c_{it}) = \frac{c_{it}^{1 - \gamma_i}}{1 - \gamma_i}$.
+
+Then, letting the Pareto weight be $\alpha_i$ and the Lagrange multiplier on the aggregate resource constraint divided by the probability of the state being realized be $\rho^t \lambda_t$, the first-order condition for consumption is 
+
+$$
+  \alpha_i \left(c_{it}^{*}\right)^{ - \gamma_i} = \lambda_t,
+$$
+
+and thus the correct relationship between the consumption and aggregate income is 
+
+$$
+  \log c_{it}^* = \frac{\log \alpha_i}{\gamma_i} + \frac{1}{\gamma_i} (- \log \lambda_t).
+$$
+
+This can be rewritten as 
+
+$$
+  \log c_{it}^* = \frac{\log \alpha}{\gamma} + \frac{1}{\gamma} (- \log \lambda_t) + u_{it},
+$$
+where $u_{it} = \left(\frac{\log \alpha_i}{\gamma_i} - \frac{\log \alpha}{\gamma} \right) + \left(\frac{1}{\gamma_i} - \frac{1}{\gamma} \right) (- \log \lambda_t)$.
+Notice that the first part in $u_{it}$ is removed by using the household fixed effect in the regression, but the second term does not go away.
+Then, assuming a iid multiplicative error in consumption ($\epsilon_{it}$), we obtain
+
+$$
+  \log c_{it} = \frac{\log \alpha}{\gamma} + \frac{1}{\gamma} (- \log \lambda_t) + \left(\epsilon_{it} + u_{it} \right)
+$$
+and by including household income for the test of full risk sharing, we obtain the standard regression equation under the assumption of homogeneous risk preferences:
+
+$$
+  \log c_{it} = \frac{\log \alpha}{\gamma} + \frac{1}{\gamma} (- \log \lambda_t) + g \log X_{it} + \left(\epsilon_{it} + u_{it} \right)
+$$
+
+He shows that $Cov(\log X_{it}, u_{it}) > 0$ if income responds more strongly to aggregate shocks for less risk-averse households, which results in the upward bias of the estimate of $g$.
+Using the Health and Retirement Survey, he shows that this is likely to be the case.
+This implies that ignoring heterogeneous preferences can result in overrejection of the full risk-sharing hypothesis.
+
+To run the regression with heterogeneous preferences taken into account, @Schulhofer-Wohl2011 first obtains $\lambda_t$ by two different methods (the factor or GMM approaches), but as @Kurosaki2001 does, the regression equation can be rewritten in the form without $\lambda_t$.
+From $\log c_{it}^* = \frac{\log \alpha_i}{\gamma_i} + \frac{1}{\gamma_i} (- \log \lambda_t)$, we obtain
+
+$$
+  \frac{1}{N} \sum_j \log c_{jt}^* = \frac{1}{N} \sum_j \frac{\log \alpha_j}{\gamma_j} + (- \log \lambda_t) \frac{1}{N} \sum_j \frac{1}{\gamma_j} \\
+  \Rightarrow \frac{1}{\gamma_i} (- \log \lambda_t) = \eta_i \frac{1}{N} \sum_j \log c_{jt}^* - \eta_i \frac{1}{N} \sum_j \frac{\log \alpha_j}{\gamma_j},
+$$
+
+where $\eta_i = \frac{1}{\gamma_i} \left( \frac{1}{N} \sum_j \frac{1}{\gamma_j} \right)^{-1}$.
+Using this, $\log c_{it}^* = \frac{\log \alpha_i}{\gamma_i} + \frac{1}{\gamma_i} (- \log \lambda_t)$ can be written as
+
+$$
+  \log c_{it}^* = \eta_i \frac{1}{N} \sum_j \log c_{jt}^* + \left( \frac{\log \alpha_i}{\gamma_i} - \eta_i \frac{1}{N} \sum_j \frac{\log \alpha_j}{\gamma_j} \right).
+$$
+Notice that the second part is time-invariant and controlled by household fixed effects.
+Therefore, with an error term and household income, the regression equation with heterogeneous preferences becomes
+
+$$
+  \log c_{it} = \eta_i \frac{1}{N} \sum_i \log c_{it} + g \log X_{it} + \left( \frac{\log \alpha_i}{\gamma_i} - \eta_i \frac{1}{N} \sum_i \frac{\log \alpha_i}{\gamma_i} \right) + \left( \epsilon_{it} - \eta_i \frac{1}{N} \sum_j \epsilon_{jt} \right).
+$$
+
+Assuming that $\frac{1}{N} \sum_j \epsilon_{jt}$ is constant across time, the last term is removed by including household fixed effects.
+Therefore, the coefficients $\eta_i$ and $g$ can be estimated without deriving $\lambda_t$.
+
+Also, this paper considers transaction cost to explain imperfect risk-sharing and to give an interpretation to the coefficient and household income.
+In particular, he assumes that the resource is destroyed if household consumption and income differ, and the cost if specified to be $\phi_i \frac{c}{2} \left( \log \frac{c}{X} \right)^2$.
+With this cost function and an assumption that $\phi_i / (\phi_i + \gamma_i) = g \ \forall i$, the author derives
+
+$$
+  \log c_{it} = \frac{(1 - g) \log \alpha_i}{\gamma_i} + \frac{1 - g}{\gamma_i} (- \log \lambda_t) + g \log X_{it} + \epsilon_{it}.
+$$
+Hence, given that the full risk-sharing hypothesis is rejected, running a regression with heterogeneous preferences is equivalent to estimating this equation.
+Using PSID data, he shows that accounting for heterogeneous risk and time preferences decreases the estimate of $g$, which is consistent with his argument that ignoring heterogeneous preferences results in overrejction of the full risk-sharing hypothesis.
+He also finds that estimates based on homogenenous preferences and on heterogeneous preferences are statistically significantly different.
+He also finds that the models with homogeneous preferences and with heterogeneous preferences, where the former is nested in the latter, give statistically significantly different estimates.
+This means the rejection of the hypothesis that the preferences are common across households.
+
+## @Mazzocco2012
+
+This paper (i) proposes a test of homogeneous preferences under full insurance, and (ii) proposes a test to evaluate efficiency of risk sharing under heterogeneous preferences.
+Here only risk preferences are considered due to the relatively small data, although the authors state that it is easy to incorporate time-preference heterogeneity in the model and the tests.
+
+
+## @Chiappori2014
+
+## References
+

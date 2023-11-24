@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Risk sharing - 2&nbsp; Static limited-commitment model (theory and simulation)</title>
+<title>Risk sharing - 4&nbsp; Static limited-commitment model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,69 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
@@ -113,7 +50,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./dynamic_limited_commitment_theory.html" rel="next">
-<link href="./base_model.html" rel="prev">
+<link href="./base_model_heterogeneity.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -153,7 +90,7 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Static limited-commitment model (theory and simulation)</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Static limited-commitment model</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -181,21 +118,100 @@ div.csl-indent {
   <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Basic risk-sharing model</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./base_model.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Basic risk-sharing model</span></a>
+  <a href="./base_model_theory.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Theory</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./static_limited_commitment.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Static limited-commitment model (theory and simulation)</span></a>
+  <a href="./base_model_empirics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Empirics</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dynamic_limited_commitment_theory.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Dynamic limited-commitment model (theory)</span></a>
+  <a href="./base_model_heterogeneity.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Extension: heterogeneity</span></a>
   </div>
 </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Risk-sharing with limited commitment</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./static_limited_commitment.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Static limited-commitment model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./dynamic_limited_commitment_theory.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dynamic limited-commitment model (theory)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./compare_limited_commitment_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Comparison between static and dynamic limited commitment models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./limited_commitment_with_storage.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Extension: Limited commitment models with storage</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Hidden information</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hidden_information_theory.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Risk sharing with hidden information (theory)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Distinguishing barriers</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Group formation</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">Network</span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">Appendices</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./coate_ravallion_reproduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Computational reproduction of Coate and Ravallion (1993)</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -205,12 +221,7 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#model-in-coate1993reciprocity" id="toc-model-in-coate1993reciprocity" class="nav-link active" data-scroll-target="#model-in-coate1993reciprocity"><span class="toc-section-number">2.1</span>  Model in <span class="citation" data-cites="coate1993reciprocity">Coate and Ravallion (1993)</span></a></li>
-  <li><a href="#numerical-exercise" id="toc-numerical-exercise" class="nav-link" data-scroll-target="#numerical-exercise"><span class="toc-section-number">2.2</span>  Numerical exercise</a>
-  <ul class="collapse">
-  <li><a href="#procedure" id="toc-procedure" class="nav-link" data-scroll-target="#procedure"><span class="toc-section-number">2.2.1</span>  Procedure</a></li>
-  <li><a href="#replication-of-table-3-the-highly-non-covariate-income-stream" id="toc-replication-of-table-3-the-highly-non-covariate-income-stream" class="nav-link" data-scroll-target="#replication-of-table-3-the-highly-non-covariate-income-stream"><span class="toc-section-number">2.2.2</span>  Replication of Table 3: The “highly non-covariate” income stream</a></li>
-  </ul></li>
+  <li><a href="#model-in-coate1993reciprocity" id="toc-model-in-coate1993reciprocity" class="nav-link active" data-scroll-target="#model-in-coate1993reciprocity"><span class="toc-section-number">4.1</span>  Model in <span class="citation" data-cites="coate1993reciprocity">Coate and Ravallion (1993)</span></a></li>
   </ul>
 </nav>
     </div>
@@ -219,7 +230,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Static limited-commitment model (theory and simulation)</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Static limited-commitment model</span></h1>
 </div>
 
 
@@ -235,8 +246,8 @@ div.csl-indent {
 </header>
 
 <p>Here, I explain the static limited-commitment model. The model is called <em>static</em> since the transfer schedule only depends on the current state if the past transfer schedule has been followed. This is in contrast to the <em>dynamic</em> limited commitment model as in, for example, <span class="citation" data-cites="ligon2002informal">Ligon, Thomas, and Worrall (<a href="#ref-ligon2002informal" role="doc-biblioref">2002</a>)</span>.</p>
-<section id="model-in-coate1993reciprocity" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="model-in-coate1993reciprocity"><span class="header-section-number">2.1</span> Model in <span class="citation" data-cites="coate1993reciprocity">Coate and Ravallion (<a href="#ref-coate1993reciprocity" role="doc-biblioref">1993</a>)</span></h2>
+<section id="model-in-coate1993reciprocity" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="model-in-coate1993reciprocity"><span class="header-section-number">4.1</span> Model in <span class="citation" data-cites="coate1993reciprocity">Coate and Ravallion (<a href="#ref-coate1993reciprocity" role="doc-biblioref">1993</a>)</span></h2>
 <p>Their framework is based on an infinite-period repeated game: in each period, players either follow a transfer schedule or renege and will stay in autarky forever. Under symmetric income distribution, they compare first-best transfers under full risk-sharing and best implementable transfers (best in the sense that the transfers that maximize the expected utilities).</p>
 <p>The problem considered in the paper is to maximize the average expected utility of a household (by symmetry, a transfer schedule that maximizes the average expected utility of one household maximizes that of the other household), subject to the following <em>implementability constraints</em>:</p>
 <span class="math display">\[\begin{align*}
@@ -255,349 +266,6 @@ div.csl-indent {
 \end{equation*}\]</span>
 <p>Here, <span class="math inline">\(\theta^*\)</span> is the contract which results in the highest average expected utility subject to the implementability constraints, and <span class="math inline">\(\widehat{\theta}\)</span> is the transfer schedule under the full risk-sharing. Intuitively, this means that, as long as the implementability constraints are not violated, the transfer schedule coincides with the one under full risk-sharing, but otherwise, as much money as possible is transferred so that the constraints are not violated.</p>
 <p>Furthermore, they examine (i) how the best implementable (ie. under the implementability constraints) insurance arrangement and the full risk-sharing insurance arrangement differ, and (ii) how the best implementable insurance arrangement changes with exogenous variables of the model (discount rate and correlation in income realizations). To (i), they find, for example, that the transfers under the implementability constraints do depend on not the level of incomes, unlike the first-best contracts where transfers depend only on the income <em>difference</em> between households. Regarding the comparative static properties as in the question (ii), they demonstrate smaller transfers among less patient househodls and also in situations where income realizations are highly correlated.</p>
-</section>
-<section id="numerical-exercise" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="numerical-exercise"><span class="header-section-number">2.2</span> Numerical exercise</h2>
-<p>I conduct a numerical exercise to replicate Table 3 in <span class="citation" data-cites="coate1993reciprocity">Coate and Ravallion (<a href="#ref-coate1993reciprocity" role="doc-biblioref">1993</a>)</span>.</p>
-<section id="procedure" class="level3" data-number="2.2.1">
-<h3 data-number="2.2.1" class="anchored" data-anchor-id="procedure"><span class="header-section-number">2.2.1</span> Procedure</h3>
-<p>I follow the parametric settings in <span class="citation" data-cites="coate1993reciprocity">Coate and Ravallion (<a href="#ref-coate1993reciprocity" role="doc-biblioref">1993</a>)</span>. A constant relative risk aversion utility function is assumed: <span class="math inline">\(u_y = y^{(1 - \rho)} / (1 - \rho)\)</span>. Using the representation of the transfer schedule under the constraints, the authors derive the transfer schedule in the following iterative method:</p>
-<span class="math display">\[\begin{equation*}
-  \theta_{ij}^*(t + 1) = \min \{\widehat{\theta}_{ij}, f(y_i, (v(\theta^*(t)) - \overline{v}) / r) \},
-\end{equation*}\]</span>
-<p>where <span class="math inline">\(\theta^*(t)\)</span> is the vector of transfers obtained at the <span class="math inline">\(t\)</span>th iteration with <span class="math inline">\(\theta^*(0) = 0\)</span>. The converged vector of <span class="math inline">\(\theta^*(t)\)</span> is used as the implementable transfers.</p>
-<p>There is one very minor typo in the paper: the equation (5) should be <span class="math inline">\(\theta_{ij}^*(t + 1) = \min \{ \widehat{\theta}_{ij}, y_i - [y_i^{1 - \rho} - (v(\theta^*(t)) - \bar{v}) (1 - \rho) / r ]^{1 / (1 - \rho)} \}\)</span> instead of <span class="math inline">\(\theta_{ij}^*(t + 1) = \min \{ \widehat{\theta}_{ij}, y_i - [y_i^{1 - \rho} - (v(\theta^*(t)) - \bar{v}) / r ]^{1 / (1 - \rho)} \}\)</span>. This is fixed in the code below.</p>
-</section>
-<section id="replication-of-table-3-the-highly-non-covariate-income-stream" class="level3" data-number="2.2.2">
-<h3 data-number="2.2.2" class="anchored" data-anchor-id="replication-of-table-3-the-highly-non-covariate-income-stream"><span class="header-section-number">2.2.2</span> Replication of Table 3: The “highly non-covariate” income stream</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># income states</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>y_vals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># transfers under full risk-sharing</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>theta_hat_vals <span class="ot">&lt;-</span> <span class="fu">c</span>((y_vals[<span class="dv">2</span>] <span class="sc">-</span> y_vals[<span class="dv">1</span>]) <span class="sc">/</span> <span class="dv">2</span>, </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                    (y_vals[<span class="dv">3</span>] <span class="sc">-</span> y_vals[<span class="dv">1</span>]) <span class="sc">/</span> <span class="dv">2</span>, </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>                    (y_vals[<span class="dv">3</span>] <span class="sc">-</span> y_vals[<span class="dv">2</span>]) <span class="sc">/</span> <span class="dv">2</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># v(theta)</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>v_theta <span class="ot">&lt;-</span> <span class="cf">function</span>(theta, y_vals, pi, rho){</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  output <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>){</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (i <span class="sc">&gt;</span> <span class="dv">1</span>){</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>(i<span class="dv">-1</span>)){</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>        output <span class="ot">&lt;-</span> output <span class="sc">+</span> pi[i,j] <span class="sc">*</span> ((y_vals[i] <span class="sc">-</span> theta[i<span class="sc">+</span>j<span class="dv">-2</span>]) <span class="sc">^</span> (<span class="dv">1</span> <span class="sc">-</span> rho) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> rho) <span class="sc">+</span> </span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                                      (y_vals[j] <span class="sc">+</span> theta[i<span class="sc">+</span>j<span class="dv">-2</span>]) <span class="sc">^</span> (<span class="dv">1</span> <span class="sc">-</span> rho) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> rho))</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>      } </span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>      output <span class="ot">&lt;-</span> output</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    output <span class="ot">&lt;-</span> output <span class="sc">+</span> pi[i, i] <span class="sc">*</span> (y_vals[i]) <span class="sc">^</span> (<span class="dv">1</span> <span class="sc">-</span> rho) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> rho) </span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(output)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Iteration for theta_star</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>iteration <span class="ot">&lt;-</span> <span class="cf">function</span>(theta_star, theta_hat, y_val, y_vals, pi, rho, r, v_bar){</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  new_theta_star_ij <span class="ot">&lt;-</span> <span class="fu">min</span>(theta_hat, </span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>                           y_val <span class="sc">-</span> (y_val <span class="sc">^</span> (<span class="dv">1</span> <span class="sc">-</span> rho) <span class="sc">-</span> </span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>                                    (<span class="fu">v_theta</span>(theta_star, y_vals, pi, rho) <span class="sc">-</span> v_bar) </span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>                                    <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> rho) <span class="sc">/</span> r) <span class="sc">^</span> (<span class="dv">1</span> <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> rho)))</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(new_theta_star_ij)</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Iteration loop for theta_star</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>theta_star_loop <span class="ot">&lt;-</span> <span class="cf">function</span>(init_theta_star, theta_hat_vals, y_vals, pi, rho, r, v_bar){</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>  iter <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>  tol <span class="ot">&lt;-</span> <span class="fl">1e-16</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>  error <span class="ot">&lt;-</span> tol <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>  theta_star <span class="ot">&lt;-</span> init_theta_star</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>  new_theta_star <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">3</span>)</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>  <span class="cf">while</span> (iter <span class="sc">&lt;</span> <span class="dv">500</span> <span class="sc">&amp;</span> error <span class="sc">&gt;</span> tol){</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    new_theta_star[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">iteration</span>(theta_star, theta_hat_vals[<span class="dv">1</span>], </span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>                                   y_vals[<span class="dv">2</span>], y_vals, pi, rho, r, v_bar)</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    new_theta_star[<span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">iteration</span>(theta_star, theta_hat_vals[<span class="dv">2</span>], </span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>                                   y_vals[<span class="dv">3</span>], y_vals, pi, rho, r, v_bar)</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    new_theta_star[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">iteration</span>(theta_star, theta_hat_vals[<span class="dv">3</span>], </span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>                                   y_vals[<span class="dv">3</span>], y_vals, pi, rho, r, v_bar)</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    error <span class="ot">=</span> <span class="fu">max</span>(<span class="fu">abs</span>(new_theta_star <span class="sc">-</span> theta_star))</span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    theta_star <span class="ot">&lt;-</span> new_theta_star</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>    iter <span class="ot">&lt;-</span> iter <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(theta_star)</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>table_3 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rep</span>(<span class="dv">0</span>, (<span class="dv">5</span> <span class="sc">+</span> <span class="dv">6</span> <span class="sc">+</span> <span class="dv">8</span>) <span class="sc">*</span> <span class="dv">6</span>), <span class="at">ncol =</span> <span class="dv">6</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>pi <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.15</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.15</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>), <span class="at">nrow =</span> <span class="dv">3</span>) </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>r_vals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="fl">0.15</span>, <span class="fl">0.25</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>rho_vals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.3</span>, <span class="fl">0.5</span>, <span class="fl">0.7</span>, <span class="fl">0.9</span>, <span class="fl">1.1</span>, <span class="fl">1.3</span>, <span class="fl">1.5</span>, <span class="fl">1.7</span>, <span class="fl">1.9</span>, <span class="fl">2.1</span>, <span class="fl">2.3</span>, <span class="fl">2.5</span>, <span class="fl">2.7</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># r = 0.05</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> r_vals[<span class="dv">1</span>]</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>){</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># r</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  table_3[i, <span class="dv">1</span>] <span class="ot">&lt;-</span> r</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># rho</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  table_3[i, <span class="dv">2</span>] <span class="ot">&lt;-</span> rho_vals[i]</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># v_bar</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  v_bar <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>){</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>){</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>      v_bar <span class="ot">&lt;-</span> v_bar <span class="sc">+</span> pi[j,k] <span class="sc">*</span> (y_vals[j] <span class="sc">^</span> (<span class="dv">1</span> <span class="sc">-</span> rho_vals[i]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> rho_vals[i]))</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># theta_star iteration</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  init_theta_star <span class="ot">&lt;-</span> theta_hat_vals</span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  theta_star <span class="ot">&lt;-</span> <span class="fu">theta_star_loop</span>(init_theta_star, theta_hat_vals, </span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>                                y_vals, pi, rho_vals[i], r, v_bar)</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># theta_star_21</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  table_3[i, <span class="dv">3</span>] <span class="ot">&lt;-</span> theta_star[<span class="dv">1</span>]</span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># theta_star_31</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  table_3[i, <span class="dv">4</span>] <span class="ot">&lt;-</span> theta_star[<span class="dv">2</span>]</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># theta_star_32</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  table_3[i, <span class="dv">5</span>] <span class="ot">&lt;-</span> theta_star[<span class="dv">3</span>]</span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># gamma</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  table_3[i, <span class="dv">6</span>] <span class="ot">&lt;-</span> (<span class="fu">v_theta</span>(theta_star, y_vals, pi, rho_vals[i]) <span class="sc">-</span> v_bar) <span class="sc">/</span> </span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>                   (<span class="fu">v_theta</span>(theta_hat_vals, y_vals, pi, rho_vals[i]) <span class="sc">-</span> v_bar)</span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="co"># r = 0.15</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> r_vals[<span class="dv">2</span>]</span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>){</span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="co"># r</span></span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  table_3[i<span class="sc">+</span><span class="dv">5</span>, <span class="dv">1</span>] <span class="ot">&lt;-</span> r</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>  <span class="co"># rho</span></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>  table_3[i<span class="sc">+</span><span class="dv">5</span>, <span class="dv">2</span>] <span class="ot">&lt;-</span> rho_vals[i]</span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>  <span class="co"># v_bar</span></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>  v_bar <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>){</span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>){</span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>      v_bar <span class="ot">&lt;-</span> v_bar <span class="sc">+</span> pi[j,k] <span class="sc">*</span> (y_vals[j] <span class="sc">^</span> (<span class="dv">1</span> <span class="sc">-</span> rho_vals[i]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> rho_vals[i]))</span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>  <span class="co"># theta_star iteration</span></span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>  init_theta_star <span class="ot">&lt;-</span> theta_hat_vals</span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>  theta_star <span class="ot">&lt;-</span> <span class="fu">theta_star_loop</span>(init_theta_star, theta_hat_vals, </span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>                                y_vals, pi, rho_vals[i], r, v_bar)</span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>  <span class="co"># theta_star_21</span></span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>  table_3[i<span class="sc">+</span><span class="dv">5</span>, <span class="dv">3</span>] <span class="ot">&lt;-</span> theta_star[<span class="dv">1</span>]</span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>  <span class="co"># theta_star_31</span></span>
-<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>  table_3[i<span class="sc">+</span><span class="dv">5</span>, <span class="dv">4</span>] <span class="ot">&lt;-</span> theta_star[<span class="dv">2</span>]</span>
-<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>  <span class="co"># theta_star_32</span></span>
-<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>  table_3[i<span class="sc">+</span><span class="dv">5</span>, <span class="dv">5</span>] <span class="ot">&lt;-</span> theta_star[<span class="dv">3</span>]</span>
-<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>  <span class="co"># gamma</span></span>
-<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>  table_3[i<span class="sc">+</span><span class="dv">5</span>, <span class="dv">6</span>] <span class="ot">&lt;-</span> (<span class="fu">v_theta</span>(theta_star, y_vals, pi, rho_vals[i]) <span class="sc">-</span> v_bar) <span class="sc">/</span> </span>
-<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>                     (<span class="fu">v_theta</span>(theta_hat_vals, y_vals, pi, rho_vals[i]) <span class="sc">-</span> v_bar)</span>
-<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="co"># r = 0.25</span></span>
-<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> r_vals[<span class="dv">3</span>]</span>
-<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>){</span>
-<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>  <span class="co"># r</span></span>
-<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>  table_3[i<span class="sc">+</span><span class="dv">11</span>, <span class="dv">1</span>] <span class="ot">&lt;-</span> r</span>
-<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>  <span class="co"># rho</span></span>
-<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>  table_3[i<span class="sc">+</span><span class="dv">11</span>, <span class="dv">2</span>] <span class="ot">&lt;-</span> rho_vals[i]</span>
-<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>  <span class="co"># v_bar</span></span>
-<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>  v_bar <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>){</span>
-<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (k <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>){</span>
-<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>      v_bar <span class="ot">&lt;-</span> v_bar <span class="sc">+</span> pi[j,k] <span class="sc">*</span> (y_vals[j] <span class="sc">^</span> (<span class="dv">1</span> <span class="sc">-</span> rho_vals[i]) <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">-</span> rho_vals[i]))</span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>  <span class="co"># theta_star iteration</span></span>
-<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>  init_theta_star <span class="ot">&lt;-</span> theta_hat_vals</span>
-<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>  theta_star <span class="ot">&lt;-</span> <span class="fu">theta_star_loop</span>(init_theta_star, theta_hat_vals, </span>
-<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>                                y_vals, pi, rho_vals[i], r, v_bar)</span>
-<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>  <span class="co"># theta_star_21</span></span>
-<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>  table_3[i<span class="sc">+</span><span class="dv">11</span>, <span class="dv">3</span>] <span class="ot">&lt;-</span> theta_star[<span class="dv">1</span>]</span>
-<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>  <span class="co"># theta_star_31</span></span>
-<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>  table_3[i<span class="sc">+</span><span class="dv">11</span>, <span class="dv">4</span>] <span class="ot">&lt;-</span> theta_star[<span class="dv">2</span>]</span>
-<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>  <span class="co"># theta_star_32</span></span>
-<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>  table_3[i<span class="sc">+</span><span class="dv">11</span>, <span class="dv">5</span>] <span class="ot">&lt;-</span> theta_star[<span class="dv">3</span>]</span>
-<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>  <span class="co"># gamma</span></span>
-<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>  table_3[i<span class="sc">+</span><span class="dv">11</span>, <span class="dv">6</span>] <span class="ot">&lt;-</span> (<span class="fu">v_theta</span>(theta_star, y_vals, pi, rho_vals[i]) <span class="sc">-</span> v_bar) <span class="sc">/</span> </span>
-<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>                      (<span class="fu">v_theta</span>(theta_hat_vals, y_vals, pi, rho_vals[i]) <span class="sc">-</span> v_bar)</span>
-<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(table_3) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"$r$"</span>, <span class="st">"$</span><span class="sc">\\</span><span class="st">rho$"</span>, <span class="st">"$</span><span class="sc">\\</span><span class="st">theta_{21}^*$"</span>, </span>
-<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>                       <span class="st">"$</span><span class="sc">\\</span><span class="st">theta_{31}^*$"</span>, <span class="st">"$</span><span class="sc">\\</span><span class="st">theta_{32}^*$"</span>, <span class="st">"$</span><span class="sc">\\</span><span class="st">gamma$"</span>)</span>
-<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(table_3, <span class="at">digits =</span> <span class="dv">3</span>, <span class="at">caption =</span> <span class="st">"Highly non-covariate income streams"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="table table-sm table-striped">
-<caption>Highly non-covariate income streams</caption>
-<colgroup>
-<col style="width: 7%">
-<col style="width: 10%">
-<col style="width: 23%">
-<col style="width: 23%">
-<col style="width: 23%">
-<col style="width: 13%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: right;"><span class="math inline">\(r\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(\rho\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(\theta_{21}^*\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(\theta_{31}^*\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(\theta_{32}^*\)</span></th>
-<th style="text-align: right;"><span class="math inline">\(\gamma\)</span></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">0.05</td>
-<td style="text-align: right;">0.1</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.000</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">0.05</td>
-<td style="text-align: right;">0.3</td>
-<td style="text-align: right;">0.500</td>
-<td style="text-align: right;">0.648</td>
-<td style="text-align: right;">0.500</td>
-<td style="text-align: right;">0.914</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">0.05</td>
-<td style="text-align: right;">0.5</td>
-<td style="text-align: right;">0.500</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">0.500</td>
-<td style="text-align: right;">1.000</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">0.05</td>
-<td style="text-align: right;">0.7</td>
-<td style="text-align: right;">0.500</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">0.500</td>
-<td style="text-align: right;">1.000</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">0.05</td>
-<td style="text-align: right;">0.9</td>
-<td style="text-align: right;">0.500</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">0.500</td>
-<td style="text-align: right;">1.000</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">0.15</td>
-<td style="text-align: right;">0.1</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.000</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">0.15</td>
-<td style="text-align: right;">0.3</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.000</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">0.15</td>
-<td style="text-align: right;">0.5</td>
-<td style="text-align: right;">0.131</td>
-<td style="text-align: right;">0.161</td>
-<td style="text-align: right;">0.161</td>
-<td style="text-align: right;">0.360</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">0.15</td>
-<td style="text-align: right;">0.7</td>
-<td style="text-align: right;">0.425</td>
-<td style="text-align: right;">0.570</td>
-<td style="text-align: right;">0.500</td>
-<td style="text-align: right;">0.872</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">0.15</td>
-<td style="text-align: right;">0.9</td>
-<td style="text-align: right;">0.500</td>
-<td style="text-align: right;">0.857</td>
-<td style="text-align: right;">0.500</td>
-<td style="text-align: right;">0.987</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">0.15</td>
-<td style="text-align: right;">1.1</td>
-<td style="text-align: right;">0.500</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">0.500</td>
-<td style="text-align: right;">1.000</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">0.25</td>
-<td style="text-align: right;">0.1</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.000</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">0.25</td>
-<td style="text-align: right;">0.3</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.000</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">0.25</td>
-<td style="text-align: right;">0.5</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.000</td>
-<td style="text-align: right;">0.000</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">0.25</td>
-<td style="text-align: right;">0.7</td>
-<td style="text-align: right;">0.058</td>
-<td style="text-align: right;">0.077</td>
-<td style="text-align: right;">0.077</td>
-<td style="text-align: right;">0.184</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">0.25</td>
-<td style="text-align: right;">0.9</td>
-<td style="text-align: right;">0.287</td>
-<td style="text-align: right;">0.415</td>
-<td style="text-align: right;">0.415</td>
-<td style="text-align: right;">0.734</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">0.25</td>
-<td style="text-align: right;">1.1</td>
-<td style="text-align: right;">0.428</td>
-<td style="text-align: right;">0.665</td>
-<td style="text-align: right;">0.500</td>
-<td style="text-align: right;">0.924</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">0.25</td>
-<td style="text-align: right;">1.3</td>
-<td style="text-align: right;">0.500</td>
-<td style="text-align: right;">0.866</td>
-<td style="text-align: right;">0.500</td>
-<td style="text-align: right;">0.989</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">0.25</td>
-<td style="text-align: right;">1.5</td>
-<td style="text-align: right;">0.500</td>
-<td style="text-align: right;">1.000</td>
-<td style="text-align: right;">0.500</td>
-<td style="text-align: right;">1.000</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
@@ -608,7 +276,6 @@ Coate, Stephen, and Martin Ravallion. 1993. <span>“Reciprocity Without Commitm
 Ligon, Ethan, Jonathan P Thomas, and Tim Worrall. 2002. <span>“Informal Insurance Arrangements with Limited Commitment: Theory and Evidence from Village Economies.”</span> <em>The Review of Economic Studies</em> 69 (1): 209–44.
 </div>
 </div>
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -747,13 +414,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./base_model.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Basic risk-sharing model</span></span>
+      <a href="./base_model_heterogeneity.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Extension: heterogeneity</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./dynamic_limited_commitment_theory.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Dynamic limited-commitment model (theory)</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dynamic limited-commitment model (theory)</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
