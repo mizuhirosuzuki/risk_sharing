@@ -8,4 +8,55 @@ Whereas the majority of the papers in the literature takes the first approach to
 
 ## Structural estimation of parameters
 
+The other main way to use the full risk-sharing model empirically is to estimate the structural parameters.
+Usually the parameters themselves are not the main objects of interest, but rather the models are structurally estimated to compare the model fit with other models.
+For example, @ligon2002informal estimate the model with the non-linear squared error method, and @laczo2015risk estimates the full risk-sharing model with the simulated maximum likelihood method.
+Both of them use the objective values from the estimation to see how much the model explains the data compared to other models such as the limited commitment model.
+
+Here, I follow the framework in @laczo2015risk to demonstrate how the likelihood function is derived.
+
+### Introducing measurement errors
+
+First, I introduce to the full risk-sharing model the measurement error in consumption, which is assumed to be multiplicative and log-normally distributed. 
+In particular, I denote observed consumption, $c_{it}^*$ as $c_{it}^* = c_{it} \exp(\varepsilon_{it}^c)$, where $\varepsilon_{it} \sim N(0, \gamma_c^2)$ is the measurement error which is i.i.d. across households and time.
+With this, the observed village-average consumption, $c_{vt}^*$ is so that
+$$
+\begin{aligned}
+  \log(c_{vt}^*) 
+  &= \frac{1}{N} \sum_i \log(c_{it}^*) \\
+  &= \frac{1}{N} \sum_i \log(c_{it}) + \frac{1}{N} \sum_i \varepsilon_{it}^c \\
+  &= \log(c_{vt}) + \frac{1}{N} \sum_i \varepsilon_{it}^c \\
+  &= \log(c_{vt}) + \varepsilon_{vt}^c,
+\end{aligned}
+$$
+where the village consumption measurement error is defined as $\varepsilon_{vt}^c \equiv \frac{1}{N} \sum_i \varepsilon_{it}^c$.
+Substituting these into $\log(c_{it}) - \log(c_{i, t - 1}) = \log(c_{vt}) - \log(c_{v, t - 1})$, I obtain
+$$
+  \log(c_{it}^*) - \log(c_{i, t - 1}^*) = \log(c_{vt}^*) - \log(c_{v, t - 1}^*) + \left(\varepsilon_{it}^c - \varepsilon_{vt}^c - (\varepsilon_{i, t - 1}^c - \varepsilon_{v, t - 1}^c) \right).
+$$
+
+### Likelihood function
+
+Since $\varepsilon_{it} \sim N(0, \gamma_C^2)$, I get $\varepsilon_{vt} \sim N(0, \frac{\gamma_C^2}{N})$, and note that $Cov(\varepsilon_{it}, \varepsilon_{vt}) = \frac{\gamma_C^2}{N}$.
+With the independence across periods and households of measurement errors, I obtain
+$$
+  Var(\varepsilon_{it}^c - \varepsilon_{vt}^c - (\varepsilon_{i, t - 1}^c - \varepsilon_{v, t - 1}^c) ) 
+  = 2\left(\gamma_C^2 + \frac{\gamma_C^2}{N} - 2\frac{\gamma_C^2}{N} \right) 
+  = 2 \gamma_C^2 \left(1 - \frac{1}{N} \right).
+$$
+
+Therefore, the likelihood function is
+
+$$
+  L(\theta) = \prod_{i} \prod_{t = 2}^{T} f \left( \log \left( \frac{c_{it}^*}{c_{i, t - 1}^*} \right) - \log \left( \frac{c_{vt}^*}{c_{v, t - 1}^*} \right), \theta \right) ,
+$$
+and the log likelihood function is
+$$
+  l(\theta) = \sum_{i} \sum_{t = 2}^{T} \log \left(f \left( \log \left( \frac{c_{it}^*}{c_{i, t - 1}^*} \right) - \log \left( \frac{c_{vt}^*}{c_{v, t - 1}^*} \right), \theta\right) \right),
+$$
+where $f(x, \theta)$ is the density function of $x \sim N \left(0, \sqrt{ 2 \gamma_C^2 \left(1 - \frac{1}{N} \right)} \right)$, and $\theta$ is a parameter to estimate (here, $\theta = \gamma_C$).
+In estimation, I find the parameter to maximize $l(\theta)$.
+
+Without assuming that the model is correctly specified but assuming that there is no autocorrelation, the standard error of the parameter is $A(\widehat{\theta})^{-1} B(\widehat{\theta}) A(\widehat{\theta})^{-1}$, where $A(\widehat{\theta})$ is the Hessian matrix of the log-likelihood function and $B(\widehat{\theta})$ is the outer product of scores (= gradient of log likelihood).
+
 ## References

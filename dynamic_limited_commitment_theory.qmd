@@ -1,6 +1,82 @@
-# Dynamic limited-commitment model (theory)
+# Dynamic limited-commitment model
 
-## Model based on @ligon2002informal
+## Model
 
+I consider constrained-efficient consumption allocations. 
+The social planner solves the following problem:
+
+```{=tex}
+\begin{align*}
+  &\max_{\{c_{it}(s^t)\}} \sum_i \lambda_i \sum_{t = 1}^{\infty} \sum_{s^t} \delta^t \pi(s^t) u(c_{it}(s^t)) \\
+  \text{subject to} 
+  &\sum_i c_{it} (s^t) \le \sum_i y_{it}(s_t) \quad \forall s^t, \forall t \\
+  &\sum_{r = t}^{\infty} \sum_{s^r} \delta^{r - t} \pi(s^r | s^t) u(c_{ir}(s^r)) \ge U_{i}^{aut}(s_t) \quad \forall s^t, \forall t, \forall i.
+\end{align*}
+```
+Here, the income follows a Markov process and is independent across households.
+Notice the difference between the history of states up to period $t$ ($s^t$) and the state at period $t$ ($s_t$).
+The variable $\lambda_i$ is the Pareto weight of a household $i$.
+The last equation is the participation constraints (PCs), whose RHS is the value of autarky and the solution of the following Bellman equation:
+
+$$
+  U_i^{aut}(s_t) = u((1 - \phi) y_{it}(s_t)) + \delta \sum_{s^{t + 1}} \pi(s_{t + 1} | s_t) U_{i}^{aut}(s_{t + 1}),
+$$
+where $\phi$ is the punishment of renege, which is a fraction of consumption each period.
+It is assumed that savings are absent.
+
+Letting the multiplier on the PC of $i$ be $\delta^t \pi(s^t) \mu_i(s^t)$ and the multiplier on the aggregate resource constraint be $\delta^t \pi(s^t) \rho(s^t)$, the Lagrangian is
+
+$$
+  \sum_{t = 1}^{\infty} \sum_{s^t} \delta^t \pi(s^t) \left\{ \sum_i \left[ \lambda_i u_i(c_{it}(s^t)) + \mu_i(s^t) \left( \sum_{r = t}^{\infty} \sum_{s^r} \delta^{r - t} \pi(s^r | s^t) u_i (c_{ir} (s^r)) - U_i^{aut}(s_t) \right) \right] + \rho(s^t) \left( \sum_i \left(y_{it} (s_t) - c_{it} (s^t) \right) \right) \right\}
+$$ With the recursive method in @Marcet2019, this Lagrangian can be written as
+
+$$
+  \sum_{t = 1}^{\infty} \sum_{s^t} \delta^t \pi(s^t) \left\{ \sum_i \left[ M_i (s^{t - 1}) u_i (c_{it} (s^t)) + \mu_i (s^t) (u_i (c_{it} (s^t)) - U_i^{aut} (s_t)) \right] + \rho(s^t) \left( \sum_i \left( y_{it}(s_t) - c_{it} (s^t) \right) \right) \right\},
+$$
+
+where $M_i(s^t) = M_i(s^{t - 1}) + \mu_i(s^t)$ and $M_i(s^0) = \lambda$.
+The variable $M_i(s^t)$ is the current Pareto weight of household $i$ and is equal to its initial Pareto weight plus the sum of the Lagrange mulipliers on its PCs along the history $s^t$.
+
+From the Lagrangian, the optimality condition is
+$$
+  u_i'(c_{it}(s^t)) M_i(s^t) = \frac{\rho(s^t)}{\delta^t \pi(s^t)},
+$$
+and thus, for two households $i$ and $j$ ($i \ne j$),
+$$
+  u_i'(c_{it}(s^t)) M_i(s^t) = u_j'(c_{jt}(s^t)) M_j(s^t).
+$$
+Taking logarithms and summing over households $j$, I get
+$$
+\begin{aligned}
+  \log \left(u'(c_{it}(s^t)) \right) + \log \left(M_i(s^t) \right) = \frac{1}{N} \sum_j \log \left(u'(c_{jt}(s^t)) \right) + \frac{1}{N} \sum_j \log \left(M_j(s^t) \right).
+\end{aligned}
+$$
+Defining the village consumption $c_{vt}$ such that $\log \left(u'(c_{vt}(s^t)) \right) = \frac{1}{N} \sum_j \log \left(u'(c_{jt}(s^t)) \right)$ and $M_v(s^t)$ such that $\log \left( M_v(s^t) \right) = \frac{1}{N} \sum_j \log \left(M_j(s^t) \right)$, I obtain
+$$
+\begin{aligned}
+  \log \left(u'('c_{it}(s^t)) \right) + \log \left(M_i(s^t) \right) &= \log \left(u'(c_{vt}(s^t)) \right) + \log \left( M_v(s^t) \right) \\
+  \Leftrightarrow \frac{u'(c_{vt}(s^t))}{u'(c_{it}(s^t))} = \frac{M_i(s^t)}{M_v(s^t)}
+\end{aligned}
+$$
+Note that this is equivalent to the optimality condition that the ratio of marginal utilities between two "households", $i$ and $v$, equals the ratio of their Pareto weights.
+Therefore, when I consider the one-versus-rest risk-sharing, I can use this optimality condition as if the village is one household.
+
+Let $x_i(s^t) = \frac{M_i(s^t)}{M_v(s^t)}$, the relative Pareto weight of household $i$ under the history $s^t$.
+Then, the vector of relative weights $x(s^t)$ plays as a role as a co-state variable, and the solution consists of policy functions $x_{it}(s_t, x_{t - 1})$ and $c_{it}(s_t, x_{t - 1}).$
+That is, $x_{t - 1}$ is a sufficient statistic for the history up to $t - 1$. The optimality condition is
+
+$$
+  \frac{u_v'(c_{vt}(s_t, x_{t - 1}))}{u_i'(c_{it}(s_t, x_{t - 1}))} = x_{it}(s_t, x_{t - 1}) \quad \forall i.
+$$
+
+The value function can be written recursively as
+
+$$
+  V_i(s_t, x_{t - 1}) = u_i (c_{it} (s_t, x_{t - 1})) + \delta \sum_{s_{t + 1}} \pi(s_{t + 1} | s_t) V_i (s_{t + 1}, x_t(s_t, x_{t - 1})).
+$$
+
+## References
+
+The evolution of relative Pareto weights is fully characterized by state-dependent intervals, which give the weights in the case where PCs are binding (@ligon2002informal).
 
 

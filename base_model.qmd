@@ -1,3 +1,7 @@
 # Basic risk-sharing model
 
-
+I first review the canonical risk-sharing, which does not have any "friction" which will be introduced in the literature to explain the data more accurately.
+The main implication of the model is that, given an aggregate resource, a household's consumption does not depend on its income shock.
+In other words, households' consumption only depends on aggregate shocks, not idiosyncratic shocks.
+For this, the model is called "perfect risk-sharing model" or "full risk-sharing model".
+In this part, the model is developed and this implication is derived, and I demonstrate how the model implication has been used in empirical studies in the literature.

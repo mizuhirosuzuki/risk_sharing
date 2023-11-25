@@ -1,0 +1,15 @@
+# Risk-sharing with limited commitment
+
+Since the development of the full risk-sharing model, many papers have used it to test its validity.
+It turns out that many studies found that the full risk-sharing model is empirically not supported (e.g., @Townsend1994, XXX).
+
+The literature started to attempt to identify the barriers for efficient risk-sharing.
+One of the candidate was the difficulty in enforcing the contract:
+In the full risk-sharing model, it is assumed that transfers among households are enforced, but this can be challenging without formal institutions.
+
+In limited commitment models, the possibility of defaulting the transfer rule is taken into account.
+In the models, social planner's maximization problem is subject to enforceability constraints, where people do not renege on prior agreements on transfers.
+In this part, I review two models with limited commitment: static and dynamic.
+Whereas transfer rules are not allowed to depend on past states in a static limited commitment model, the transfers can depend on the past history in the dynamic model.
+
+## References

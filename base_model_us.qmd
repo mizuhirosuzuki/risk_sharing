@@ -1,0 +1,50 @@
+# Tests of full risk-sharing model in the U.S.
+
+There are several studies applying the above estimation equation to the US data.
+One of the main focuses of these studies is the test of market completeness:
+under ...
+
+## @Mace1991
+
+She uses Consumer Expenditure Survey (CES) in the U.S. for 1980-1983 and analyzes how, controlling for changes in aggregate consumption, idiosyncratic shocks affect changes in individual consumption.
+It should be noted that CES is an overlapping panel data of 1-year duration with a quarterly sampling frequency, which makes Townsend-like regressions possible.
+Here, the whole economy is considered as one "village", implying that risk is presumably shared within the economy.
+She finds that, while the economy almost achieves full risk-sharing under the CARA utility function, the full risk-sharing hypothesis is rejected under the CRRA utility function for many goods.
+
+While she runs regressions with the same specifications as in @Townsend1994, there are a couple of differences from the study.
+First, she runs regressions for, in addition to total consumption, different expenditure categories separately (services, nondurables, durables, food, housing, utilities, household furnishings, clothing, medical care, transportation, and recreation).
+Under full risk-sharing, given that aggregate consumption is controlled for, idiosyncratic shocks should not affect each component of expenditures.
+Secondly, she uses not only income shocks but also employment shocks and sees if they also affect individual consumption.
+Again, under full risk-sharing, controlling for aggregate consumption, these non-income shocks should not affect individual consumption as well.
+Also, in the appendix, she argues that the econometric specification in the paper is valid in the case with multiple goods under general homothetic utility function and with durable goods, although the latter holds under the assumption that the initial endowment of durable goods is identical to the distribution of Pareto weights. 
+
+## @Cochrane1991
+
+He uses Panel Study of Income Dynamics (PSID) in the U.S. for 1980-1983 to analyze how exogenous shocks affect consumption growth.
+In his regressions, the left-hand side variable is consumption growth from 1980 to 1983, and the right-hand side variables are cumulated shocks from 1981 to 1983 such as unemployment or illness.
+Although he also uses income shocks, interestingly he is suspicious of using income shocks, since income shocks can be correlated with the error term through, for example, preference shocks.
+This can cause a spurious correlation between individual consumption and individual income, which can result in rejecting the full risk-sharing hypothesis.
+Using the specification with the CRRA utility function, he finds that, while some shocks are insured (eg. light illness, strikes), other shocks are not (heavy illness, involuntary job loss).
+
+## @Altonji1992
+
+Although their framework does not exactly correspond to the full risk-sharing model, their empirical analysis is pretty close to other studies that test full risk-sharing hypothesis. 
+In particular, they analyze if household consumption is correlated with household income, controlling for the aggregate resources of the extended family linked through altruism (for this control, they use extended-family fixed effects).
+As mentioned in the paper, their dynamic tests (regressions with first-differences of variables) are equivalent to the test of full risk-sharing.
+Their alternative hypothesis is the life-cycle model in which household consumption is determined by household income and resources of other households in the same extended family do not matter.
+
+They use Panel Study of Income Dynamics (PSID) in the U.S. for 1976-1985.
+PSID surveyed over 5000 households in 1968 and reinterviewed the heads and spouses of these sample each year since 1968. 
+Importantly, when some household members form new households (eg. marriage of children), these new households are interviewed as well.
+Connecting these child-households and original parent-households allows them to create a dataset of extended families with variables of each household.
+They find that the altruism hypothesis is strongly rejected (household income affects household consumption), and the life-cycle model tends to be empirically supported (household consumption is little affected by resources of other households in the same extended family).
+
+One thing that can be minor but interesting to me in the analyses is that they consider the possibility of labor supply (or leisure) being a choice variable.
+Given that leisure is in the utility functions and wage rates are different across households, labor income may be positively correlated with, for example, food consumption since "higher wage rates -> more labor supply -> more food consumption (to compensate less leisure)".
+To deal with this, they also use lagged wage in the analyses, and still the altruism hypothesis is strongly rejected (ie. lagged wage affects household consumption).
+
+One motivation of this paper is to show that Barro's neutrality may not hold: that is, redistribution among members of an altruistically linked economic unit can change the unit's behaviors.
+In the context of risk sharing in developing countries, this corresponds to the statement that redistribution among members in the same network can change their economic activities.
+But this may be less relevant in the context of developing countries since policy interventions usually change aggregate resources of the communities and pure redistribution policies are rare.
+ 
+## References

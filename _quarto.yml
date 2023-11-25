@@ -8,12 +8,12 @@ book:
   date: ""
   chapters:
     - index.qmd
-    - part: "Basic risk-sharing model"
+    - part: base_model.qmd
       chapters:
         - base_model_theory.qmd
         - base_model_empirics.qmd
         - base_model_heterogeneity.qmd
-    - part: "Risk-sharing with limited commitment"
+    - part: limited_commitment_model.qmd
       chapters:
         - static_limited_commitment.qmd
         - dynamic_limited_commitment_theory.qmd
@@ -26,6 +26,7 @@ book:
     - part: "Group formation"
     - part: "Network"
   appendices:
+    - base_model_us.qmd
     - coate_ravallion_reproduction.qmd
 
 bibliography: references.bib

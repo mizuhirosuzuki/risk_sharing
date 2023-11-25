@@ -1,2 +1,53 @@
 # Theory
 
+## Settings
+
+Suuposed that there are $N$ households in a village. Each household maximized its expected lifetime utility: $$
+  E \left[ \sum_{t = 1}^{\infty} \delta^t u (c_{it}) \right],
+$$
+where $\delta$ is the discount factor, $u$ is instantaneous preference of households (note that here I assume homogeneous preference), and $c_{it}$ is consumption by household $i$ at time $t$.
+Assume that there is no saving.
+
+For income, let $s^t = (s_1, \dots, s_t)$ the history of income states from time $1$ to $t$, and let $y_{it}(s_t)$ be household $i$'s income at time $t$ and state $s_t$.
+Assume that the income process is a Markov process and is independent across households.
+
+With these, I find the Pareto-optimal allocations.
+For this, a weighted sum of households' expected lifetime utilities is maximized.
+In other words, a social planner solves the following maximization problem:
+$$
+  \max_{\{c_{it}(s^t)\}} \quad \sum_i \lambda_i \sum_{t = 1}^{\infty} \sum_{s^t} \delta^t \pi(s^t) u(c_{it}(s^t))
+$$ subject to the resource constraint $$
+  \sum_i c_{it}(s^t) \le \sum_i y_{it}(s_t) \quad \forall s^t, \forall t,
+$$
+where $\lambda_i$ is the Pareto weight of $i$, $\pi(s^t)$ is the probability that the history $s^t$ is realized, and $c_{it}(s^t)$ is $i$'s consumption under the history $s^t$.
+
+## Optimization condition
+
+Solving this maximization problem, we see that, for any two households $i$ and $j$ in the village, the following holds: 
+$$
+  \frac{u'(c_{jt}(s^t))}{u'(c_{it}(s^t))} = \frac{\lambda_i}{\lambda_j} \quad \forall s^t, \forall t.
+$$
+
+If I assume the utility function to take the CRRA form, that is, $$
+  u(c_{it}) = \frac{c_{it}^{1 - \sigma} - 1}{1 - \sigma},
+$$
+then
+$$
+  u'(c_{it}) = c_{it}^{- \sigma},
+$$
+and thus I get
+$$
+  \frac{c_{jt}(s^t)^{-\sigma}}{c_{it}(s^t)^{-\sigma}} = \frac{\lambda_i}{\lambda_j} \quad \forall s^t, \forall t.
+$$
+Dropping $s^t$ from the quation for simplicity and taking the logarithms, I obtain
+$$
+\begin{aligned}
+  -\sigma \log(c_{jt}) + \sigma \log(c_{it}) &= \log(\lambda_i) - \log(\lambda_j) \\
+  \Leftrightarrow \log(c_{it}) &= \frac{1}{\sigma} \left( \log(\lambda_i) - \log(\lambda_j) \right) + \log(c_{jt}) \\
+  \Leftrightarrow N \log(c_{it}) &= \frac{1}{\sigma} \left( N \log(\lambda_i) - \sum_j \log(\lambda_j) \right) + \sum_j \log(c_{jt}) \\
+  \Leftrightarrow \log(c_{it}) &= \frac{1}{\sigma} \left( \log(\lambda_i) - \frac{1}{N} \sum_j \log(\lambda_j) \right) + \frac{1}{N} \sum_j \log(c_{jt}).
+\end{aligned}
+$$
+By defining the village-average consumption, $c_{vt}$, as $\log(c_{vt}) = \frac{1}{N} \sum_j \log(c_{jt})$, and taking the first difference from the equation above, I get $$
+  \log(c_{it}) - \log(c_{i, t - 1}) = \log(c_{vt}) - \log(c_{v, t - 1}).
+$$

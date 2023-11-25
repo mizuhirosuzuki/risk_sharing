@@ -21,6 +21,25 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -31,7 +50,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./base_model_theory.html" rel="next">
+<link href="./base_model.html" rel="next">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -100,7 +119,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Basic risk-sharing model</a>
+            <a href="./base_model.html" class="sidebar-item-text sidebar-link">Basic risk-sharing model</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -125,7 +144,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Risk-sharing with limited commitment</a>
+            <a href="./limited_commitment_model.html" class="sidebar-item-text sidebar-link">Risk-sharing with limited commitment</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -138,7 +157,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dynamic_limited_commitment_theory.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dynamic limited-commitment model (theory)</span></a>
+  <a href="./dynamic_limited_commitment_theory.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dynamic limited-commitment model</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -187,7 +206,12 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./coate_ravallion_reproduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Computational reproduction of Coate and Ravallion (1993)</span></a>
+  <a href="./base_model_us.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Tests of full risk-sharing model in the U.S.</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./coate_ravallion_reproduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Computational reproduction of Coate and Ravallion (1993)</span></a>
   </div>
 </li>
       </ul>
@@ -201,7 +225,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a></li>
+  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
+  <ul class="collapse">
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -233,10 +260,26 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="preface" class="level1 unnumbered">
 <h1 class="unnumbered">Preface</h1>
-<p>This website shows the theories and empirics of risk-sharing models. I made this website primarily for my self-learning, but I hope somebody finds the information here interesting. Any errors are my own, and please report misinformation or wrong statement if you find any.</p>
-<p>GitHub: https://github.com/mizuhirosuzuki/risk_sharing</p>
+<p>This website shows the theories and empirics of risk-sharing models.</p>
+<p>Here, by risk-sharing, I consider studies trying to understand the relationships between consumption and income and mechanisms to reduce the correlation through sharing income risks with others. The seminal paper in this literature is <span class="citation" data-cites="Townsend1994">Townsend (<a href="#ref-Townsend1994" role="doc-biblioref">1994</a>)</span>, and I introduce studies before and after this paper and try to relate each other. <span class="citation" data-cites="Fafchamps2011">Fafchamps (<a href="#ref-Fafchamps2011" role="doc-biblioref">2011</a>)</span> reviews this literature extensively, and <span class="citation" data-cites="Ligon2016">Ligon (<a href="#ref-Ligon2016" role="doc-biblioref">2008</a>)</span> provides a brief (and super awesome!) review of this literature.</p>
+<p>I made this website primarily for my self-learning, but I hope somebody finds the information here interesting. Any errors are my own, and please report misinformation or wrong statement if you find any.</p>
+<p>GitHub: <a href="https://github.com/mizuhirosuzuki/risk_sharing">https://github.com/mizuhirosuzuki/risk_sharing</a></p>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Fafchamps2011" class="csl-entry" role="doc-biblioentry">
+Fafchamps, Marcel. 2011. <span>“<span class="nocase">Risk sharing between households</span>.”</span> In <em>Handbook of Social Economics</em>, 1:1255–79. 1 B. Elsevier B.V. <a href="https://doi.org/10.1016/B978-0-444-53707-2.00007-4">https://doi.org/10.1016/B978-0-444-53707-2.00007-4</a>.
+</div>
+<div id="ref-Ligon2016" class="csl-entry" role="doc-biblioentry">
+Ligon, Ethan. 2008. <span>“Risk Sharing.”</span> In <em>The New Palgrave Dictionary of Economics</em>, 1–4. London: Palgrave Macmillan UK. <a href="https://doi.org/10.1057/978-1-349-95121-5_2357-1">https://doi.org/10.1057/978-1-349-95121-5_2357-1</a>.
+</div>
+<div id="ref-Townsend1994" class="csl-entry" role="doc-biblioentry">
+Townsend, Robert M. 1994. <span>“<span class="nocase">Risk and Insurance in Village India</span>.”</span> <em>Econometrica</em> 62 (3): 539. <a href="https://doi.org/10.2307/2951659">https://doi.org/10.2307/2951659</a>.
+</div>
+</div>
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -377,8 +420,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./base_model_theory.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Theory</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./base_model.html" class="pagination-link">
+        <span class="nav-page-text">Basic risk-sharing model</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Risk sharing - 8&nbsp; Risk sharing with hidden information (theory)</title>
+<title>Risk sharing - Risk-sharing with limited commitment</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,25 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -30,8 +49,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./coate_ravallion_reproduction.html" rel="next">
-<link href="./limited_commitment_with_storage.html" rel="prev">
+<link href="./static_limited_commitment.html" rel="next">
+<link href="./base_model_heterogeneity.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -70,7 +89,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Risk sharing with hidden information (theory)</span></h1>
+      <h1 class="quarto-secondary-nav-title">Risk-sharing with limited commitment</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -100,7 +119,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Basic risk-sharing model</a>
+            <a href="./base_model.html" class="sidebar-item-text sidebar-link">Basic risk-sharing model</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -125,7 +144,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Risk-sharing with limited commitment</a>
+            <a href="./limited_commitment_model.html" class="sidebar-item-text sidebar-link active">Risk-sharing with limited commitment</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -138,7 +157,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dynamic_limited_commitment_theory.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dynamic limited-commitment model (theory)</span></a>
+  <a href="./dynamic_limited_commitment_theory.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dynamic limited-commitment model</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -163,7 +182,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./hidden_information_theory.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Risk sharing with hidden information (theory)</span></a>
+  <a href="./hidden_information_theory.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Risk sharing with hidden information (theory)</span></a>
   </div>
 </li>
       </ul>
@@ -187,7 +206,12 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./coate_ravallion_reproduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Computational reproduction of Coate and Ravallion (1993)</span></a>
+  <a href="./base_model_us.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Tests of full risk-sharing model in the U.S.</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./coate_ravallion_reproduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Computational reproduction of Coate and Ravallion (1993)</span></a>
   </div>
 </li>
       </ul>
@@ -197,14 +221,20 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#references" id="toc-references" class="nav-link active" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Risk sharing with hidden information (theory)</span></h1>
+<h1 class="title d-none d-lg-block">Risk-sharing with limited commitment</h1>
 </div>
 
 
@@ -219,8 +249,19 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p>Since the development of the full risk-sharing model, many papers have used it to test its validity. It turns out that many studies found that the full risk-sharing model is empirically not supported (e.g., <span class="citation" data-cites="Townsend1994">Townsend (<a href="#ref-Townsend1994" role="doc-biblioref">1994</a>)</span>, XXX).</p>
+<p>The literature started to attempt to identify the barriers for efficient risk-sharing. One of the candidate was the difficulty in enforcing the contract: In the full risk-sharing model, it is assumed that transfers among households are enforced, but this can be challenging without formal institutions.</p>
+<p>In limited commitment models, the possibility of defaulting the transfer rule is taken into account. In the models, social planner’s maximization problem is subject to enforceability constraints, where people do not renege on prior agreements on transfers. In this part, I review two models with limited commitment: static and dynamic. Whereas transfer rules are not allowed to depend on past states in a static limited commitment model, the transfers can depend on the past history in the dynamic model.</p>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Townsend1994" class="csl-entry" role="doc-biblioentry">
+Townsend, Robert M. 1994. <span>“<span class="nocase">Risk and Insurance in Village India</span>.”</span> <em>Econometrica</em> 62 (3): 539. <a href="https://doi.org/10.2307/2951659">https://doi.org/10.2307/2951659</a>.
+</div>
+</div>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -358,13 +399,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./limited_commitment_with_storage.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Extension: Limited commitment models with storage</span></span>
+      <a href="./base_model_heterogeneity.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Extension: heterogeneity</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./coate_ravallion_reproduction.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Computational reproduction of Coate and Ravallion (1993)</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./static_limited_commitment.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Static limited-commitment model</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

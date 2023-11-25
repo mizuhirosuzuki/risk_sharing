@@ -80,6 +80,7 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -119,7 +120,7 @@ div.csl-indent {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Basic risk-sharing model</a>
+            <a href="./base_model.html" class="sidebar-item-text sidebar-link">Basic risk-sharing model</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -206,7 +207,12 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./coate_ravallion_reproduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Computational reproduction of Coate and Ravallion (1993)</span></a>
+  <a href="./base_model_us.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Tests of full risk-sharing model in the U.S.</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./coate_ravallion_reproduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Computational reproduction of Coate and Ravallion (1993)</span></a>
   </div>
 </li>
       </ul>
@@ -220,7 +226,8 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#model-based-on-ligon2002informal" id="toc-model-based-on-ligon2002informal" class="nav-link active" data-scroll-target="#model-based-on-ligon2002informal"><span class="toc-section-number">5.1</span>  Model based on <span class="citation" data-cites="ligon2002informal">Ligon, Thomas, and Worrall (2002)</span></a></li>
+  <li><a href="#model" id="toc-model" class="nav-link active" data-scroll-target="#model"><span class="toc-section-number">5.1</span>  Model</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="toc-section-number">5.2</span>  References</a></li>
   </ul>
 </nav>
     </div>
@@ -244,13 +251,61 @@ div.csl-indent {
 
 </header>
 
-<section id="model-based-on-ligon2002informal" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="model-based-on-ligon2002informal"><span class="header-section-number">5.1</span> Model based on <span class="citation" data-cites="ligon2002informal">Ligon, Thomas, and Worrall (<a href="#ref-ligon2002informal" role="doc-biblioref">2002</a>)</span></h2>
+<section id="model" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="model"><span class="header-section-number">5.1</span> Model</h2>
+<p>I consider constrained-efficient consumption allocations. The social planner solves the following problem:</p>
+<span class="math display">\[\begin{align*}
+  &amp;\max_{\{c_{it}(s^t)\}} \sum_i \lambda_i \sum_{t = 1}^{\infty} \sum_{s^t} \delta^t \pi(s^t) u(c_{it}(s^t)) \\
+  \text{subject to}
+  &amp;\sum_i c_{it} (s^t) \le \sum_i y_{it}(s_t) \quad \forall s^t, \forall t \\
+  &amp;\sum_{r = t}^{\infty} \sum_{s^r} \delta^{r - t} \pi(s^r | s^t) u(c_{ir}(s^r)) \ge U_{i}^{aut}(s_t) \quad \forall s^t, \forall t, \forall i.
+\end{align*}\]</span>
+<p>Here, the income follows a Markov process and is independent across households. Notice the difference between the history of states up to period <span class="math inline">\(t\)</span> (<span class="math inline">\(s^t\)</span>) and the state at period <span class="math inline">\(t\)</span> (<span class="math inline">\(s_t\)</span>). The variable <span class="math inline">\(\lambda_i\)</span> is the Pareto weight of a household <span class="math inline">\(i\)</span>. The last equation is the participation constraints (PCs), whose RHS is the value of autarky and the solution of the following Bellman equation:</p>
+<p><span class="math display">\[
+  U_i^{aut}(s_t) = u((1 - \phi) y_{it}(s_t)) + \delta \sum_{s^{t + 1}} \pi(s_{t + 1} | s_t) U_{i}^{aut}(s_{t + 1}),
+\]</span> where <span class="math inline">\(\phi\)</span> is the punishment of renege, which is a fraction of consumption each period. It is assumed that savings are absent.</p>
+<p>Letting the multiplier on the PC of <span class="math inline">\(i\)</span> be <span class="math inline">\(\delta^t \pi(s^t) \mu_i(s^t)\)</span> and the multiplier on the aggregate resource constraint be <span class="math inline">\(\delta^t \pi(s^t) \rho(s^t)\)</span>, the Lagrangian is</p>
+<p><span class="math display">\[
+  \sum_{t = 1}^{\infty} \sum_{s^t} \delta^t \pi(s^t) \left\{ \sum_i \left[ \lambda_i u_i(c_{it}(s^t)) + \mu_i(s^t) \left( \sum_{r = t}^{\infty} \sum_{s^r} \delta^{r - t} \pi(s^r | s^t) u_i (c_{ir} (s^r)) - U_i^{aut}(s_t) \right) \right] + \rho(s^t) \left( \sum_i \left(y_{it} (s_t) - c_{it} (s^t) \right) \right) \right\}
+\]</span> With the recursive method in <span class="citation" data-cites="Marcet2019">Marcet and Marimon (<a href="#ref-Marcet2019" role="doc-biblioref">2019</a>)</span>, this Lagrangian can be written as</p>
+<p><span class="math display">\[
+  \sum_{t = 1}^{\infty} \sum_{s^t} \delta^t \pi(s^t) \left\{ \sum_i \left[ M_i (s^{t - 1}) u_i (c_{it} (s^t)) + \mu_i (s^t) (u_i (c_{it} (s^t)) - U_i^{aut} (s_t)) \right] + \rho(s^t) \left( \sum_i \left( y_{it}(s_t) - c_{it} (s^t) \right) \right) \right\},
+\]</span></p>
+<p>where <span class="math inline">\(M_i(s^t) = M_i(s^{t - 1}) + \mu_i(s^t)\)</span> and <span class="math inline">\(M_i(s^0) = \lambda\)</span>. The variable <span class="math inline">\(M_i(s^t)\)</span> is the current Pareto weight of household <span class="math inline">\(i\)</span> and is equal to its initial Pareto weight plus the sum of the Lagrange mulipliers on its PCs along the history <span class="math inline">\(s^t\)</span>.</p>
+<p>From the Lagrangian, the optimality condition is <span class="math display">\[
+  u_i'(c_{it}(s^t)) M_i(s^t) = \frac{\rho(s^t)}{\delta^t \pi(s^t)},
+\]</span> and thus, for two households <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> (<span class="math inline">\(i \ne j\)</span>), <span class="math display">\[
+  u_i'(c_{it}(s^t)) M_i(s^t) = u_j'(c_{jt}(s^t)) M_j(s^t).
+\]</span> Taking logarithms and summing over households <span class="math inline">\(j\)</span>, I get <span class="math display">\[
+\begin{aligned}
+  \log \left(u'(c_{it}(s^t)) \right) + \log \left(M_i(s^t) \right) = \frac{1}{N} \sum_j \log \left(u'(c_{jt}(s^t)) \right) + \frac{1}{N} \sum_j \log \left(M_j(s^t) \right).
+\end{aligned}
+\]</span> Defining the village consumption <span class="math inline">\(c_{vt}\)</span> such that <span class="math inline">\(\log \left(u'(c_{vt}(s^t)) \right) = \frac{1}{N} \sum_j \log \left(u'(c_{jt}(s^t)) \right)\)</span> and <span class="math inline">\(M_v(s^t)\)</span> such that <span class="math inline">\(\log \left( M_v(s^t) \right) = \frac{1}{N} \sum_j \log \left(M_j(s^t) \right)\)</span>, I obtain <span class="math display">\[
+\begin{aligned}
+  \log \left(u'('c_{it}(s^t)) \right) + \log \left(M_i(s^t) \right) &amp;= \log \left(u'(c_{vt}(s^t)) \right) + \log \left( M_v(s^t) \right) \\
+  \Leftrightarrow \frac{u'(c_{vt}(s^t))}{u'(c_{it}(s^t))} = \frac{M_i(s^t)}{M_v(s^t)}
+\end{aligned}
+\]</span> Note that this is equivalent to the optimality condition that the ratio of marginal utilities between two “households”, <span class="math inline">\(i\)</span> and <span class="math inline">\(v\)</span>, equals the ratio of their Pareto weights. Therefore, when I consider the one-versus-rest risk-sharing, I can use this optimality condition as if the village is one household.</p>
+<p>Let <span class="math inline">\(x_i(s^t) = \frac{M_i(s^t)}{M_v(s^t)}\)</span>, the relative Pareto weight of household <span class="math inline">\(i\)</span> under the history <span class="math inline">\(s^t\)</span>. Then, the vector of relative weights <span class="math inline">\(x(s^t)\)</span> plays as a role as a co-state variable, and the solution consists of policy functions <span class="math inline">\(x_{it}(s_t, x_{t - 1})\)</span> and <span class="math inline">\(c_{it}(s_t, x_{t - 1}).\)</span> That is, <span class="math inline">\(x_{t - 1}\)</span> is a sufficient statistic for the history up to <span class="math inline">\(t - 1\)</span>. The optimality condition is</p>
+<p><span class="math display">\[
+  \frac{u_v'(c_{vt}(s_t, x_{t - 1}))}{u_i'(c_{it}(s_t, x_{t - 1}))} = x_{it}(s_t, x_{t - 1}) \quad \forall i.
+\]</span></p>
+<p>The value function can be written recursively as</p>
+<p><span class="math display">\[
+  V_i(s_t, x_{t - 1}) = u_i (c_{it} (s_t, x_{t - 1})) + \delta \sum_{s_{t + 1}} \pi(s_{t + 1} | s_t) V_i (s_{t + 1}, x_t(s_t, x_{t - 1})).
+\]</span></p>
+</section>
+<section id="references" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="references"><span class="header-section-number">5.2</span> References</h2>
+<p>The evolution of relative Pareto weights is fully characterized by state-dependent intervals, which give the weights in the case where PCs are binding (<span class="citation" data-cites="ligon2002informal">Ligon, Thomas, and Worrall (<a href="#ref-ligon2002informal" role="doc-biblioref">2002</a>)</span>).</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-ligon2002informal" class="csl-entry" role="doc-biblioentry">
 Ligon, Ethan, Jonathan P Thomas, and Tim Worrall. 2002. <span>“Informal Insurance Arrangements with Limited Commitment: Theory and Evidence from Village Economies.”</span> <em>The Review of Economic Studies</em> 69 (1): 209–44.
+</div>
+<div id="ref-Marcet2019" class="csl-entry" role="doc-biblioentry">
+Marcet, Albert, and Ramon Marimon. 2019. <span>“Recursive Contracts.”</span> <em>Econometrica</em> 87 (5): 1589–1631.
 </div>
 </div>
 </section>

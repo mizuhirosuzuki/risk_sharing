@@ -50,7 +50,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./dynamic_limited_commitment_theory.html" rel="next">
-<link href="./base_model_heterogeneity.html" rel="prev">
+<link href="./limited_commitment_model.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -120,7 +120,7 @@ div.csl-indent {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Basic risk-sharing model</a>
+            <a href="./base_model.html" class="sidebar-item-text sidebar-link">Basic risk-sharing model</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -145,7 +145,7 @@ div.csl-indent {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Risk-sharing with limited commitment</a>
+            <a href="./limited_commitment_model.html" class="sidebar-item-text sidebar-link">Risk-sharing with limited commitment</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -158,7 +158,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./dynamic_limited_commitment_theory.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dynamic limited-commitment model (theory)</span></a>
+  <a href="./dynamic_limited_commitment_theory.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dynamic limited-commitment model</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -207,7 +207,12 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./coate_ravallion_reproduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Computational reproduction of Coate and Ravallion (1993)</span></a>
+  <a href="./base_model_us.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Tests of full risk-sharing model in the U.S.</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./coate_ravallion_reproduction.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Computational reproduction of Coate and Ravallion (1993)</span></a>
   </div>
 </li>
       </ul>
@@ -221,7 +226,10 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#model-in-coate1993reciprocity" id="toc-model-in-coate1993reciprocity" class="nav-link active" data-scroll-target="#model-in-coate1993reciprocity"><span class="toc-section-number">4.1</span>  Model in <span class="citation" data-cites="coate1993reciprocity">Coate and Ravallion (1993)</span></a></li>
+  <li><a href="#kimball1988" id="toc-kimball1988" class="nav-link active" data-scroll-target="#kimball1988"><span class="toc-section-number">4.1</span>  <span class="citation" data-cites="Kimball1988">Kimball (1988)</span></a></li>
+  <li><a href="#coate1993reciprocity" id="toc-coate1993reciprocity" class="nav-link" data-scroll-target="#coate1993reciprocity"><span class="toc-section-number">4.2</span>  <span class="citation" data-cites="coate1993reciprocity">Coate and Ravallion (1993)</span></a></li>
+  <li><a href="#difference-between-kimball1988-and-coate1993reciprocity" id="toc-difference-between-kimball1988-and-coate1993reciprocity" class="nav-link" data-scroll-target="#difference-between-kimball1988-and-coate1993reciprocity"><span class="toc-section-number">4.3</span>  Difference between <span class="citation" data-cites="Kimball1988">Kimball (1988)</span> and <span class="citation" data-cites="coate1993reciprocity">Coate and Ravallion (1993)</span></a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="toc-section-number">4.4</span>  References</a></li>
   </ul>
 </nav>
     </div>
@@ -245,32 +253,51 @@ div.csl-indent {
 
 </header>
 
-<p>Here, I explain the static limited-commitment model. The model is called <em>static</em> since the transfer schedule only depends on the current state if the past transfer schedule has been followed. This is in contrast to the <em>dynamic</em> limited commitment model as in, for example, <span class="citation" data-cites="ligon2002informal">Ligon, Thomas, and Worrall (<a href="#ref-ligon2002informal" role="doc-biblioref">2002</a>)</span>.</p>
-<section id="model-in-coate1993reciprocity" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="model-in-coate1993reciprocity"><span class="header-section-number">4.1</span> Model in <span class="citation" data-cites="coate1993reciprocity">Coate and Ravallion (<a href="#ref-coate1993reciprocity" role="doc-biblioref">1993</a>)</span></h2>
-<p>Their framework is based on an infinite-period repeated game: in each period, players either follow a transfer schedule or renege and will stay in autarky forever. Under symmetric income distribution, they compare first-best transfers under full risk-sharing and best implementable transfers (best in the sense that the transfers that maximize the expected utilities).</p>
+<p>In a <em>static</em> limited commitment model, transfer rules are not allowed to depend on past states. The repeated game is used in the analysis, and <span class="citation" data-cites="coate1993reciprocity">Coate and Ravallion (<a href="#ref-coate1993reciprocity" role="doc-biblioref">1993</a>)</span> provides a simple and clear framework.</p>
+<section id="kimball1988" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="kimball1988"><span class="header-section-number">4.1</span> <span class="citation" data-cites="Kimball1988">Kimball (<a href="#ref-Kimball1988" role="doc-biblioref">1988</a>)</span></h2>
+<p>In this paper, he provides a framework for risk-sharing with limited commitment and conducts numerical analyses to see (i) under what parameter values enforceability constraints are satisfied (and hence some form of transfers happens), and (ii) under what parameter values full risk-sharing is achieved. Interestingly, in his formulation of the problem, he does not use the repeated game but instead uses the dynamic optimization, which looks closer to the dynamic limited commitment model (introduced below) in which transfers can depend on past states. However, Kimball explicitly rules out the possibility of consumption depending on the past states (p.226), which makes the framework a static limited commitment model.</p>
+<p>The paper says Table 1 shows that the enforceability constraints tend to be satisfied with reasonable parameters and Table 3 shows that full risk-sharing can be achieved with reasonable parameters. I am not sure (i) what the expression for <span class="math inline">\(W(P)\)</span> on p.226 is, (ii) how to derive (6), and (iii) how to get numbers on Table 3.</p>
+<p>The main motivation in this paper is to explain why farmers had scattered plots in Medieval England. Some say this is for insurance (as a form of income diversification), but Kimball argues that this is unlikely since, as shown in the paper, risk-sharing among farmers as informal insurance can be sustained. Thus, he argues that, rather than relying on the costly income diversification (eg. travel time), farmers should use risk-sharing for insurance.</p>
+</section>
+<section id="coate1993reciprocity" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="coate1993reciprocity"><span class="header-section-number">4.2</span> <span class="citation" data-cites="coate1993reciprocity">Coate and Ravallion (<a href="#ref-coate1993reciprocity" role="doc-biblioref">1993</a>)</span></h2>
+<p>Like <span class="citation" data-cites="Kimball1988">Kimball (<a href="#ref-Kimball1988" role="doc-biblioref">1988</a>)</span>, this paper also considers a risk-sharing model with limited commitment model. Unlike <span class="citation" data-cites="Kimball1988">Kimball (<a href="#ref-Kimball1988" role="doc-biblioref">1988</a>)</span>, however, their framework is based on an infinite-period repeated game: in each period, players either follow a transfer schedule or renege and will stay in autarky forever. Under symmetric income distribution, they compare first-best transfers under full risk-sharing and best implementable transfers (best in the sense that the transfers that maximize the expected utilities).</p>
 <p>The problem considered in the paper is to maximize the average expected utility of a household (by symmetry, a transfer schedule that maximizes the average expected utility of one household maximizes that of the other household), subject to the following <em>implementability constraints</em>:</p>
-<span class="math display">\[\begin{align*}
+<p><span class="math display">\[\begin{align*}
   u(y_i) - u(y_i - \theta_{ij}) &amp;\le (v^A(\Theta) - \overline{v}) / r \quad \text{for all } (i, j) \\
   u(y_j) - u(y_j + \theta_{ij}) &amp;\le (v^B(\Theta) - \overline{v}) / r \quad \text{for all } (i, j),
-\end{align*}\]</span>
-<p>where <span class="math inline">\(y\)</span> is income, <span class="math inline">\(\theta_{ij}\)</span> is the transfer from A to B when the state is <span class="math inline">\((i, j)\)</span>, <span class="math inline">\(\Theta\)</span> is the entire transfer schedule, or <em>informal insurance arrangement</em>, <span class="math inline">\(\overline{v}\)</span> is the value under autarky, and <span class="math inline">\(r\)</span> is the discount rate. Per-period expected utilities of A and B, <span class="math inline">\(v^A(\Theta)\)</span> and <span class="math inline">\(v^B(\Theta)\)</span>, under the informal insurance arrangement <span class="math inline">\(\Theta\)</span> are</p>
-<span class="math display">\[\begin{align*}
-  v^A(\Theta) = \sum_{i} \sum_{j} \pi_{ij} u(y_i - \theta_{ij}), \\
-  v^B(\Theta) = \sum_{i} \sum_{j} \pi_{ij} u(y_j + \theta_{ij}),
-\end{align*}\]</span>
-<p>where <span class="math inline">\(\pi_{ij}\)</span> is a probability of the state <span class="math inline">\((i, j)\)</span>.</p>
-<p>To characterize the transfers under those constraints, the authors define the function <span class="math inline">\(f(y, w)\)</span> which implicitly satisfies <span class="math inline">\(u(y) - u(y - f) = w\)</span>. The function represents the maximal amount of income that can be taken from a household without violating the implementability constraints where the cost of defection is <span class="math inline">\(w\)</span>. With this, they derive that</p>
-<span class="math display">\[\begin{equation*}
-  \theta_{ij}^* = \min \{\widehat{\theta}_{ij}, f(y_i, (v(\theta^*) - \overline{v}) / r) \}.
-\end{equation*}\]</span>
-<p>Here, <span class="math inline">\(\theta^*\)</span> is the contract which results in the highest average expected utility subject to the implementability constraints, and <span class="math inline">\(\widehat{\theta}\)</span> is the transfer schedule under the full risk-sharing. Intuitively, this means that, as long as the implementability constraints are not violated, the transfer schedule coincides with the one under full risk-sharing, but otherwise, as much money as possible is transferred so that the constraints are not violated.</p>
-<p>Furthermore, they examine (i) how the best implementable (ie. under the implementability constraints) insurance arrangement and the full risk-sharing insurance arrangement differ, and (ii) how the best implementable insurance arrangement changes with exogenous variables of the model (discount rate and correlation in income realizations). To (i), they find, for example, that the transfers under the implementability constraints do depend on not the level of incomes, unlike the first-best contracts where transfers depend only on the income <em>difference</em> between households. Regarding the comparative static properties as in the question (ii), they demonstrate smaller transfers among less patient househodls and also in situations where income realizations are highly correlated.</p>
+\end{align*}\]</span></p>
+<p>where <span class="math inline">\(y\)</span> is income, <span class="math inline">\(\theta_{ij}\)</span> is the transfer from A to B when the state is <span class="math inline">\((i, j)\)</span>, <span class="math inline">\(\Theta\)</span> is the entire transfer schedule, or <em>informal insurance arrangement</em>, <span class="math inline">\(\overline{v}\)</span> is the value under autarky, and <span class="math inline">\(r\)</span> is the discount rate. Using this framework, they examine (i) how the best implementable (ie. under the implementability constraints) insurance arrangement and the full risk-sharing insurance arrangement differ, and (ii) how the best implementable insurance arrangement changes with exogenous variables of the model (discount rate and correlation in income realizations). Also, they conduct numerical exercises to show how changes in exogenous variables affect the insurance arrangement. The numerical exercises</p>
+<p>As suggestions for future research (I mean, “future” from their perspective), they provide three possible directions to extend their model:</p>
+<ol type="1">
+<li>to allow non-stationary insurance arrangements, which can depend on both current and past income realizations;</li>
+<li>to allow households to save;</li>
+<li>to allow households’ income to depend on its work effort which others in the community cannot observe.</li>
+</ol>
+<p>Interestingly, all of these three extensions have been achieved by later works: (1) by, for example, <span class="citation" data-cites="ligon2002informal">Ligon, Thomas, and Worrall (<a href="#ref-ligon2002informal" role="doc-biblioref">2002</a>)</span>, (2) by, for example, <span class="citation" data-cites="Ligon2000">Ligon, Thomas, and Worrall (<a href="#ref-Ligon2000" role="doc-biblioref">2000</a>)</span>, and (3) by, for example, XXX.</p>
+</section>
+<section id="difference-between-kimball1988-and-coate1993reciprocity" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="difference-between-kimball1988-and-coate1993reciprocity"><span class="header-section-number">4.3</span> Difference between <span class="citation" data-cites="Kimball1988">Kimball (<a href="#ref-Kimball1988" role="doc-biblioref">1988</a>)</span> and <span class="citation" data-cites="coate1993reciprocity">Coate and Ravallion (<a href="#ref-coate1993reciprocity" role="doc-biblioref">1993</a>)</span></h2>
+<p>The main difference between this paper and <span class="citation" data-cites="Kimball1988">Kimball (<a href="#ref-Kimball1988" role="doc-biblioref">1988</a>)</span> is that,</p>
+<ul>
+<li>while <span class="citation" data-cites="Kimball1988">Kimball (<a href="#ref-Kimball1988" role="doc-biblioref">1988</a>)</span> identifies the conditions (i) for risk-sharing institutions to exist and (ii) for full risk-sharing to be achieved,</li>
+<li><span class="citation" data-cites="coate1993reciprocity">Coate and Ravallion (<a href="#ref-coate1993reciprocity" role="doc-biblioref">1993</a>)</span> investigates the properties of the best implementable insurance arrangement (ie. how this is different from the insurance arrangement under full risk-sharing and how this arrangement changes as exogenous variables vary).</li>
+</ul>
+</section>
+<section id="references" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="references"><span class="header-section-number">4.4</span> References</h2>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-coate1993reciprocity" class="csl-entry" role="doc-biblioentry">
 Coate, Stephen, and Martin Ravallion. 1993. <span>“Reciprocity Without Commitment: Characterization and Performance of Informal Insurance Arrangements.”</span> <em>Journal of Development Economics</em> 40 (1): 1–24.
+</div>
+<div id="ref-Kimball1988" class="csl-entry" role="doc-biblioentry">
+Kimball, M S. 1988. <span>“<span class="nocase">Farmers’ Cooperatives as Behavior Toward Risk</span>.”</span> <em>The American Economic Review</em> 78 (1): 224–32.
+</div>
+<div id="ref-Ligon2000" class="csl-entry" role="doc-biblioentry">
+Ligon, Ethan, Jonathan P. Thomas, and Tim Worrall. 2000. <span>“<span class="nocase">Mutual Insurance, Individual Savings, and Limited Commitment</span>.”</span> <em>Review of Economic Dynamics</em>. <a href="https://doi.org/10.1006/redy.1999.0081">https://doi.org/10.1006/redy.1999.0081</a>.
 </div>
 <div id="ref-ligon2002informal" class="csl-entry" role="doc-biblioentry">
 Ligon, Ethan, Jonathan P Thomas, and Tim Worrall. 2002. <span>“Informal Insurance Arrangements with Limited Commitment: Theory and Evidence from Village Economies.”</span> <em>The Review of Economic Studies</em> 69 (1): 209–44.
@@ -414,13 +441,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./base_model_heterogeneity.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Extension: heterogeneity</span></span>
+      <a href="./limited_commitment_model.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Risk-sharing with limited commitment</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./dynamic_limited_commitment_theory.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dynamic limited-commitment model (theory)</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dynamic limited-commitment model</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
