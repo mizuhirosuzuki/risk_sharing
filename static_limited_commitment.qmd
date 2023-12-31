@@ -3,20 +3,28 @@
 In a *static* limited commitment model, transfer rules are not allowed to depend on past states.
 The repeated game is used in the analysis, and @coate1993reciprocity provides a simple and clear framework.
 
-## @Kimball1988
+## Model
+
+I introduce a statsic limited commitment model following the set up in @coate1993reciprocity.
+
+[TBA]
+
+## Related papers
+
+### @Kimball1988
 
 In this paper, he provides a framework for risk-sharing with limited commitment and conducts numerical analyses to see (i) under what parameter values enforceability constraints are satisfied (and hence some form of transfers happens), and (ii) under what parameter values full risk-sharing is achieved.
 Interestingly, in his formulation of the problem, he does not use the repeated game but instead uses the dynamic optimization, which looks closer to the dynamic limited commitment model (introduced below) in which transfers can depend on past states.
 However, Kimball explicitly rules out the possibility of consumption depending on the past states (p.226), which makes the framework a static limited commitment model.
 
-The paper says Table 1 shows that the enforceability constraints tend to be satisfied with reasonable parameters and Table 3 shows that full risk-sharing can be achieved with reasonable parameters.
-I am not sure (i) what the expression for $W(P)$ on p.226 is, (ii) how to derive (6), and (iii) how to get numbers on Table 3.
+<!-- The paper says Table 1 shows that the enforceability constraints tend to be satisfied with reasonable parameters and Table 3 shows that full risk-sharing can be achieved with reasonable parameters. -->
+<!-- I am not sure (i) what the expression for $W(P)$ on p.226 is, (ii) how to derive (6), and (iii) how to get numbers on Table 3. -->
 
 The main motivation in this paper is to explain why farmers had scattered plots in Medieval England.
 Some say this is for insurance (as a form of income diversification), but Kimball argues that this is unlikely since, as shown in the paper, risk-sharing among farmers as informal insurance can be sustained.
 Thus, he argues that, rather than relying on the costly income diversification (eg. travel time), farmers should use risk-sharing for insurance.
 
-## @coate1993reciprocity
+### @coate1993reciprocity
 
 Like @Kimball1988, this paper also considers a risk-sharing model with limited commitment model.
 Unlike @Kimball1988, however, their framework is based on an infinite-period repeated game:
@@ -44,7 +52,7 @@ As suggestions for future research (I mean, "future" from their perspective), th
 Interestingly, all of these three extensions have been achieved by later works:
 (1) by, for example, @ligon2002informal, (2) by, for example, @Ligon2000, and (3) by, for example, XXX.
 
-## Difference between @Kimball1988 and @coate1993reciprocity
+### Difference between @Kimball1988 and @coate1993reciprocity
 
 The main difference between this paper and @Kimball1988 is that, 
 

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Risk sharing - 7&nbsp; Extension: Limited commitment models with storage</title>
+<title>Risk sharing - 6&nbsp; Extension: Limited commitment models with storage</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,25 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -31,7 +50,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./hidden_information_theory.html" rel="next">
-<link href="./compare_limited_commitment_models.html" rel="prev">
+<link href="./dynamic_limited_commitment_theory.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -61,6 +80,7 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -70,7 +90,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Extension: Limited commitment models with storage</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Extension: Limited commitment models with storage</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -143,12 +163,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./compare_limited_commitment_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Comparison between static and dynamic limited commitment models</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./limited_commitment_with_storage.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Extension: Limited commitment models with storage</span></a>
+  <a href="./limited_commitment_with_storage.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Extension: Limited commitment models with storage</span></a>
   </div>
 </li>
       </ul>
@@ -163,7 +178,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./hidden_information_theory.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Risk sharing with hidden information (theory)</span></a>
+  <a href="./hidden_information_theory.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Risk sharing with hidden information (theory)</span></a>
   </div>
 </li>
       </ul>
@@ -187,7 +202,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./base_model_us.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Tests of full risk-sharing model in the U.S.</span></a>
+  <a href="./base_model_us.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Early studies testing “full risk-sharing” in the U.S.</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -202,14 +217,27 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#model" id="toc-model" class="nav-link active" data-scroll-target="#model"><span class="toc-section-number">6.1</span>  Model</a></li>
+  <li><a href="#simulation" id="toc-simulation" class="nav-link" data-scroll-target="#simulation"><span class="toc-section-number">6.2</span>  Simulation</a></li>
+  <li><a href="#related-papers" id="toc-related-papers" class="nav-link" data-scroll-target="#related-papers"><span class="toc-section-number">6.3</span>  Related papers</a>
+  <ul class="collapse">
+  <li><a href="#ligon2000" id="toc-ligon2000" class="nav-link" data-scroll-target="#ligon2000"><span class="toc-section-number">6.3.1</span>  <span class="citation" data-cites="Ligon2000">Ligon, Thomas, and Worrall (2000)</span></a></li>
+  <li><a href="#abraham2018" id="toc-abraham2018" class="nav-link" data-scroll-target="#abraham2018"><span class="toc-section-number">6.3.2</span>  <span class="citation" data-cites="Abraham2018">Ábrahám and Laczó (2018)</span></a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="toc-section-number">6.4</span>  References</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Extension: Limited commitment models with storage</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Extension: Limited commitment models with storage</span></h1>
 </div>
 
 
@@ -224,8 +252,102 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<p>One interesting extension of a (dynamic) limited commitment model is introducing saving in the model. Here, I explain such extension, largely based on <span class="citation" data-cites="Abraham2018">Ábrahám and Laczó (<a href="#ref-Abraham2018" role="doc-biblioref">2018</a>)</span>.</p>
+<section id="model" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="model"><span class="header-section-number">6.1</span> Model</h2>
+<p>As in the basic limited commitment model, a social planner maximized the discounted sum of utilities of households, subject to resource constraints and participation constraints. But now, the social planner is allowed to <em>publicly</em> save resources across times, and also, each household can <em>privately</em> save for future periods. Here,</p>
+<ul>
+<li>public storage is observed by households, and households cannot access once they leave the risk-sharing network (hence the public storage does not affect the autarky value), and</li>
+<li>private storage is unenforceable in that social planners cannot use the private storage for resource allocation, and also, households can access the private storage under autarky too.</li>
+</ul>
+<p>Hence, the social planner solves the following maximization problem. <span class="math display">\[
+\begin{aligned}
+  &amp;\max_{\{c_{it}(s^t)\}} \sum_i \lambda_i \sum_{t = 1}^{\infty} \sum_{s^t} \delta^t \pi(s^t) u(c_{it}(s^t)) \\
+  \text{subject to}
+  &amp;\sum_i c_{it} (s^t) \le \sum_i y_{it}(s_t) + (1+r) B \left(s^{t - 1} \right) - B\left(s^t \right)\quad \forall s^t, \forall t \\
+  &amp;\sum_{r = t}^{\infty} \sum_{s^r} \delta^{r - t} \pi(s^r | s^t) u(c_{ir}(s^r)) \ge \tilde{U}_{i}^{aut}(s_t) \quad \forall s^t, \forall t, \forall i, \\
+  &amp;B(s^t) \ge 0 \quad \forall s^t, \forall t
+\end{aligned}
+\]</span> where the similar notations are used as in the case without storage, with a few exceptions that, <span class="math inline">\(B(s^t)\)</span> is a public storage at the state history <span class="math inline">\(s^t\)</span>, and <span class="math inline">\(\tilde{U}_i^{aut}\)</span> is the autarky value with private storage. Also, for simplicity, assume that the income process is i.i.d..</p>
+<p>Note that, here I do not consider the possibility of households relying on private storage while they are in the risk-sharing network. In principle, they can use private saving, and hence to the list of constraints, I would need to add intertemporal optimality conditions (that is, Euler equations of each household). However, <span class="citation" data-cites="Abraham2018">Ábrahám and Laczó (<a href="#ref-Abraham2018" role="doc-biblioref">2018</a>)</span> shows that private storage does not matter when public asset accumulation is optimal (Proposition 4). Therefore, I can safely ignore the possibility of private storage from the constraints, which simplifies the expression and also numerical solution greatly.</p>
+<p>Using the recursive form in <span class="citation" data-cites="Marcet2019">Marcet and Marimon (<a href="#ref-Marcet2019" role="doc-biblioref">2019</a>)</span>, the Lagrangian can be written as <span class="math display">\[
+\begin{aligned}
+  \mathcal{L} = \sum_{t = 1}^{\infty} \sum_{s^t} \beta^t Pr(s^t) \left\{ \sum_i \left[ M_i(s^t) u(c_i(s^t)) - \mu_i(s^t) U^{aut}_i(s^t) \right] + \gamma(s^t) \left( \sum_i (y_i(s_t) - c_i(s^t)) + (1 + r) B(s^{t - 1}) - B(s^t) \right) + \rho(s^t) B(s^t) \right\},
+\end{aligned}
+\]</span> where <span class="math inline">\(\mu_i(s^t)\)</span>, <span class="math inline">\(\gamma(s^t)\)</span>, and <span class="math inline">\(\rho(s^t)\)</span> are Lagrangian multipliers of participation constraints, the resource constraint, and the non-negativity constraint of public storage, respectively. The variable, <span class="math inline">\(M_i(s^t)\)</span>, captures the evolution of the Pareto weights, and it evolves as <span class="math inline">\(M_i(s^t) = M_i(s^{t - 1}) + \mu_i(s^t)\)</span>.</p>
+<p>The first-order conditions are <span class="math display">\[
+  M_i(s^t) u'(c_i(s^t)) = \gamma(s^t) \quad \forall i,
+\]</span> which implies that, for any two households, <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, the following holds: <span class="math display">\[
+  \frac{u'(c_i(s^t))}{u'(c_j(s^t))} = \frac{M_j(s^t)}{M_i(s^t)}.
+\]</span></p>
+<p>From now on, I consider the case where there are two households in a village. Letting <span class="math inline">\(x(s^t) \equiv \frac{M_2(s^t)}{M_1(s^t)}\)</span>, I obtain <span class="math display">\[
+  x(s^t) = \frac{u'(c_1(s^t))}{u'(c_2(s^t))}.
+\]</span> Defining, <span class="math inline">\(\nu_i(s^t) = \frac{\mu_i(s^t)}{M_i(s^t)}\)</span> for <span class="math inline">\(i = 1, 2\)</span>, I obtain <span class="math display">\[
+  x(s^t) = x(s^{t - 1}) \frac{M_1(s^{t - 1})}{M_2(s^{t - 1})} \frac{M_2(s^t)}{M_1(s^t)} = x(s^{t - 1}) \frac{(M_1(s^t) - \mu_1(s^t)) / M_1(s^t)}{(M_2(s^t) - \mu_2(s^t)) / M_2(s^t)} = x(s^{t - 1}) \frac{1 - \nu_1(s^t)}{1 - \nu_2(s^t)}.
+\]</span></p>
+<p>By taking a derivative with respect to <span class="math inline">\(B(s^{t + 1})\)</span>, I get the planner’s Euler equation as <span class="math display">\[
+\begin{aligned}
+  &amp;\quad \gamma(s^t) \ge \beta (1 + r) \sum_{s^{t + 1}} Pr(s^{t + 1}) \gamma(s^{t + 1}) \\
+  &amp;\Leftrightarrow u'(c_i(s^t)) \ge \beta (1 + r) \sum_{s^{t + 1}} Pr(s^{t + 1}) \frac{u'(c_i(s^{t + 1}))}{1 - \nu_i(s^{t + 1})},
+\end{aligned}
+\]</span> where equality holds when <span class="math inline">\(B(s^{t + 1}) &gt; 0\)</span>. These conditions determine the policy functions, and the individual value functions can be written with three state variables, <span class="math inline">\((y, B, x)\)</span>, as follows: <span class="math display">\[
+  V_i(y, B, x) = u_i(c_i(y, B, x)) + \beta \sum_{y'} Pr(y') V_i(y', B', x').
+\]</span></p>
+<p>The interval update rule found in <span class="citation" data-cites="ligon2002informal">Ligon, Thomas, and Worrall (<a href="#ref-ligon2002informal" role="doc-biblioref">2002</a>)</span> holds in this context too, but interval bounds depend on public storage. Specifically, by defining the interval bounds, <span class="math inline">\(\underline{x}(y, B)\)</span> and <span class="math inline">\(\overline{x}(y, B)\)</span>, <span class="math inline">\(V_2(y, B, \underline{x}(y, B)) = U_2(y)\)</span> and <span class="math inline">\(V_1(y, B, \overline{x}(y, B)) = U_1(y)\)</span>, the relative Pareto weight <span class="math inline">\(x\)</span> is updated such that the policy function <span class="math inline">\(x'(y, B, x)\)</span> is characterized as follows: <span class="math display">\[
+x'(y, B, x) = \begin{cases}
+\overline{x}(y, B) \quad &amp;\text{if } x &gt; \overline{x}(y, B) \\
+x \quad &amp;\text{if } x \in [\underline{x}(y, B), \overline{x}(y, B)] \\
+\underline{x}(y, B) \quad &amp;\text{if } x &lt; \underline{x}(y, B).
+\end{cases}
+\]</span></p>
+<p>The expected lifetime utility of an agent <span class="math inline">\(i\)</span> under autarky with storage, at a state <span class="math inline">\(y\)</span> with private savings <span class="math inline">\(b\)</span>, is <span class="math display">\[
+  V_i^{aut}(y, b) = \max_{b' \ge 0} \left\{ u(y_i + (1 + r) b - b') + \beta \sum_{y'} Pr(y') V_i^{aut} (y', b') \right\}.
+\]</span> The intertemporal optimality condition, that is, the (individual) Euler equation, is <span class="math display">\[
+  u'(c(y, b)) \ge (1 + r) \beta \sum_j Pr(y') c(y', b'(y, b)),
+\]</span> where the equality holds if <span class="math inline">\(\beta'(y, b) \ge 0\)</span>. Note that <span class="math inline">\(b'(y, b) = y_i + (1 + r) b - c(y, b)\)</span>. I use the policy function iteration method to calculate <span class="math inline">\(c(y, b)\)</span>.</p>
+<p>What we are interested in is <span class="math inline">\(U_i^{aut} \equiv V_i^{aut}(y, 0)\)</span>, that is, the autarky value when there is no private saving, since this is the state households consider in participation constraints.</p>
+</section>
+<section id="simulation" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="simulation"><span class="header-section-number">6.2</span> Simulation</h2>
+<p>I created <a href="https://mizuhirosuzuki.github.io/risk_sharing_lc_storage/">a website</a> showing the computation steps and a simulation result of the model. There are two important takeaways:</p>
+<ul>
+<li>Even in the “steady state”, the level of public storage is stochastic and hence household consumption is random too. This is in contract to a basic risk-sharing model with limited commitment but without storage (as in <span class="citation" data-cites="Kocherlakota1996">Kocherlakota (<a href="#ref-Kocherlakota1996" role="doc-biblioref">1996</a>)</span> and <span class="citation" data-cites="ligon2002informal">Ligon, Thomas, and Worrall (<a href="#ref-ligon2002informal" role="doc-biblioref">2002</a>)</span>) which predicts that the consumption converges to a distribution with a finite number of covers.</li>
+<li>The existence of storage can <em>reduce</em> the level of welfare of households. This is because higher autarky values make it harder to maintain participation constraints and hence the function of a risk-sharing network is degraded.</li>
+</ul>
+</section>
+<section id="related-papers" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="related-papers"><span class="header-section-number">6.3</span> Related papers</h2>
+<section id="ligon2000" class="level3" data-number="6.3.1">
+<h3 data-number="6.3.1" class="anchored" data-anchor-id="ligon2000"><span class="header-section-number">6.3.1</span> <span class="citation" data-cites="Ligon2000">Ligon, Thomas, and Worrall (<a href="#ref-Ligon2000" role="doc-biblioref">2000</a>)</span></h3>
+<p>[TBA]</p>
+</section>
+<section id="abraham2018" class="level3" data-number="6.3.2">
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="abraham2018"><span class="header-section-number">6.3.2</span> <span class="citation" data-cites="Abraham2018">Ábrahám and Laczó (<a href="#ref-Abraham2018" role="doc-biblioref">2018</a>)</span></h3>
+<p>[TBA]</p>
+</section>
+</section>
+<section id="references" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="references"><span class="header-section-number">6.4</span> References</h2>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Abraham2018" class="csl-entry" role="doc-biblioentry">
+Ábrahám, Árpád, and Sarolta Laczó. 2018. <span>“<span class="nocase">Efficient risk sharing with limited commitment and storage</span>.”</span> <em>Review of Economic Studies</em>. <a href="https://doi.org/10.1093/restud/rdx061">https://doi.org/10.1093/restud/rdx061</a>.
+</div>
+<div id="ref-Kocherlakota1996" class="csl-entry" role="doc-biblioentry">
+Kocherlakota, N. R. 1996. <span>“<span class="nocase">Implications of Efficient Risk Sharing without Commitment</span>.”</span> <em>The Review of Economic Studies</em> 63 (4): 595–609. <a href="https://doi.org/10.2307/2297795">https://doi.org/10.2307/2297795</a>.
+</div>
+<div id="ref-Ligon2000" class="csl-entry" role="doc-biblioentry">
+Ligon, Ethan, Jonathan P. Thomas, and Tim Worrall. 2000. <span>“<span class="nocase">Mutual Insurance, Individual Savings, and Limited Commitment</span>.”</span> <em>Review of Economic Dynamics</em>. <a href="https://doi.org/10.1006/redy.1999.0081">https://doi.org/10.1006/redy.1999.0081</a>.
+</div>
+<div id="ref-ligon2002informal" class="csl-entry" role="doc-biblioentry">
+Ligon, Ethan, Jonathan P Thomas, and Tim Worrall. 2002. <span>“Informal Insurance Arrangements with Limited Commitment: Theory and Evidence from Village Economies.”</span> <em>The Review of Economic Studies</em> 69 (1): 209–44.
+</div>
+<div id="ref-Marcet2019" class="csl-entry" role="doc-biblioentry">
+Marcet, Albert, and Ramon Marimon. 2019. <span>“Recursive Contracts.”</span> <em>Econometrica</em> 87 (5): 1589–1631.
+</div>
+</div>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -363,13 +485,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./compare_limited_commitment_models.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Comparison between static and dynamic limited commitment models</span></span>
+      <a href="./dynamic_limited_commitment_theory.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Dynamic limited-commitment model</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./hidden_information_theory.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Risk sharing with hidden information (theory)</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Risk sharing with hidden information (theory)</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -75,8 +75,39 @@ $$
   V_i(s_t, x_{t - 1}) = u_i (c_{it} (s_t, x_{t - 1})) + \delta \sum_{s_{t + 1}} \pi(s_{t + 1} | s_t) V_i (s_{t + 1}, x_t(s_t, x_{t - 1})).
 $$
 
+## Estimation
+
+The model has been used in several papers to estimate the structural parameters and to check the model fit to data (e.g., @laczo2015risk, @ligon2002informal).
+The idea in estimation is to simulate the consumption of each household based on the model and compare it with consumption in data.
+@ligon2002informa uses a simulated method of moments, and @laczo2015risk uses a simulated maximum likelihood method for estimation.
+
+I created [a website](https://mizuhirosuzuki.github.io/risk_sharing_lc_estimation/) explaining the estimation steps with R, largely based on the framework in @laczo2015risk.
+
+## Comparison between static and dynamic limited commitment models
+
+To see the differences between static and dynamic limited commitment models, I compare data simulated based on each of these models.
+The results are summarized [on this page with R scripts for replication](https://mizuhirosuzuki.github.io/risk_sharing_lc_estimation/lc_hom_static.html).
+
+In summary, risk-sharing with dynamic limited commitment achieves smaller consunption variance compared to a static limited commitment model.
+The reason is the dependence of transfers on the past state.
+In particular, it allows "quasi-credit", which is a lending-borrowing relationship between households, depending on the realized state.
+Given that helping your partner household today can benefit you tomorrow and afterwards, you can transfer more to the household who experienced a negative shock without violating your participation constraint, which reduces consumption variability.
+In a static limited commitment model, this kind of transaction is not allowed and hence, if a household is strucken by a negative shock, the other household has a smaller incentive to transfer since the household does not "pay back" to you (unless you experience a negative shock).
+
+## Related papers
+
+### @Kocherlakota1996
+
+[TBA]
+
+### @ligon2002informal
+
+Most importantly, the paper proves that the evolution of relative Pareto weights is fully chatacterized by state-dependent intervals, where the weights are updated when a participation constraint of a household binds.
+
+[TBA]
+
+### @Fafchamps1999
+
+[TBA]
+
 ## References
-
-The evolution of relative Pareto weights is fully characterized by state-dependent intervals, which give the weights in the case where PCs are binding (@ligon2002informal).
-
-

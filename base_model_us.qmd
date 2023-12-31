@@ -1,8 +1,8 @@
-# Tests of full risk-sharing model in the U.S.
+# Early studies testing "full risk-sharing" in the U.S.
 
 There are several studies applying the above estimation equation to the US data.
 One of the main focuses of these studies is the test of market completeness:
-under ...
+under ...[TBA]
 
 ## @Mace1991
 

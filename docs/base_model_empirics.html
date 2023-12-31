@@ -207,7 +207,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./base_model_us.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Tests of full risk-sharing model in the U.S.</span></a>
+  <a href="./base_model_us.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Early studies testing “full risk-sharing” in the U.S.</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -259,6 +259,20 @@ div.csl-indent {
 <p>The model developed in the previous chapter has been used extensively for empirical analyses in the literature. There are mainly two ways the model is used: first, to test the full risk-sharing model, and second, to estimate the model parameters. Whereas the majority of the papers in the literature takes the first approach to use the model, there are papers to use the second method, primarily for comparing the empirical relevancy of different models (e.g., <span class="citation" data-cites="ligon2002informal">Ligon, Thomas, and Worrall (<a href="#ref-ligon2002informal" role="doc-biblioref">2002</a>)</span>, <span class="citation" data-cites="laczo2015risk">Laczó (<a href="#ref-laczo2015risk" role="doc-biblioref">2015</a>)</span>).</p>
 <section id="test-of-the-full-risk-sharing-model" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="test-of-the-full-risk-sharing-model"><span class="header-section-number">2.1</span> Test of the full risk-sharing model</h2>
+<p>As I reviewed in the previous section, one implication of a full risk-sharing model is that individual consumption does not depend on individual income, given the aggregate resources. In particular, from this relationship, <span class="math display">\[
+  \frac{c_{jt}(s^t)^{-\sigma}}{c_{it}(s^t)^{-\sigma}} = \frac{\lambda_i}{\lambda_j} \quad \forall s^t, \forall t.
+\]</span> by dropping <span class="math inline">\(s^t\)</span> from the equation for simplicity and taking the logarithms, I obtain <span class="math display">\[
+\begin{aligned}
+  -\sigma \log(c_{jt}) + \sigma \log(c_{it}) &amp;= \log(\lambda_i) - \log(\lambda_j) \\
+  \Leftrightarrow \log(c_{it}) &amp;= \frac{1}{\sigma} \left( \log(\lambda_i) - \log(\lambda_j) \right) + \log(c_{jt}) \\
+  \Leftrightarrow N \log(c_{it}) &amp;= \frac{1}{\sigma} \left( N \log(\lambda_i) - \sum_j \log(\lambda_j) \right) + \sum_j \log(c_{jt}) \\
+  \Leftrightarrow \log(c_{it}) &amp;= \frac{1}{N} \sum_j \log(c_{jt}) + \frac{1}{\sigma} \log(\lambda_i) - \frac{1}{\sigma} \frac{1}{N} \sum_j \log(\lambda_j)  .
+\end{aligned}
+\]</span> For the right-hand side of the equation, the first term is the village-average of log of consuption, and be controlled for by village-time fixed effects. The second term captures the effect of the household’s Pareto weight on his consumption, and can be controlled for by individual fixed effects. And the last term is simply a constant.</p>
+<p>Following this relationship, we expect that other factors such as idiosyncratic shocks such as income shocks of each household do not impact his consumption if other variables in the equation are controlled for. Hence, studies testing a full risk-sharing model include such shocks in the equation and check whether the coefficient of the shocks are statistically significant or not. If they are, then that means the failure of full risk sharing.</p>
+<p>Specifically, the full risk-sharing model usually is tested by running the following equation: <span class="math display">\[
+  \log(c_{it}) = \alpha + \beta \log(y_{it}) + \nu_{vt} + \mu_i + \epsilon_{it},
+\]</span> where <span class="math inline">\(\nu_{vt}\)</span> is a village-time fixed effect and <span class="math inline">\(\mu_i\)</span> is a household fixed effect. Many previous studies have found that the estimate of <span class="math inline">\(\beta\)</span> is statistically significant (eg. <span class="citation" data-cites="deaton1992understanding">Deaton (<a href="#ref-deaton1992understanding" role="doc-biblioref">1992</a>)</span>, <span class="citation" data-cites="Townsend1994">Townsend (<a href="#ref-Townsend1994" role="doc-biblioref">1994</a>)</span>), which has led to development of the later studies investigating the cause of failure of full risk sharing. Similar tests are conducted with U.S. data as well (reviewed <a href="./base_model_us.html">here</a>), where the focus is on the test of a complete market, not risk-sharing per se.</p>
 </section>
 <section id="structural-estimation-of-parameters" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="structural-estimation-of-parameters"><span class="header-section-number">2.2</span> Structural estimation of parameters</h2>
@@ -299,11 +313,17 @@ div.csl-indent {
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-deaton1992understanding" class="csl-entry" role="doc-biblioentry">
+Deaton, Angus. 1992. <em>Understanding Consumption</em>. Oxford University Press.
+</div>
 <div id="ref-laczo2015risk" class="csl-entry" role="doc-biblioentry">
 Laczó, Sarolta. 2015. <span>“Risk Sharing with Limited Commitment and Preference Heterogeneity: Structural Estimation and Testing.”</span> <em>Journal of the European Economic Association</em> 13 (2): 265–92.
 </div>
 <div id="ref-ligon2002informal" class="csl-entry" role="doc-biblioentry">
 Ligon, Ethan, Jonathan P Thomas, and Tim Worrall. 2002. <span>“Informal Insurance Arrangements with Limited Commitment: Theory and Evidence from Village Economies.”</span> <em>The Review of Economic Studies</em> 69 (1): 209–44.
+</div>
+<div id="ref-Townsend1994" class="csl-entry" role="doc-biblioentry">
+Townsend, Robert M. 1994. <span>“<span class="nocase">Risk and Insurance in Village India</span>.”</span> <em>Econometrica</em> 62 (3): 539. <a href="https://doi.org/10.2307/2951659">https://doi.org/10.2307/2951659</a>.
 </div>
 </div>
 </section>

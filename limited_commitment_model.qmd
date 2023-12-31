@@ -1,7 +1,7 @@
 # Risk-sharing with limited commitment
 
 Since the development of the full risk-sharing model, many papers have used it to test its validity.
-It turns out that many studies found that the full risk-sharing model is empirically not supported (e.g., @Townsend1994, XXX).
+It turns out that many studies found that the full risk-sharing model is empirically not supported (e.g., @Townsend1994, @deaton1992understanding).
 
 The literature started to attempt to identify the barriers for efficient risk-sharing.
 One of the candidate was the difficulty in enforcing the contract:

@@ -1,10 +1,13 @@
 # Extension: heterogeneity
 
+As one extension of the base model, some of the previous studies have introduced preference heterogeneity in the model.
+I review those papers in this chapter.
+
 In the theoretical part of this paper, @Cochrane1991 allows heterogeneous risk and time preferences across households.
 However, in his "cross-sectional" analysis, if the economic shocks are independent of these variables, this heterogeneity does not matter for the test of full risk-sharing.
 Also, @Townsend1994 conducts a time-series analysis for each household in ICRISAT data, which allows different preferences for different households.
 One problem in this analysis is the temporal length of the data: there are only 10 years of data, which seems too short to conduct a time-series analysis.
-Here I will introduce works explicitly focusing on the heterogeneouos preferences of households in the context of risk sharing.
+The papers introduced below explicitly focus on the heterogeneouos preferences of households in the context of risk sharing.
 
 ## @Kurosaki2001
 
@@ -140,8 +143,11 @@ This means the rejection of the hypothesis that the preferences are common acros
 This paper (i) proposes a test of homogeneous preferences under full insurance, and (ii) proposes a test to evaluate efficiency of risk sharing under heterogeneous preferences.
 Here only risk preferences are considered due to the relatively small data, although the authors state that it is easy to incorporate time-preference heterogeneity in the model and the tests.
 
+[TBA]
 
 ## @Chiappori2014
+
+[TBA]
 
 ## References
 

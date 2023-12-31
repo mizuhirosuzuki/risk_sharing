@@ -1,5 +1,8 @@
 # Theory
 
+I first review the full risk-sharing model.
+Chapter 8 of @bardhan1999development provides a great textbook-treatment of the model.
+
 ## Settings
 
 Suuposed that there are $N$ households in a village. Each household maximized its expected lifetime utility: $$
@@ -9,7 +12,7 @@ where $\delta$ is the discount factor, $u$ is instantaneous preference of househ
 Assume that there is no saving.
 
 For income, let $s^t = (s_1, \dots, s_t)$ the history of income states from time $1$ to $t$, and let $y_{it}(s_t)$ be household $i$'s income at time $t$ and state $s_t$.
-Assume that the income process is a Markov process and is independent across households.
+Assume that the income process is independent across households.
 
 With these, I find the Pareto-optimal allocations.
 For this, a weighted sum of households' expected lifetime utilities is maximized.
@@ -37,17 +40,23 @@ $$
 $$
 and thus I get
 $$
-  \frac{c_{jt}(s^t)^{-\sigma}}{c_{it}(s^t)^{-\sigma}} = \frac{\lambda_i}{\lambda_j} \quad \forall s^t, \forall t.
-$$
-Dropping $s^t$ from the quation for simplicity and taking the logarithms, I obtain
-$$
 \begin{aligned}
-  -\sigma \log(c_{jt}) + \sigma \log(c_{it}) &= \log(\lambda_i) - \log(\lambda_j) \\
-  \Leftrightarrow \log(c_{it}) &= \frac{1}{\sigma} \left( \log(\lambda_i) - \log(\lambda_j) \right) + \log(c_{jt}) \\
-  \Leftrightarrow N \log(c_{it}) &= \frac{1}{\sigma} \left( N \log(\lambda_i) - \sum_j \log(\lambda_j) \right) + \sum_j \log(c_{jt}) \\
-  \Leftrightarrow \log(c_{it}) &= \frac{1}{\sigma} \left( \log(\lambda_i) - \frac{1}{N} \sum_j \log(\lambda_j) \right) + \frac{1}{N} \sum_j \log(c_{jt}).
+  &\quad \frac{c_{jt}(s^t)^{-\sigma}}{c_{it}(s^t)^{-\sigma}} = \frac{\lambda_i}{\lambda_j} \quad \forall s^t, \forall t \\
+  &\Leftrightarrow \frac{c_{jt}(s^t)}{c_{it}(s^t)} = \left( \frac{\lambda_i}{\lambda_j} \right)^{-1/\sigma} \quad \forall s^t, \forall t.
 \end{aligned}
 $$
-By defining the village-average consumption, $c_{vt}$, as $\log(c_{vt}) = \frac{1}{N} \sum_j \log(c_{jt})$, and taking the first difference from the equation above, I get $$
-  \log(c_{it}) - \log(c_{i, t - 1}) = \log(c_{vt}) - \log(c_{v, t - 1}).
+
+## Model implications
+
+The relationship above means that the ratio of consumption between any two households is constant across time and states, where households with larger $\lambda$ enjoyes higher consumption.
+Another way to interpret this expression is that, by taking logarithms and taking a first-order difference, I et
 $$
+\log(c_{it}(s^t)) - \log(c_{i, t - 1}(s^{t - 1})) =  \log(c_{jt}(s^{t})) - \log(c_{j, t - 1}(s^{t - 1})) \quad \forall s^t, s^{t-1}, \forall t,
+$$
+which means that the growth rate of consumption is identical for any households in the village, in any state and time.
+
+Also, under a full risk sharing, consumption does not depend on the individual income:
+it is determined by their Pareto weights and the aggregate resources.
+This is the basis of the empirical test of a full risk-sharing model, as shown in the next chapter.
+
+## Rerefences

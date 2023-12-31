@@ -6,6 +6,36 @@ Whereas the majority of the papers in the literature takes the first approach to
 
 ## Test of the full risk-sharing model
 
+As I reviewed in the previous section, one implication of a full risk-sharing model is that individual consumption does not depend on individual income, given the aggregate resources.
+In particular, from this relationship,
+$$
+  \frac{c_{jt}(s^t)^{-\sigma}}{c_{it}(s^t)^{-\sigma}} = \frac{\lambda_i}{\lambda_j} \quad \forall s^t, \forall t.
+$$
+by dropping $s^t$ from the equation for simplicity and taking the logarithms, I obtain
+$$
+\begin{aligned}
+  -\sigma \log(c_{jt}) + \sigma \log(c_{it}) &= \log(\lambda_i) - \log(\lambda_j) \\
+  \Leftrightarrow \log(c_{it}) &= \frac{1}{\sigma} \left( \log(\lambda_i) - \log(\lambda_j) \right) + \log(c_{jt}) \\
+  \Leftrightarrow N \log(c_{it}) &= \frac{1}{\sigma} \left( N \log(\lambda_i) - \sum_j \log(\lambda_j) \right) + \sum_j \log(c_{jt}) \\
+  \Leftrightarrow \log(c_{it}) &= \frac{1}{N} \sum_j \log(c_{jt}) + \frac{1}{\sigma} \log(\lambda_i) - \frac{1}{\sigma} \frac{1}{N} \sum_j \log(\lambda_j)  .
+\end{aligned}
+$$
+For the right-hand side of the equation, the first term is the village-average of log of consuption, and be controlled for by village-time fixed effects.
+The second term captures the effect of the household's Pareto weight on his consumption, and can be controlled for by individual fixed effects.
+And the last term is simply a constant.
+
+Following this relationship, we expect that other factors such as idiosyncratic shocks such as income shocks of each household do not impact his consumption if other variables in the equation are controlled for.
+Hence, studies testing a full risk-sharing model include such shocks in the equation and check whether the coefficient of the shocks are statistically significant or not.
+If they are, then that means the failure of full risk sharing.
+
+Specifically, the full risk-sharing model usually is tested by running the following equation:
+$$
+  \log(c_{it}) = \alpha + \beta \log(y_{it}) + \nu_{vt} + \mu_i + \epsilon_{it},
+$$
+where $\nu_{vt}$ is a village-time fixed effect and $\mu_i$ is a household fixed effect. 
+Many previous studies have found that the estimate of $\beta$ is statistically significant (eg. @deaton1992understanding, @Townsend1994), which has led to development of the later studies investigating the cause of failure of full risk sharing.
+Similar tests are conducted with U.S. data as well (reviewed [here](base_model_us.qmd)), where the focus is on the test of a complete market, not risk-sharing per se.
+
 ## Structural estimation of parameters
 
 The other main way to use the full risk-sharing model empirically is to estimate the structural parameters.

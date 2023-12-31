@@ -49,7 +49,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./compare_limited_commitment_models.html" rel="next">
+<link href="./limited_commitment_with_storage.html" rel="next">
 <link href="./static_limited_commitment.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -163,12 +163,7 @@ div.csl-indent {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./compare_limited_commitment_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Comparison between static and dynamic limited commitment models</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./limited_commitment_with_storage.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Extension: Limited commitment models with storage</span></a>
+  <a href="./limited_commitment_with_storage.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Extension: Limited commitment models with storage</span></a>
   </div>
 </li>
       </ul>
@@ -183,7 +178,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./hidden_information_theory.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Risk sharing with hidden information (theory)</span></a>
+  <a href="./hidden_information_theory.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Risk sharing with hidden information (theory)</span></a>
   </div>
 </li>
       </ul>
@@ -207,7 +202,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./base_model_us.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Tests of full risk-sharing model in the U.S.</span></a>
+  <a href="./base_model_us.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Early studies testing “full risk-sharing” in the U.S.</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -227,7 +222,15 @@ div.csl-indent {
    
   <ul>
   <li><a href="#model" id="toc-model" class="nav-link active" data-scroll-target="#model"><span class="toc-section-number">5.1</span>  Model</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="toc-section-number">5.2</span>  References</a></li>
+  <li><a href="#estimation" id="toc-estimation" class="nav-link" data-scroll-target="#estimation"><span class="toc-section-number">5.2</span>  Estimation</a></li>
+  <li><a href="#comparison-between-static-and-dynamic-limited-commitment-models" id="toc-comparison-between-static-and-dynamic-limited-commitment-models" class="nav-link" data-scroll-target="#comparison-between-static-and-dynamic-limited-commitment-models"><span class="toc-section-number">5.3</span>  Comparison between static and dynamic limited commitment models</a></li>
+  <li><a href="#related-papers" id="toc-related-papers" class="nav-link" data-scroll-target="#related-papers"><span class="toc-section-number">5.4</span>  Related papers</a>
+  <ul class="collapse">
+  <li><a href="#kocherlakota1996" id="toc-kocherlakota1996" class="nav-link" data-scroll-target="#kocherlakota1996"><span class="toc-section-number">5.4.1</span>  <span class="citation" data-cites="Kocherlakota1996">Kocherlakota (1996)</span></a></li>
+  <li><a href="#ligon2002informal" id="toc-ligon2002informal" class="nav-link" data-scroll-target="#ligon2002informal"><span class="toc-section-number">5.4.2</span>  <span class="citation" data-cites="ligon2002informal">Ligon, Thomas, and Worrall (2002)</span></a></li>
+  <li><a href="#fafchamps1999" id="toc-fafchamps1999" class="nav-link" data-scroll-target="#fafchamps1999"><span class="toc-section-number">5.4.3</span>  <span class="citation" data-cites="Fafchamps1999">Fafchamps (1999)</span></a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="toc-section-number">5.5</span>  References</a></li>
   </ul>
 </nav>
     </div>
@@ -295,12 +298,46 @@ div.csl-indent {
   V_i(s_t, x_{t - 1}) = u_i (c_{it} (s_t, x_{t - 1})) + \delta \sum_{s_{t + 1}} \pi(s_{t + 1} | s_t) V_i (s_{t + 1}, x_t(s_t, x_{t - 1})).
 \]</span></p>
 </section>
-<section id="references" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="references"><span class="header-section-number">5.2</span> References</h2>
-<p>The evolution of relative Pareto weights is fully characterized by state-dependent intervals, which give the weights in the case where PCs are binding (<span class="citation" data-cites="ligon2002informal">Ligon, Thomas, and Worrall (<a href="#ref-ligon2002informal" role="doc-biblioref">2002</a>)</span>).</p>
+<section id="estimation" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="estimation"><span class="header-section-number">5.2</span> Estimation</h2>
+<p>The model has been used in several papers to estimate the structural parameters and to check the model fit to data (e.g., <span class="citation" data-cites="laczo2015risk">Laczó (<a href="#ref-laczo2015risk" role="doc-biblioref">2015</a>)</span>, <span class="citation" data-cites="ligon2002informal">Ligon, Thomas, and Worrall (<a href="#ref-ligon2002informal" role="doc-biblioref">2002</a>)</span>). The idea in estimation is to simulate the consumption of each household based on the model and compare it with consumption in data. <span class="citation" data-cites="ligon2002informa">(<a href="#ref-ligon2002informa" role="doc-biblioref"><strong>ligon2002informa?</strong></a>)</span> uses a simulated method of moments, and <span class="citation" data-cites="laczo2015risk">Laczó (<a href="#ref-laczo2015risk" role="doc-biblioref">2015</a>)</span> uses a simulated maximum likelihood method for estimation.</p>
+<p>I created <a href="https://mizuhirosuzuki.github.io/risk_sharing_lc_estimation/">a website</a> explaining the estimation steps with R, largely based on the framework in <span class="citation" data-cites="laczo2015risk">Laczó (<a href="#ref-laczo2015risk" role="doc-biblioref">2015</a>)</span>.</p>
+</section>
+<section id="comparison-between-static-and-dynamic-limited-commitment-models" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="comparison-between-static-and-dynamic-limited-commitment-models"><span class="header-section-number">5.3</span> Comparison between static and dynamic limited commitment models</h2>
+<p>To see the differences between static and dynamic limited commitment models, I compare data simulated based on each of these models. The results are summarized <a href="https://mizuhirosuzuki.github.io/risk_sharing_lc_estimation/lc_hom_static.html">on this page with R scripts for replication</a>.</p>
+<p>In summary, risk-sharing with dynamic limited commitment achieves smaller consunption variance compared to a static limited commitment model. The reason is the dependence of transfers on the past state. In particular, it allows “quasi-credit”, which is a lending-borrowing relationship between households, depending on the realized state. Given that helping your partner household today can benefit you tomorrow and afterwards, you can transfer more to the household who experienced a negative shock without violating your participation constraint, which reduces consumption variability. In a static limited commitment model, this kind of transaction is not allowed and hence, if a household is strucken by a negative shock, the other household has a smaller incentive to transfer since the household does not “pay back” to you (unless you experience a negative shock).</p>
+</section>
+<section id="related-papers" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="related-papers"><span class="header-section-number">5.4</span> Related papers</h2>
+<section id="kocherlakota1996" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="kocherlakota1996"><span class="header-section-number">5.4.1</span> <span class="citation" data-cites="Kocherlakota1996">Kocherlakota (<a href="#ref-Kocherlakota1996" role="doc-biblioref">1996</a>)</span></h3>
+<p>[TBA]</p>
+</section>
+<section id="ligon2002informal" class="level3" data-number="5.4.2">
+<h3 data-number="5.4.2" class="anchored" data-anchor-id="ligon2002informal"><span class="header-section-number">5.4.2</span> <span class="citation" data-cites="ligon2002informal">Ligon, Thomas, and Worrall (<a href="#ref-ligon2002informal" role="doc-biblioref">2002</a>)</span></h3>
+<p>Most importantly, the paper proves that the evolution of relative Pareto weights is fully chatacterized by state-dependent intervals, where the weights are updated when a participation constraint of a household binds.</p>
+<p>[TBA]</p>
+</section>
+<section id="fafchamps1999" class="level3" data-number="5.4.3">
+<h3 data-number="5.4.3" class="anchored" data-anchor-id="fafchamps1999"><span class="header-section-number">5.4.3</span> <span class="citation" data-cites="Fafchamps1999">Fafchamps (<a href="#ref-Fafchamps1999" role="doc-biblioref">1999</a>)</span></h3>
+<p>[TBA]</p>
+</section>
+</section>
+<section id="references" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="references"><span class="header-section-number">5.5</span> References</h2>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Fafchamps1999" class="csl-entry" role="doc-biblioentry">
+Fafchamps, Marcel. 1999. <span>“<span class="nocase">Risk sharing and quasi-credit</span>.”</span> <em>The Journal of International Trade <span>&amp;</span> Economic Development</em> 8 (3): 257–78. <a href="https://doi.org/10.1080/09638199900000016">https://doi.org/10.1080/09638199900000016</a>.
+</div>
+<div id="ref-Kocherlakota1996" class="csl-entry" role="doc-biblioentry">
+Kocherlakota, N. R. 1996. <span>“<span class="nocase">Implications of Efficient Risk Sharing without Commitment</span>.”</span> <em>The Review of Economic Studies</em> 63 (4): 595–609. <a href="https://doi.org/10.2307/2297795">https://doi.org/10.2307/2297795</a>.
+</div>
+<div id="ref-laczo2015risk" class="csl-entry" role="doc-biblioentry">
+Laczó, Sarolta. 2015. <span>“Risk Sharing with Limited Commitment and Preference Heterogeneity: Structural Estimation and Testing.”</span> <em>Journal of the European Economic Association</em> 13 (2): 265–92.
+</div>
 <div id="ref-ligon2002informal" class="csl-entry" role="doc-biblioentry">
 Ligon, Ethan, Jonathan P Thomas, and Tim Worrall. 2002. <span>“Informal Insurance Arrangements with Limited Commitment: Theory and Evidence from Village Economies.”</span> <em>The Review of Economic Studies</em> 69 (1): 209–44.
 </div>
@@ -451,8 +488,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./compare_limited_commitment_models.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Comparison between static and dynamic limited commitment models</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./limited_commitment_with_storage.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Extension: Limited commitment models with storage</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
